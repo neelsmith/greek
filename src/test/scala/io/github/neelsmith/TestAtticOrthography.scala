@@ -24,12 +24,21 @@ class TestAtticOrthography extends Specification {
     "which should distinguish a non-vowel" >> {
         AtticOrthography.isVowel('B') == false
     }
+    "which should recognize a breathing" >> {
+        AtticOrthography.isBreathing('H') == true
+    }
+    "which should distinguish a non-breathing" >> {
+        AtticOrthography.isBreathing('A') == false
+    }
 
     "which should recognize vowels as alphabetic characters" >> {
         AtticOrthography.isAlphabetic('A') == true
     }
     "which should recognize consonants as alphabetic characters" >> {
         AtticOrthography.isAlphabetic('B') == true
+    }
+    "which should recognize breathings as alphabetic characters" >> {
+        AtticOrthography.isAlphabetic('H') == true
     }
     "which should distinguish non-alphabetic characters" >> {
         AtticOrthography.isAlphabetic('=') == false

@@ -24,12 +24,22 @@ class TestNormalizedOrthography extends Specification {
     "which should distinguish a non-vowel" >> {
         NormalizedOrthography.isVowel('b') == false
     }
+    "which should recognize a breathing" >> {
+        NormalizedOrthography.isBreathing(')') == true
+    }
+    "which should distinguish a non-breathing" >> {
+        NormalizedOrthography.isBreathing('a') == false
+    }
+
 
     "which should recognize vowels as alphabetic characters" >> {
         NormalizedOrthography.isAlphabetic('a') == true
     }
     "which should recognize consonants as alphabetic characters" >> {
         NormalizedOrthography.isAlphabetic('b') == true
+    }
+    "which should recognize breathings as alphabetic characters" >> {
+        NormalizedOrthography.isAlphabetic(')') == true
     }
     "which should distinguish non-alphabetic characters" >> {
         NormalizedOrthography.isAlphabetic('=') == false

@@ -10,7 +10,10 @@ package greek {
     val vowels: Vector[Char]
     def isVowel(c: Char) = vowels.contains(c)
 
-    def isAlphabetic(c: Char) = isConsonant(c) || isVowel(c)
+    val breathings: Vector[Char]
+    def isBreathing(c: Char) = breathings.contains(c)
+
+    def isAlphabetic(c: Char) = isConsonant(c) || isVowel(c) || isBreathing(c)
 
     val accents = Vector('/','\\','=')
     def isAccent(c: Char) = accents.contains(c)
@@ -25,6 +28,12 @@ package greek {
     def isPunctuation(c: Char) = punctuation.contains(c)
 
     def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c) || isPunctuation(c)
+
+    // String-level features to implement:
+    // - comparison and ordering
+    // - tokenization
+    // - conversion to Unicode output,
+
   }
 
 }
