@@ -6,11 +6,20 @@ package greek {
   case class GreekStringN(s: String) extends GreekString {
     val orthography = NormalizedOrthography
 
-    // LC; require all chars valid:
-    val greekString = u2ascii.getString(s)
+    // require all chars valid.
+    // Check for bogus terminal sigma
+    val greek = u2ascii.getString(s.toLowerCase.trim).toLowerCase
+    require(greek.filterNot(orthography.isValidChar(_)).isEmpty)
+
 
     def unicodeView = {
-      ascii2u.getString(greekString)
+      ascii2u.getString(greek)
+    }
+  }
+
+  object GreekStringN {
+    def fromGreek(s: String) = {
+      GreekStringN(ascii2u.getString(s))
     }
   }
 

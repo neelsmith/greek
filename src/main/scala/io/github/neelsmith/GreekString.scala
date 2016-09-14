@@ -6,7 +6,7 @@ package greek {
 
   abstract class GreekString {
     val orthography: GreekOrthography
-    val greekString: String
+    val greek: String
     def unicodeView: String
   }
 

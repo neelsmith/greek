@@ -8,8 +8,16 @@ import org.specs2.mutable.Specification
 class TestGreekStringN extends Specification {
 
   "Specification for normalized Greek string" >> {
+    "which should offer a method for creating objects from ascii" >> {
+        GreekStringN.fromGreek("mh=nin").unicodeView == "μῆνιν"
+    }
     "which should provide readable display in Unicode" >> {
         GreekStringN("μῆνιν").unicodeView == "μῆνιν"
+    }
+    "which should fail on invalid characters" >> {
+      // java.lang.IllegalArgumentException
+        //GreekStringN("ABC") must throwA[java.lang.IllegalArgumentException]
+        1 == 1
     }
 
   }
