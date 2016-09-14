@@ -63,6 +63,13 @@ class TestAtticOrthography extends Specification {
         AtticOrthography.isValidChar('C') == false
     }
 
+    "which should recognize punctuation characters" >> {
+        AtticOrthography.isPunctuation(':') == true
+    }
+    "which should distinguish from non-punctuation characters" >> {
+        AtticOrthography.isPunctuation('A') == false
+    }
+
   }
 
 

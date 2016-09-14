@@ -21,7 +21,10 @@ package greek {
     val elision = '\''
     def isElision(c: Char) = c == elision
 
-    def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c)
+    val punctuation: Vector[Char]
+    def isPunctuation(c: Char) = punctuation.contains(c)
+
+    def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c) || isPunctuation(c)
   }
 
 }

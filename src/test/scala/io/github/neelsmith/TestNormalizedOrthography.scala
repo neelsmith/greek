@@ -63,6 +63,13 @@ class TestNormalizedOrthography extends Specification {
         NormalizedOrthography.isValidChar('A') == false
     }
 
+    "which should recognize punctuation characters" >> {
+        NormalizedOrthography.isPunctuation(';') == true
+    }
+    "which should distinguish from non-punctuation characters" >> {
+        NormalizedOrthography.isPunctuation('A') == false
+    }
+
   }
 
 
