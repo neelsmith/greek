@@ -14,10 +14,11 @@ class TestGreekStringN extends Specification {
     "which should provide readable display in Unicode" >> {
         GreekStringN("μῆνιν").unicodeView == "μῆνιν"
     }
+
     "which should fail on invalid characters" >> {
-      // java.lang.IllegalArgumentException
-        //GreekStringN("ABC") must throwA[java.lang.IllegalArgumentException]
-        1 == 1
+
+      GreekStringN("123") must throwA[java.lang.IllegalArgumentException]
+
     }
 
   }

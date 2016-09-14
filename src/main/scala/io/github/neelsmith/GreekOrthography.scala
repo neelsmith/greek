@@ -27,7 +27,10 @@ package greek {
     val punctuation: Vector[Char]
     def isPunctuation(c: Char) = punctuation.contains(c)
 
-    def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c) || isPunctuation(c)
+    val whitespace = Vector(' ','\r','\n','\t')
+    def isWhitespace(c: Char) = whitespace.contains(c)
+
+    def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c) || isPunctuation(c) || isWhitespace(c)
 
     // String-level features to implement:
     // - comparison and ordering
