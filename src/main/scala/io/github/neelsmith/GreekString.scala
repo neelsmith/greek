@@ -4,11 +4,10 @@ package greek {
 
 
 
-  class GreekString {
-
-
-
-
+  abstract class GreekString {
+    val orthography: GreekOrthography
+    val greekString: String
+    def unicodeView: String
   }
 
 }
