@@ -32,11 +32,8 @@ package greek {
 
     def isValidChar(c: Char) = isAlphabetic(c) || isAccent(c) || isQuantity(c) || isElision(c) || isPunctuation(c) || isWhitespace(c)
 
-    // String-level features to implement:
-    // - comparison and ordering
-    // - tokenization
-    // - conversion to Unicode output,
-
+    // defines alphabetic ordering for all non-whitespace chars
+    val alphabet: Vector[Char]
   }
 
 }

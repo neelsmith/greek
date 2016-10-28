@@ -7,9 +7,9 @@ resolvers += "uh-nexus" at "http://beta.hpcc.uh.edu/nexus/content/groups/public"
 libraryDependencies += "edu.unc.epidoc" % "transcoder" % "1.2-SNAPSHOT"
 
 
-libraryDependencies += "com.lihaoyi" % "ammonite" % "0.7.6" cross CrossVersion.full
+libraryDependencies += "com.lihaoyi" % "ammonite" % "0.7.8" cross CrossVersion.full
 
-libraryDependencies += "com.lihaoyi" %% "ammonite-ops" % "0.7.4"
+libraryDependencies += "com.lihaoyi" %% "ammonite-ops" % "0.7.8"
 
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.5" % "test"
@@ -22,7 +22,7 @@ scalaVersion := "2.11.8"
 
 name := "greek"
 organization := "io.github.neelsmith"
-version := "0.1.0"
+version := "0.1.1"
 
 publishTo := Some("Sonatype Snapshots Nexus" at "http://beta.hpcc.uh.edu/nexus/content/repositories/releases/")
 

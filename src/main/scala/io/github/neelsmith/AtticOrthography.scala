@@ -11,6 +11,7 @@ package greek {
     val vowels = Vector('A','E','I','O','U')
     val breathings = Vector('H')
     val punctuation = Vector(':')
+    val alphabet = Vector('H','A','B','G','D','E','Z','Q','I','K','L','M','N','O','P','R','S','T','U','F','X')
 
   }
 }
