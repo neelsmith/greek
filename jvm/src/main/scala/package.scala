@@ -3,7 +3,7 @@ import java.text.Normalizer
 
 package object greek {
 
-  def asciiOf(s: String) = {
+  def asciiOf(s: String): String = {
     if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
       s
     } else {
@@ -11,7 +11,7 @@ package object greek {
     }
   }
 
-  def ucodeOf(s: String) = {
+  def ucodeOf(s: String): String = {
     if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
       "UCODE OF " + s
     } else {
