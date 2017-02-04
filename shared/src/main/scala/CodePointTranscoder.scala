@@ -18,23 +18,5 @@ object CodePointTranscoder {
     )
 
 
-  def asciiToUcode (s: String): String = {
-    val matchingPairs = pairings.filter(_.ascii == s)
-    matchingPairs.size match {
-      case 0 => "#"
-      case 1 => matchingPairs(0).ucode
-      case _ => throw GreekException("Found multiple unicode mappings for " + s)
-    }
-  }
-
-
-  def ucodeToAscii (s: String): String = {
-    val matchingPairs = pairings.filter(_.ucode == s)
-    matchingPairs.size match {
-      case 0 => "#"
-      case 1 => matchingPairs(0).ascii
-      case _ => throw GreekException("Found multiple ascii mappings for " + s)
-    }
-  }
 
 }
