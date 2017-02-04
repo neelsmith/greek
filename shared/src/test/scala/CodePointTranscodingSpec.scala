@@ -2,7 +2,7 @@ package edu.holycross.shot.greek
 import org.scalatest.FlatSpec
 
 
-import java.text.Normalizer
+
 
 class CodePointTranscodingSpec extends FlatSpec {
 
@@ -15,7 +15,7 @@ class CodePointTranscodingSpec extends FlatSpec {
 
     var count = 0
     for (a <- asciiList) {
-      assert(ucodeList(count ) == ucodeCodePoint(a))
+      assert(ucodeList(count ) == CodePointTranscoder.ucodeCodePoint(a))
       count = count + 1
     }
   }
@@ -23,10 +23,10 @@ class CodePointTranscodingSpec extends FlatSpec {
   it should "map individual code points in the Greek range to ascii strings" in {
     val asciiList = Vector("a","b","g","d","e")
     val ucodeList = Vector("α","β","γ","δ","ε")
-    val normalUcode = ucodeList.map(s => Normalizer.normalize(s, Normalizer.Form.NFC))
+
     var count = 0
-    for (u <- normalUcode) {
-      assert(asciiList(count ) == asciiCodePoint(u))
+    for (u <- ucodeList) {
+      assert(asciiList(count ) == CodePointTranscoder.asciiCodePoint(u))
       count = count + 1
     }
 

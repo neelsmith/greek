@@ -9,12 +9,12 @@ class TranscodingSpec extends FlatSpec {
 
 
 
-  "A code point transcoder object"  should "derive a Unicode Greek string when instantiated with an ASCII string" in  {
+  "A code point transcoder object"  should "derive a Unicode Greek string when instantiated with an ASCII string" in pending /* {
     val lgs = LiteraryGreekString("mh=nin")
     val expected = Normalizer.normalize("μῆνιν", Normalizer.Form.NFC)
     assert(lgs.ascii == "mh=nin")
     assert(lgs.ucode == expected)
-  }
+  }*/
 
 
 

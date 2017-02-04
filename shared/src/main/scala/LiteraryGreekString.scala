@@ -5,8 +5,8 @@ import js.annotation.JSExport
 
 
 @JSExport  case class LiteraryGreekString(str: String)  {
-  val ascii = asciiOf(str)
-  val ucode = ucodeOf(str)
+  val ascii = literaryAsciiOf(str)
+  val ucode = literaryUcodeOf(str)
 }
 
 
