@@ -1,10 +1,7 @@
 package edu.holycross.shot.greek
 
-import scala.scalajs.js
-import js.JSStringOps._
-
-object Main extends js.JSApp {
-  def main(): Unit = {
+object Main {
+  def main(args: Array[String]): Unit = {
 
     val litgs = LiteraryGreekString("mh=nin")
     println("Create greek string with ascii: ")
