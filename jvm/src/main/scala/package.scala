@@ -3,7 +3,8 @@ import java.text.Normalizer
 
 package object greek {
 
-    def asciiOf (s: String): String = {
+
+    def asciiCodePoint(s: String) : String = {
       val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == s)
       matchingPairs.size match {
         case 0 => "#"
@@ -13,7 +14,8 @@ package object greek {
     }
 
 
-    def ucodeOf (s: String): String = {
+
+    def ucodeCodePoint(s: String) : String ={
       val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == s)
       matchingPairs.size match {
         case 0 => "#"
@@ -21,20 +23,14 @@ package object greek {
         case _ => throw GreekException("Found multiple ascii mappings for " + s)
       }
     }
-    /*
-  def asciiOf(s: String): String = {
-    if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
-      s
-    } else {
-      "TRANSCODE " + s
-    }
-  }
 
-  def ucodeOf(s: String): String = {
-    if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
+
+    def ucodeOf (s: String): String = {
       "UCODE OF " + s
-    } else {
-      "ucode normalize " + s
     }
-  }*/
+
+    def asciiOf (s: String): String = {
+      "ASCII OF " + s
+    }
+
 }
