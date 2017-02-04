@@ -1,30 +1,37 @@
-// Needed for specs2
-resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
-// Repository for
-resolvers += "uh-nexus" at "http://beta.hpcc.uh.edu/nexus/content/groups/public"
+name := "Greek string library"
+
+crossScalaVersions := Seq("2.10.6","2.11.8", "2.12.1")
 
 
-libraryDependencies += "edu.unc.epidoc" % "transcoder" % "1.2-SNAPSHOT"
+lazy val root = project.in(file(".")).
+    aggregate(crossedJVM, crossedJS).
+    settings(
+      publish := {},
+      publishLocal := {}
 
+    )
 
-libraryDependencies += "com.lihaoyi" % "ammonite" % "0.7.8" cross CrossVersion.full
+lazy val crossed = crossProject.in(file(".")).
+    settings(
+      name := "greek",
+      organization := "edu.holycross.shot",
+      version := "0.1.0",
+      licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
+      resolvers += Resolver.jcenterRepo,
+      libraryDependencies ++= Seq(
+        "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
+        "org.scalatest" %%% "scalatest" % "3.0.1" % "test"
+      )
+    ).
+    jvmSettings(
 
-libraryDependencies += "com.lihaoyi" %% "ammonite-ops" % "0.7.8"
+    ).
+    jsSettings(
+      skip in packageJSDependencies := false,
+      persistLauncher in Compile := true,
+      persistLauncher in Test := false
 
+    )
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.5" % "test"
-
-scalacOptions in Test ++= Seq("-Yrangepos")
-
-initialCommands in (Test, console) := """ammonite.Main().run()"""
-
-scalaVersion := "2.11.8"
-
-name := "greek"
-organization := "io.github.neelsmith"
-version := "0.1.1"
-
-publishTo := Some("Sonatype Snapshots Nexus" at "http://beta.hpcc.uh.edu/nexus/content/repositories/releases/")
-
-
-credentials += Credentials(Path.userHome / "nexusauth.txt" )
+lazy val crossedJVM = crossed.jvm
+lazy val crossedJS = crossed.js.enablePlugins(ScalaJSPlugin)
