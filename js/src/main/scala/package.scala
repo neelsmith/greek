@@ -14,4 +14,10 @@ package object greek {
     "UCODE OF " + s
   }
 
+    def atticAsciiOf(s: String) : String = {
+      "ATTIC ASCII OF  " + s
+    }
+    def atticUcodeOf(s: String) : String = {
+      "ATTIC Ucode OF  " + s
+    }
 }
