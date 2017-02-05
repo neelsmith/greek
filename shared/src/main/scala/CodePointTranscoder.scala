@@ -24,6 +24,11 @@ object CodePointTranscoder {
   def pairings =
     Vector(
 
+      CodePointPair(" ", " "),
+      CodePointPair(",", ","),
+      CodePointPair(".", "."),
+      CodePointPair(":", ":"),
+      CodePointPair(";", ";"),
 
       //CodePointPair("","Ͱ"), //880
       //CodePointPair("","ͱ"), //881
@@ -284,7 +289,7 @@ object CodePointTranscoder {
       CodePointPair("w\\","ὼ"), //8060
       CodePointPair("w/","ώ"), //8061
 
-    
+
       CodePointPair("","ᾀ"), //8064
       CodePointPair("","ᾁ"), //8065
       CodePointPair("","ᾂ"), //8066
@@ -355,7 +360,7 @@ object CodePointTranscoder {
       CodePointPair("","ῃ"), //8131
       CodePointPair("","ῄ"), //8132
       CodePointPair("","῅"), //8133
-      CodePointPair("","ῆ"), //8134
+      CodePointPair("h=","ῆ"), //8134
       CodePointPair("","ῇ"), //8135
       CodePointPair("","Ὲ"), //8136
       CodePointPair("","Έ"), //8137

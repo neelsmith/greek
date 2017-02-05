@@ -26,6 +26,16 @@ class AsciiToUcodeSpec extends FlatSpec {
     assert(LiteraryGreekString.asciiToUcode("a" + ')' + "a","") == "ἀα")
   }
 
+  it should "map vowel+breathing+accent to one code point" in {
+      assert(LiteraryGreekString.asciiToUcode("a" + ')' + "/","") == "ἄ")
+  }
+
+  it should "happily accept iota subscript as a vowel" in {
+    val expected = "μῆνιν ἄειδε θεὰ"
+    val submitted = "mh=nin a)/eide qea\\"
+    assert (LiteraryGreekString.asciiToUcode(submitted,"") == expected)
+  }
+
 
 
 
