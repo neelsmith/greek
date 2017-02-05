@@ -4,7 +4,7 @@ import scala.scalajs.js
 import js.annotation.JSExport
 
 
-@JSExport  case class LiteraryGreekString(str: String)  {
+@JSExport  case class LiteraryGreekString(str: String) extends GreekString {
   val ascii = literaryAsciiOf(str)
   val ucode = literaryUcodeOf(str)
 }

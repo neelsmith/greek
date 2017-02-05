@@ -23,7 +23,7 @@ object CodePointTranscoder {
 
   def pairings =
     Vector(
-  
+
 
       //CodePointPair("","Ͱ"), //880
       //CodePointPair("","ͱ"), //881
@@ -156,94 +156,15 @@ object CodePointTranscoder {
       //CodePointPair("","Ͻ"), //1021
       //CodePointPair("","Ͼ"), //1022
       //CodePointPair("","Ͽ"), //1023
-      CodePointPair("","ŀ"), //65856
-      CodePointPair("","Ł"), //65857
-      CodePointPair("","ł"), //65858
-      CodePointPair("","Ń"), //65859
-      CodePointPair("","ń"), //65860
-      CodePointPair("","Ņ"), //65861
-      CodePointPair("","ņ"), //65862
-      CodePointPair("","Ň"), //65863
-      CodePointPair("","ň"), //65864
-      CodePointPair("","ŉ"), //65865
-      CodePointPair("","Ŋ"), //65866
-      CodePointPair("","ŋ"), //65867
-      CodePointPair("","Ō"), //65868
-      CodePointPair("","ō"), //65869
-      CodePointPair("","Ŏ"), //65870
-      CodePointPair("","ŏ"), //65871
-      CodePointPair("","Ő"), //65872
-      CodePointPair("","ő"), //65873
-      CodePointPair("","Œ"), //65874
-      CodePointPair("","œ"), //65875
-      CodePointPair("","Ŕ"), //65876
-      CodePointPair("","ŕ"), //65877
-      CodePointPair("","Ŗ"), //65878
-      CodePointPair("","ŗ"), //65879
-      CodePointPair("","Ř"), //65880
-      CodePointPair("","ř"), //65881
-      CodePointPair("","Ś"), //65882
-      CodePointPair("","ś"), //65883
-      CodePointPair("","Ŝ"), //65884
-      CodePointPair("","ŝ"), //65885
-      CodePointPair("","Ş"), //65886
-      CodePointPair("","ş"), //65887
-      CodePointPair("","Š"), //65888
-      CodePointPair("","š"), //65889
-      CodePointPair("","Ţ"), //65890
-      CodePointPair("","ţ"), //65891
-      CodePointPair("","Ť"), //65892
-      CodePointPair("","ť"), //65893
-      CodePointPair("","Ŧ"), //65894
-      CodePointPair("","ŧ"), //65895
-      CodePointPair("","Ũ"), //65896
-      CodePointPair("","ũ"), //65897
-      CodePointPair("","Ū"), //65898
-      CodePointPair("","ū"), //65899
-      CodePointPair("","Ŭ"), //65900
-      CodePointPair("","ŭ"), //65901
-      CodePointPair("","Ů"), //65902
-      CodePointPair("","ů"), //65903
-      CodePointPair("","Ű"), //65904
-      CodePointPair("","ű"), //65905
-      CodePointPair("","Ų"), //65906
-      CodePointPair("","ų"), //65907
-      CodePointPair("","Ŵ"), //65908
-      CodePointPair("","ŵ"), //65909
-      CodePointPair("","Ŷ"), //65910
-      CodePointPair("","ŷ"), //65911
-      CodePointPair("","Ÿ"), //65912
-      CodePointPair("","Ź"), //65913
-      CodePointPair("","ź"), //65914
-      CodePointPair("","Ż"), //65915
-      CodePointPair("","ż"), //65916
-      CodePointPair("","Ž"), //65917
-      CodePointPair("","ž"), //65918
-      CodePointPair("","ſ"), //65919
-      CodePointPair("","ƀ"), //65920
-      CodePointPair("","Ɓ"), //65921
-      CodePointPair("","Ƃ"), //65922
-      CodePointPair("","ƃ"), //65923
-      CodePointPair("","Ƅ"), //65924
-      CodePointPair("","ƅ"), //65925
-      CodePointPair("","Ɔ"), //65926
-      CodePointPair("","Ƈ"), //65927
-      CodePointPair("","ƈ"), //65928
-      CodePointPair("","Ɖ"), //65929
-      CodePointPair("","Ɗ"), //65930
-      CodePointPair("","Ƌ"), //65931
-      CodePointPair("","ƌ"), //65932
-      CodePointPair("","ƍ"), //65933
-      CodePointPair("","Ǝ"), //65934
-      CodePointPair("","Ə"), //65935
-      CodePointPair("","ἀ"), //7936
-      CodePointPair("","ἁ"), //7937
-      CodePointPair("","ἂ"), //7938
-      CodePointPair("","ἃ"), //7939
-      CodePointPair("","ἄ"), //7940
-      CodePointPair("","ἅ"), //7941
-      CodePointPair("","ἆ"), //7942
-      CodePointPair("","ἇ"), //7943
+
+      CodePointPair("a)","ἀ"), //7936
+      CodePointPair("a(","ἁ"), //7937
+      CodePointPair("a)\\","ἂ"), //7938
+      CodePointPair("a(\\","ἃ"), //7939
+      CodePointPair("a)/","ἄ"), //7940
+      CodePointPair("a(/","ἅ"), //7941
+      CodePointPair("a)=","ἆ"), //7942
+      CodePointPair("a(=","ἇ"), //7943
       CodePointPair("","Ἀ"), //7944
       CodePointPair("","Ἁ"), //7945
       CodePointPair("","Ἂ"), //7946
@@ -252,30 +173,30 @@ object CodePointTranscoder {
       CodePointPair("","Ἅ"), //7949
       CodePointPair("","Ἆ"), //7950
       CodePointPair("","Ἇ"), //7951
-      CodePointPair("","ἐ"), //7952
-      CodePointPair("","ἑ"), //7953
-      CodePointPair("","ἒ"), //7954
-      CodePointPair("","ἓ"), //7955
-      CodePointPair("","ἔ"), //7956
-      CodePointPair("","ἕ"), //7957
-      CodePointPair("","἖"), //7958
-      CodePointPair("","἗"), //7959
+      CodePointPair("e)","ἐ"), //7952
+      CodePointPair("e(","ἑ"), //7953
+      CodePointPair("e)\\","ἒ"), //7954
+      CodePointPair("e(\\","ἓ"), //7955
+      CodePointPair("e)/","ἔ"), //7956
+      CodePointPair("e(/)","ἕ"), //7957
+
+
       CodePointPair("","Ἐ"), //7960
       CodePointPair("","Ἑ"), //7961
       CodePointPair("","Ἒ"), //7962
       CodePointPair("","Ἓ"), //7963
       CodePointPair("","Ἔ"), //7964
       CodePointPair("","Ἕ"), //7965
-      CodePointPair("","἞"), //7966
-      CodePointPair("","἟"), //7967
-      CodePointPair("","ἠ"), //7968
-      CodePointPair("","ἡ"), //7969
-      CodePointPair("","ἢ"), //7970
-      CodePointPair("","ἣ"), //7971
-      CodePointPair("","ἤ"), //7972
-      CodePointPair("","ἥ"), //7973
-      CodePointPair("","ἦ"), //7974
-      CodePointPair("","ἧ"), //7975
+
+
+      CodePointPair("h)","ἠ"), //7968
+      CodePointPair("h(","ἡ"), //7969
+      CodePointPair("h)\\","ἢ"), //7970
+      CodePointPair("h(\\","ἣ"), //7971
+      CodePointPair("h)/","ἤ"), //7972
+      CodePointPair("h(/","ἥ"), //7973
+      CodePointPair("h)=","ἦ"), //7974
+      CodePointPair("h(=","ἧ"), //7975
       CodePointPair("","Ἠ"), //7976
       CodePointPair("","Ἡ"), //7977
       CodePointPair("","Ἢ"), //7978
@@ -284,14 +205,14 @@ object CodePointTranscoder {
       CodePointPair("","Ἥ"), //7981
       CodePointPair("","Ἦ"), //7982
       CodePointPair("","Ἧ"), //7983
-      CodePointPair("","ἰ"), //7984
-      CodePointPair("","ἱ"), //7985
-      CodePointPair("","ἲ"), //7986
-      CodePointPair("","ἳ"), //7987
-      CodePointPair("","ἴ"), //7988
-      CodePointPair("","ἵ"), //7989
-      CodePointPair("","ἶ"), //7990
-      CodePointPair("","ἷ"), //7991
+      CodePointPair("i)","ἰ"), //7984
+      CodePointPair("i(","ἱ"), //7985
+      CodePointPair("i)\\","ἲ"), //7986
+      CodePointPair("i(\\","ἳ"), //7987
+      CodePointPair("i)/","ἴ"), //7988
+      CodePointPair("i(/","ἵ"), //7989
+      CodePointPair("i)=","ἶ"), //7990
+      CodePointPair("i(=","ἷ"), //7991
       CodePointPair("","Ἰ"), //7992
       CodePointPair("","Ἱ"), //7993
       CodePointPair("","Ἲ"), //7994
@@ -300,30 +221,30 @@ object CodePointTranscoder {
       CodePointPair("","Ἵ"), //7997
       CodePointPair("","Ἶ"), //7998
       CodePointPair("","Ἷ"), //7999
-      CodePointPair("","ὀ"), //8000
-      CodePointPair("","ὁ"), //8001
-      CodePointPair("","ὂ"), //8002
-      CodePointPair("","ὃ"), //8003
-      CodePointPair("","ὄ"), //8004
-      CodePointPair("","ὅ"), //8005
-      CodePointPair("","὆"), //8006
-      CodePointPair("","὇"), //8007
+      CodePointPair("o)","ὀ"), //8000
+      CodePointPair("o(","ὁ"), //8001
+      CodePointPair("o)\\","ὂ"), //8002
+      CodePointPair("o(\\","ὃ"), //8003
+      CodePointPair("o)/","ὄ"), //8004
+      CodePointPair("o(/","ὅ"), //8005
+
+
       CodePointPair("","Ὀ"), //8008
       CodePointPair("","Ὁ"), //8009
       CodePointPair("","Ὂ"), //8010
       CodePointPair("","Ὃ"), //8011
       CodePointPair("","Ὄ"), //8012
       CodePointPair("","Ὅ"), //8013
-      CodePointPair("","὎"), //8014
-      CodePointPair("","὏"), //8015
-      CodePointPair("","ὐ"), //8016
-      CodePointPair("","ὑ"), //8017
-      CodePointPair("","ὒ"), //8018
-      CodePointPair("","ὓ"), //8019
-      CodePointPair("","ὔ"), //8020
-      CodePointPair("","ὕ"), //8021
-      CodePointPair("","ὖ"), //8022
-      CodePointPair("","ὗ"), //8023
+
+
+      CodePointPair("u)","ὐ"), //8016
+      CodePointPair("u(","ὑ"), //8017
+      CodePointPair("u)\\","ὒ"), //8018
+      CodePointPair("u(\\","ὓ"), //8019
+      CodePointPair("u)/","ὔ"), //8020
+      CodePointPair("u(/","ὕ"), //8021
+      CodePointPair("u)=","ὖ"), //8022
+      CodePointPair("u(=","ὗ"), //8023
       CodePointPair("","὘"), //8024
       CodePointPair("","Ὑ"), //8025
       CodePointPair("","὚"), //8026
@@ -332,14 +253,14 @@ object CodePointTranscoder {
       CodePointPair("","Ὕ"), //8029
       CodePointPair("","὞"), //8030
       CodePointPair("","Ὗ"), //8031
-      CodePointPair("","ὠ"), //8032
-      CodePointPair("","ὡ"), //8033
-      CodePointPair("","ὢ"), //8034
-      CodePointPair("","ὣ"), //8035
-      CodePointPair("","ὤ"), //8036
-      CodePointPair("","ὥ"), //8037
-      CodePointPair("","ὦ"), //8038
-      CodePointPair("","ὧ"), //8039
+      CodePointPair("w)","ὠ"), //8032
+      CodePointPair("w(","ὡ"), //8033
+      CodePointPair("w)\\","ὢ"), //8034
+      CodePointPair("w(\\","ὣ"), //8035
+      CodePointPair("w)/","ὤ"), //8036
+      CodePointPair("w(/","ὥ"), //8037
+      CodePointPair("w)=","ὦ"), //8038
+      CodePointPair("w(=","ὧ"), //8039
       CodePointPair("","Ὠ"), //8040
       CodePointPair("","Ὡ"), //8041
       CodePointPair("","Ὢ"), //8042
@@ -348,22 +269,22 @@ object CodePointTranscoder {
       CodePointPair("","Ὥ"), //8045
       CodePointPair("","Ὦ"), //8046
       CodePointPair("","Ὧ"), //8047
-      CodePointPair("","ὰ"), //8048
-      CodePointPair("","ά"), //8049
-      CodePointPair("","ὲ"), //8050
-      CodePointPair("","έ"), //8051
-      CodePointPair("","ὴ"), //8052
-      CodePointPair("","ή"), //8053
-      CodePointPair("","ὶ"), //8054
-      CodePointPair("","ί"), //8055
-      CodePointPair("","ὸ"), //8056
-      CodePointPair("","ό"), //8057
-      CodePointPair("","ὺ"), //8058
-      CodePointPair("","ύ"), //8059
-      CodePointPair("","ὼ"), //8060
-      CodePointPair("","ώ"), //8061
-      CodePointPair("","὾"), //8062
-      CodePointPair("","὿"), //8063
+      CodePointPair("a\\","ὰ"), //8048
+      CodePointPair("a/","ά"), //8049
+      CodePointPair("e\\","ὲ"), //8050
+      CodePointPair("e/","έ"), //8051
+      CodePointPair("h\\","ὴ"), //8052
+      CodePointPair("h/","ή"), //8053
+      CodePointPair("i\\","ὶ"), //8054
+      CodePointPair("i/","ί"), //8055
+      CodePointPair("o\\","ὸ"), //8056
+      CodePointPair("o/","ό"), //8057
+      CodePointPair("u\\","ὺ"), //8058
+      CodePointPair("u/","ύ"), //8059
+      CodePointPair("w\\","ὼ"), //8060
+      CodePointPair("w/","ώ"), //8061
+
+    
       CodePointPair("","ᾀ"), //8064
       CodePointPair("","ᾁ"), //8065
       CodePointPair("","ᾂ"), //8066
@@ -481,7 +402,8 @@ object CodePointTranscoder {
       CodePointPair("","ῲ"), //8178
       CodePointPair("","ῳ"), //8179
       CodePointPair("","ῴ"), //8180
-      CodePointPair("","῵"), //8181
+
+
       CodePointPair("","ῶ"), //8182
       CodePointPair("","ῷ"), //8183
       CodePointPair("","Ὸ"), //8184
@@ -494,6 +416,88 @@ object CodePointTranscoder {
       CodePointPair("","῿") //8191
     )
 
-
+          // conversions broken beyond BMP
+          /*
+          CodePointPair("","ŀ"), //65856
+          CodePointPair("","Ł"), //65857
+          CodePointPair("","ł"), //65858
+          CodePointPair("","Ń"), //65859
+          CodePointPair("","ń"), //65860
+          CodePointPair("","Ņ"), //65861
+          CodePointPair("","ņ"), //65862
+          CodePointPair("","Ň"), //65863
+          CodePointPair("","ň"), //65864
+          CodePointPair("","ŉ"), //65865
+          CodePointPair("","Ŋ"), //65866
+          CodePointPair("","ŋ"), //65867
+          CodePointPair("","Ō"), //65868
+          CodePointPair("","ō"), //65869
+          CodePointPair("","Ŏ"), //65870
+          CodePointPair("","ŏ"), //65871
+          CodePointPair("","Ő"), //65872
+          CodePointPair("","ő"), //65873
+          CodePointPair("","Œ"), //65874
+          CodePointPair("","œ"), //65875
+          CodePointPair("","Ŕ"), //65876
+          CodePointPair("","ŕ"), //65877
+          CodePointPair("","Ŗ"), //65878
+          CodePointPair("","ŗ"), //65879
+          CodePointPair("","Ř"), //65880
+          CodePointPair("","ř"), //65881
+          CodePointPair("","Ś"), //65882
+          CodePointPair("","ś"), //65883
+          CodePointPair("","Ŝ"), //65884
+          CodePointPair("","ŝ"), //65885
+          CodePointPair("","Ş"), //65886
+          CodePointPair("","ş"), //65887
+          CodePointPair("","Š"), //65888
+          CodePointPair("","š"), //65889
+          CodePointPair("","Ţ"), //65890
+          CodePointPair("","ţ"), //65891
+          CodePointPair("","Ť"), //65892
+          CodePointPair("","ť"), //65893
+          CodePointPair("","Ŧ"), //65894
+          CodePointPair("","ŧ"), //65895
+          CodePointPair("","Ũ"), //65896
+          CodePointPair("","ũ"), //65897
+          CodePointPair("","Ū"), //65898
+          CodePointPair("","ū"), //65899
+          CodePointPair("","Ŭ"), //65900
+          CodePointPair("","ŭ"), //65901
+          CodePointPair("","Ů"), //65902
+          CodePointPair("","ů"), //65903
+          CodePointPair("","Ű"), //65904
+          CodePointPair("","ű"), //65905
+          CodePointPair("","Ų"), //65906
+          CodePointPair("","ų"), //65907
+          CodePointPair("","Ŵ"), //65908
+          CodePointPair("","ŵ"), //65909
+          CodePointPair("","Ŷ"), //65910
+          CodePointPair("","ŷ"), //65911
+          CodePointPair("","Ÿ"), //65912
+          CodePointPair("","Ź"), //65913
+          CodePointPair("","ź"), //65914
+          CodePointPair("","Ż"), //65915
+          CodePointPair("","ż"), //65916
+          CodePointPair("","Ž"), //65917
+          CodePointPair("","ž"), //65918
+          CodePointPair("","ſ"), //65919
+          CodePointPair("","ƀ"), //65920
+          CodePointPair("","Ɓ"), //65921
+          CodePointPair("","Ƃ"), //65922
+          CodePointPair("","ƃ"), //65923
+          CodePointPair("","Ƅ"), //65924
+          CodePointPair("","ƅ"), //65925
+          CodePointPair("","Ɔ"), //65926
+          CodePointPair("","Ƈ"), //65927
+          CodePointPair("","ƈ"), //65928
+          CodePointPair("","Ɖ"), //65929
+          CodePointPair("","Ɗ"), //65930
+          CodePointPair("","Ƌ"), //65931
+          CodePointPair("","ƌ"), //65932
+          CodePointPair("","ƍ"), //65933
+          CodePointPair("","Ǝ"), //65934
+          CodePointPair("","Ə"), //65935
+          */
 
 }
