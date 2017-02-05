@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 
 import java.text.Normalizer
 
-class LiteraryGreekStringSpec extends FlatSpec {
+class JvmLiteraryGreekStringSpec extends FlatSpec {
 
 
 
