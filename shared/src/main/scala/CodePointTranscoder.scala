@@ -1,23 +1,25 @@
 package edu.holycross.shot.greek
 
-case class CodePointPair(ucode: String, ascii: String)
+case class CodePointPair(ascii: String, ucode: String)
 
 object CodePointTranscoder {
 
-    def ucodeCodePoint(s: String) : String ={
-      val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == s)
-      matchingPairs.size match {
-        case 0 => "#"
-        case 1 => matchingPairs(0).ascii
-        case _ => throw GreekException("Found multiple ascii mappings for " + s)
-      }
-    }
-    def asciiCodePoint(s: String) : String = {
-      val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == s)
+
+
+    def ucodeCodePoint(asciiCodePoint: String) : String ={
+      val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
       matchingPairs.size match {
         case 0 => "#"
         case 1 => matchingPairs(0).ucode
-        case _ => throw GreekException("Found multiple unicode mappings for " + s)
+        case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
+      }
+    }
+    def asciiCodePoint(ucodeCodePoint: String) : String = {
+      val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
+      matchingPairs.size match {
+        case 0 => "#"
+        case 1 => matchingPairs(0).ascii
+        case _ => throw GreekException("Found multiple unicode mappings for " + ucodeCodePoint)
       }
     }
 

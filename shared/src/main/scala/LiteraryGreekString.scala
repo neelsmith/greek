@@ -73,4 +73,19 @@ object LiteraryGreekString {
       asciiToUcode(newAscii, newUcode)
     }
   }
+  //ucode must be already normalized to NFC
+  def nfcToAscii(ucode: String, ascii: String): String = {
+    if (ucode.size == 0 ) {
+      ascii
+
+    } else if (ucode.size == 1) {
+      ascii +  CodePointTranscoder.asciiCodePoint(ucode)
+
+    } else {
+      val newUcode = ucode.drop(1)
+      val newAscii = ascii + CodePointTranscoder.asciiCodePoint(ucode.head.toString)
+      nfcToAscii(newUcode,newAscii )
+    }
+  }
+
 }

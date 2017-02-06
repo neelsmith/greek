@@ -4,9 +4,11 @@ import java.text.Normalizer
 package object greek {
 
   def literaryAsciiOf (s: String): String = {
-    // if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
     if (s.head.toInt > 127) {
-      "TRANSCODE " + s + " to ASCII"
+      val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
+      LiteraryGreekString.nfcToAscii(normalized,"")
+
+
     } else {
       s
     }
@@ -16,7 +18,7 @@ package object greek {
     if (s.head.toInt > 127) {
       s
     } else {
-      "TRANSCODE " + s + " to unicode Greek"
+      LiteraryGreekString.asciiToUcode(s,"")
     }
   }
 

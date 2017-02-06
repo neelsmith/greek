@@ -14,9 +14,19 @@ class LiteraryGreekStringSpec extends FlatSpec {
     assert(wrath.ascii == "mh=nin")
   }
 
-  it should ", when constructed from an ASCII string, create a representation in Unicode Greek" in pending /* {
+  it should ", when constructed from an ASCII string, create a representation in Unicode Greek" in   {
     val wrath = LiteraryGreekString("mh=nin")
     assert(wrath.ucode == "μῆνιν")
+  }
+
+  it should ", when constructed from a Greek Unicode string, preserve the Greek Unicode representation" in {
+    val wrath = LiteraryGreekString("μῆνιν")
+    assert(wrath.ucode == "μῆνιν")
+  }
+
+  it should ", when constructed from a Greek Unicode string, construct an ASCII representation" in pending /*{
+    val wrath = LiteraryGreekString("μῆνιν")
+    assert(wrath.ascii == "mh=nin")
   }*/
 
 
