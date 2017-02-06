@@ -2,14 +2,16 @@ package edu.holycross.shot
 
 
 import scala.scalajs.js
-import js.JSStringOps._
+// Useless? import js.JSStringOps._
 
 package object greek {
 
+
   def literaryAsciiOf (s: String): String = {
-    // if (Character.UnicodeBlock.of(s.head) == Character.UnicodeBlock.BASIC_LATIN) {
     if (s.head.toInt > 127) {
-      "TRANSCODE " + s + " to ASCII"
+      // Probably ONLY WORKS FOR Unicode in form NFC
+      LiteraryGreekString.nfcToAscii(s,"")
+
     } else {
       s
     }
@@ -19,14 +21,19 @@ package object greek {
     if (s.head.toInt > 127) {
       s
     } else {
-      "TRANSCODE " + s + " to unicode Greek"
+      LiteraryGreekString.asciiToUcode(s,"")
     }
   }
 
-    def atticAsciiOf(s: String) : String = {
-      "ATTIC ASCII OF  " + s
-    }
-    def atticUcodeOf(s: String) : String = {
-      "ATTIC Ucode OF  " + s
-    }
+
+
+
+
+  //////////////////////////////////////////
+  def atticAsciiOf(s: String) : String = {
+    "ATTIC ASCII OF  " + s
+  }
+  def atticUcodeOf(s: String) : String = {
+    "ATTIC Ucode OF  " + s
+  }
 }

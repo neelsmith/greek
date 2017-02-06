@@ -8,7 +8,6 @@ package object greek {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
       LiteraryGreekString.nfcToAscii(normalized,"")
 
-
     } else {
       s
     }
