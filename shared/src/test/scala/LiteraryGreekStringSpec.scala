@@ -27,5 +27,11 @@ class LiteraryGreekStringSpec extends FlatSpec {
     assert(wrath.ascii == "mh=nin")
   }
 
+  it should "support meaningful equality comparison" in {
+    val s1 = LiteraryGreekString("μῆνιν")
+    val s2 = LiteraryGreekString("mh=nin")
+    assert(s1 == s2)
+  }
+
 
 }
