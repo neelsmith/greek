@@ -7,4 +7,5 @@ import js.annotation.JSExport
 @JSExport  case class AtticGreekString(str: String) extends GreekString {
   val ascii = atticAsciiOf(str)
   val ucode = atticUcodeOf(str)
+  val alphabetString ="abgdezqiklmnoprstufxh"
 }

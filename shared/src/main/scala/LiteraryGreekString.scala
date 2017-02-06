@@ -4,11 +4,17 @@ import scala.scalajs.js
 import js.annotation.JSExport
 
 
-@JSExport  case class LiteraryGreekString(str: String) extends GreekString {
+@JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
   val ascii = literaryAsciiOf(str)
   val ucode = literaryUcodeOf(str)
-}
 
+  val alphabetString ="""abgdezhqiklmncoprstufxyw|()/\=+,:;. """ + "\n\r"
+
+  override def compare(that:GreekString): Int = {
+    asciiCompare(this.ascii, that.ascii)
+  }
+
+}
 
 object LiteraryGreekString {
   val vowels = Vector('a','e','h','i','o','u','w')

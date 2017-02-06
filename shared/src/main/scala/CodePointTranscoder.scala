@@ -92,7 +92,9 @@ object CodePointTranscoder {
       CodePointPair("*w","Ω"), //937
       CodePointPair("*i+","Ϊ"), //938
       CodePointPair("*u+","Ϋ"), //939
-      CodePointPair("a/","ά"), //940
+
+
+      //CodePointPair("a/","ά"), //940 cf 8049
       CodePointPair("e/","έ"), //941
       CodePointPair("h/","ή"), //942
       CodePointPair("i/","ί"), //943
@@ -114,7 +116,7 @@ object CodePointTranscoder {
       CodePointPair("o","ο"), //959
       CodePointPair("p","π"), //960
       CodePointPair("r","ρ"), //961
-      CodePointPair("s","ς"), //962
+      //CodePointPair("s","ς"), //962
       CodePointPair("s","σ"), //963
       CodePointPair("t","τ"), //964
       CodePointPair("u","υ"), //965
