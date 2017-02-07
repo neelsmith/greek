@@ -5,10 +5,10 @@ import js.annotation.JSExport
 
 
 @JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
-  val ascii = literaryAsciiOf(str)
-  val ucode = literaryUcodeOf(str)
+  val ascii = literaryAsciiOf(str.replaceAll("ς","σ"))
+  val ucode = literaryUcodeOf(str.replace("s ","Σ ").replaceAll("σ ", "ς "))
 
-  val alphabetString ="""abgdezhqiklmncoprstufxyw|()/\=+,:;. """ + "\n\r"
+  val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;. """ + "\n\r"
 
   override def compare(that:GreekString): Int = {
     asciiCompare(this.ascii, that.ascii)
@@ -19,7 +19,7 @@ import js.annotation.JSExport
 object LiteraryGreekString {
   val vowels = Vector('a','e','h','i','o','u','w')
   val consonants = Vector('b','g','d','z','q','k','l','m','n','c','p',
-    'r','s','t','f','x','y')
+    'r','s','t','f','x','y','Σ')
   val breathings = Vector(')', '(')
   val accents = Vector('=', '/', '\\')
   val comboChars = Vector('|','+')

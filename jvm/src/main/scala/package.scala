@@ -9,13 +9,14 @@ package object greek {
       LiteraryGreekString.nfcToAscii(normalized,"")
 
     } else {
-      s
+      // handle terminal sigma
+      Normalizer.normalize(s, Normalizer.Form.NFC)
     }
   }
 
   def literaryUcodeOf(s: String) : String = {
     if (s.head.toInt > 127) {
-      s
+      Normalizer.normalize(s, Normalizer.Form.NFC)
     } else {
       LiteraryGreekString.asciiToUcode(s,"")
     }

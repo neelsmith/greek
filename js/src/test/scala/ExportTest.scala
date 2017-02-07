@@ -20,4 +20,20 @@ class ExportTest extends FlatSpec {
     assert (s == normalized)
   }
 
+
+  "A Literary Greek String" should "construct single-accented vowel in ancient Greek range" in {
+    val rightAlpha = "μάλα"
+    val wrongAlpha = "μάλα"
+
+    val s1 = LiteraryGreekString("ma/la")
+    val s2 = LiteraryGreekString(rightAlpha)
+    assert(s1.ascii == s2.ascii)
+    assert (s1 == s2)
+    //assert (s1 == s3)
+    // sadly, can't normalize in browser yet:
+    
+    val s3 = LiteraryGreekString(wrongAlpha)
+    assert(s3.ascii.contains("#"))
+
+  }
 }

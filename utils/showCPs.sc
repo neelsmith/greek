@@ -9,5 +9,13 @@ def showCps (s: String, idx : Int) {
   }
 }
 
-val analyze = "μάλα"
-showCps(analyze,0)
+
+val rightAlpha = "μάλα"
+println("RIGHT alpha " + rightAlpha)
+showCps(rightAlpha,0)
+
+
+
+val wrongAlpha = "μάλα"
+println("WRONG alpha " + wrongAlpha)
+showCps(wrongAlpha,0)
