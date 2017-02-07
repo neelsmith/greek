@@ -1,7 +1,7 @@
 # greek: release notes
 
 
-**1.2.0**: Adds alphabetic comparison and sorting.
+**1.2.0**: Adds alphabetic comparison.
 
 **1.1.0**:  Adds semantic comparison with `==`.
 

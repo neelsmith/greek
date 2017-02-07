@@ -22,9 +22,9 @@ If you are using sbt, include `Resolver.jcenterRepo` in your list of resolvers
 
     resolvers += Resolver.jcenterRepo
 
- and add this to your library dependencies:
+and add this to your library dependencies:
 
-    "edu.holycross.shot" %% "greek" % "1.0.0"
+    "edu.holycross.shot" %% "greek" % VERSION
 
 For maven, ivy or gradle equivalents, refer to <https://bintray.com/neelsmith/maven/greek>.
 
