@@ -9,6 +9,7 @@
 [Release notes](releases.md)
 
 Get automatic nofication of new versions 
+
 <a href='https://bintray.com/neelsmith/maven/greek?source=watch' alt='Get automatic notifications about new "greek" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 
