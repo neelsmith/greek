@@ -1,5 +1,7 @@
 # greek: release notes
 
+**1.2.2**: In `LiteraryGreekString`, add support for breathing-accent combinations on upper-case vowels.
+
 **1.2.1**: Bug fixes in handling accented vowel combinations with equivalents in both "modern Greek" and "ancient Greek" blocks of Unicode, and in determining equivalences of strings with terminal or medial sigma.
 
 **1.2.0**: Adds alphabetic comparison.
