@@ -27,12 +27,14 @@ object CodePointTranscoder {
     Vector(
 
       CodePointPair(" ", " "),
+      CodePointPair("\n", "\n"),
+      CodePointPair("\r", "\r"),
+      CodePointPair("\t", "\t"),
+
       CodePointPair(",", ","),
       CodePointPair(".", "."),
       CodePointPair(":", ":"),
       CodePointPair(";", ";"),
-      CodePointPair("\n", "\n"),
-      CodePointPair("\t", "\t"),
       CodePointPair("'", "'"),
 
       //CodePointPair("","Ͱ"), //880
