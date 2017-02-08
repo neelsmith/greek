@@ -6,7 +6,9 @@
 
 ## Current version: 1.2.2
 
-[Release notes](releases.md)
+[Release notes](releases.md). Get automatic nofication of new versions from jcenter:
+
+<a href='https://bintray.com/neelsmith/maven/greek?source=watch' alt='Get automatic notifications about new "greek" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 ## Documentation
 
@@ -36,3 +38,5 @@ and add this to your library dependencies:
 For maven, ivy or gradle equivalents, refer to <https://bintray.com/neelsmith/maven/greek>.
 
 To build from source and test, use normal sbt commands (`compile`, `test` ...).
+
+
