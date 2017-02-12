@@ -15,4 +15,9 @@ class AccentSpec extends FlatSpec {
     }
   }
 
+  it should "be able to strip accents from a word" in {
+    val s = LiteraryGreekString("mh=nin")
+    assert (s.stripAccent.ascii == "mhnin")
+  }
+
 }

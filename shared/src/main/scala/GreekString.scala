@@ -6,22 +6,30 @@ trait GreekString  {
   def ucode: String
   val accents = Vector('/','\\','=')
 
+
+  def toUpper: GreekString
+  def toLower: GreekString
+
   def isAccent(c: Char): Boolean = {
     accents.contains(c)
   }
+
   def accent: Option[Char] = {
     getAccent(ascii)
   }
 
-  def getAccent(s: String): Option[Char] = {
-    if (isAccent(s.head)) { Some(s.head) }
-    else {
+  private def getAccent(s: String = ascii): Option[Char] = {
+    if (isAccent(s.head)) {
+      Some(s.head)
+    } else {
       s.size match {
         case 1 => None
         case _ => getAccent(s.tail)
       }
     }
   }
+
+  def stripAccent: GreekString
 
   val alphabetString: String
   def sequenceOf(c: Char) =  {
@@ -51,4 +59,5 @@ trait GreekString  {
       case _ => throw GreekException("Cannot compare " + that + " to a GreekString object")
     }
   }
+
 }

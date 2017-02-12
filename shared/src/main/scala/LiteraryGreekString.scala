@@ -14,6 +14,53 @@ import js.annotation.JSExport
     asciiCompare(this.ascii, that.ascii)
   }
 
+  def ucString(src: String, accumulator: String) : LiteraryGreekString = {
+    if (src.isEmpty) {
+      LiteraryGreekString(accumulator)
+
+    } else {
+      if (src.head == '*') {
+        val transferred = accumulator + src(0) + src(1)
+        ucString(src.drop(2), transferred)
+      } else {
+        val transferred = accumulator + "*" + src(0)
+        ucString(src.tail, transferred)
+      }
+    }
+  }
+  def toUpper: LiteraryGreekString = {
+    ucString(ascii,"")
+  }
+
+  def toLower: LiteraryGreekString = {
+    LiteraryGreekString(ascii)
+  }
+
+  def capitalize: LiteraryGreekString = {
+    if (ascii.head == '*') {
+      LiteraryGreekString(ascii.tail)
+    } else {
+      LiteraryGreekString(ascii)
+    }
+  }
+
+
+
+  def stripAccent: LiteraryGreekString = {
+    stripAccs(ascii,"")
+  }
+  private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
+    if (src.isEmpty) {
+      LiteraryGreekString(accumulator)
+
+    } else {
+      if (isAccent(src.head)) {
+        stripAccs(src.tail, accumulator)
+      } else {
+        stripAccs(src.tail, accumulator + src.head)
+      }
+    }
+  }
 }
 
 object LiteraryGreekString {
@@ -58,7 +105,10 @@ object LiteraryGreekString {
     if (s.size < 2) {
       accumulator + s
     } else {
-      if (isCombining(s(1))) {
+      if (s(0) == '*') {
+        s.take(2)
+
+      } else if (isCombining(s(1))) {
         peekAhead(s.drop(1), accumulator + s.head)
       } else {
         accumulator + s.head.toString
@@ -79,6 +129,8 @@ object LiteraryGreekString {
       asciiToUcode(newAscii, newUcode)
     }
   }
+
+
   //ucode must be already normalized to NFC
   def nfcToAscii(ucode: String, ascii: String): String = {
     if (ucode.size == 0 ) {
