@@ -4,7 +4,7 @@
 
 `greek` is a cross-platform library for working with strings representing ancient Greek.
 
-## Current version: 1.2.2
+## Current version: 1.3.0
 
 [Release notes](releases.md). Get automatic nofication of new versions from jcenter:
 
@@ -38,5 +38,3 @@ and add this to your library dependencies:
 For maven, ivy or gradle equivalents, refer to <https://bintray.com/neelsmith/maven/greek>.
 
 To build from source and test, use normal sbt commands (`compile`, `test` ...).
-
-
