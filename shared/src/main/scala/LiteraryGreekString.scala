@@ -14,7 +14,7 @@ import js.annotation.JSExport
     asciiCompare(this.ascii, that.ascii)
   }
 
-  def ucString(src: String, accumulator: String) : LiteraryGreekString = {
+  private def ucString(src: String, accumulator: String) : LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)
 
@@ -32,19 +32,35 @@ import js.annotation.JSExport
     ucString(ascii,"")
   }
 
+  private def lcString(src: String, accumulator: String) : LiteraryGreekString = {
+    if (src.isEmpty) {
+      LiteraryGreekString(accumulator)
+
+    } else {
+      if (src.head == '*') {
+        lcString(src.tail, accumulator)
+      } else {
+        lcString(src.tail, accumulator + src.head)
+      }
+    }
+  }
   def toLower: LiteraryGreekString = {
-    LiteraryGreekString(ascii)
+    lcString(ascii,"")
   }
 
   def capitalize: LiteraryGreekString = {
     if (ascii.head == '*') {
-      LiteraryGreekString(ascii.tail)
-    } else {
       LiteraryGreekString(ascii)
+    } else {
+      LiteraryGreekString("*" + ascii)
     }
   }
 
-
+  def camelCase: LiteraryGreekString = {
+    val splits = ascii.split(" ").toVector.map(LiteraryGreekString(_))
+    val camelAscii = splits.map(_.capitalize.ascii)
+    LiteraryGreekString(camelAscii.mkString(" "))
+  }
 
   def stripAccent: LiteraryGreekString = {
     stripAccs(ascii,"")
@@ -106,7 +122,13 @@ object LiteraryGreekString {
       accumulator + s
     } else {
       if (s(0) == '*') {
-        s.take(2)
+        if (s.size == 2) {
+          accumulator + s
+        } else if (isCombining(s(2))) {
+          peekAhead(s.drop(2), accumulator + s.take(2))
+        } else {
+          accumulator + s.take(2)
+        }
 
       } else if (isCombining(s(1))) {
         peekAhead(s.drop(1), accumulator + s.head)

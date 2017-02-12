@@ -12,9 +12,27 @@ class CasingSpec extends FlatSpec {
       assert (s.ucode == "Α")
   }
 
-  it should "lower case a string" in {
+  it should "upper case a string" in {
     val s = LiteraryGreekString("ιλιας")
     assert (s.toUpper.ucode == "ΙΛΙΑΣ")
     assert (s.toUpper.ascii == "*i*l*i*a*s")
+  }
+
+  it should "lower case a string" in {
+    val s = LiteraryGreekString("ΙΛΙΑΣ")
+    assert (s.toLower.ucode == "ιλιασ")
+    assert (s.toLower.ascii == "ilias")
+  }
+
+  it should "capitalize a string" in {
+    val s = LiteraryGreekString("i)/lias")
+    assert (s.capitalize.ascii == "*i)/lias")
+    println(s.capitalize.ucode)
+  }
+
+  it should "camel-case a string" in {
+    val s = LiteraryGreekString("peri\\ paronu/mwn")
+    assert (s.camelCase.ascii == "*peri\\ *paronu/mwn")
+    println(s.camelCase.ucode)
   }
 }
