@@ -69,7 +69,7 @@ object CodePointTranscoder {
 
       //CodePointPair("*u/","Ύ"), //910
       //CodePointPair("*w/","Ώ"), //911
-      //CodePointPair("i/+","ΐ"), //912
+      CodePointPair("i/+","ΐ"), //912 cf 8147
       CodePointPair("*a","Α"), //913
       CodePointPair("*b","Β"), //914
       CodePointPair("*g","Γ"), //915
@@ -407,7 +407,7 @@ object CodePointTranscoder {
       CodePointPair("","ῑ"), //8145
 
       CodePointPair("i\\+","ῒ"), //8146
-      CodePointPair("i/+","ΐ"), //8147
+      //CodePointPair("i/+","ΐ"), //8147
       //
       //
       CodePointPair("i=","ῖ"), //8150
