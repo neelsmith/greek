@@ -1,5 +1,7 @@
 # greek: release notes
 
+**1.3.2**:  add em dash to `LiteraryGreekString` puncutation characters.
+
 **1.3.1**: fixes ambiguous mapping of some unicode code points that are duplicated in two blocks of the Unicode standard.
 
 **1.3.0**: adds a variety of new functions for working with accents and formatting for case, both in `GreekString` trait and in the `LiteraryGreekString` class.

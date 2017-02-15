@@ -36,6 +36,7 @@ object CodePointTranscoder {
       CodePointPair(":", ":"),
       CodePointPair(";", ";"),
       CodePointPair("'", "'"),
+      CodePointPair("—", "—"),
 
       //CodePointPair("","Ͱ"), //880
       //CodePointPair("","ͱ"), //881
