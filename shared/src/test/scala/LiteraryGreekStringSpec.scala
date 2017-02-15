@@ -33,5 +33,11 @@ class LiteraryGreekStringSpec extends FlatSpec {
     assert(s1 == s2)
   }
 
+  it should "accept quotation mark and em dash as 'markup' characters" in {
+    val s1 = LiteraryGreekString("""mh=nin — "a)/eide" —""")
+    val expected = """μῆνιν — "ἄειδε" —"""
+    assert(s1.ucode == expected)
+  }
+
 
 }
