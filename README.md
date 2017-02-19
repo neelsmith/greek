@@ -6,7 +6,7 @@
 
 ## Current version: 1.3.3
 
-[Release notes](releases.md). Get automatic nofication of new versions from jcenter:
+Status:  **active development**. [Release notes](releases.md). Get automatic nofication of new versions from jcenter:
 
 <a href='https://bintray.com/neelsmith/maven/greek?source=watch' alt='Get automatic notifications about new "greek" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
