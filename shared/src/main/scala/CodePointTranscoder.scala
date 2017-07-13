@@ -23,9 +23,17 @@ object CodePointTranscoder {
       }
     }
 
+  def swapPrecedingBreathings(s: String): String = {
+    s.replaceAll(" ̓Ε", " " + ucodeCodePoint("*e)")).
+    replaceAll(" ̔Ε", " " + ucodeCodePoint("*e("))
+
+    // A + smmooth " ̓Α"
+    // A + rough
+  }
+
   def pairings =
     Vector(
-
+      //CodePointPair("*e)"," ̓Ε"),
       CodePointPair(" ", " "),
       CodePointPair("\n", "\n"),
       CodePointPair("\r", "\r"),

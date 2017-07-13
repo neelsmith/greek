@@ -5,8 +5,9 @@ import js.annotation.JSExport
 
 
 @JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
-  val ascii = literaryAsciiOf(str.replaceAll("ς","σ"))
-  val ucode = literaryUcodeOf(str.replace("s ","Σ ").replaceAll("σ ", "ς "))
+  val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
+  val ascii = literaryAsciiOf(fixedCombos.replaceAll("ς","σ"))
+  val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
 
   val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;. """ + "\n\r"
 

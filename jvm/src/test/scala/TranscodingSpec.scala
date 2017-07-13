@@ -30,6 +30,16 @@ class TranscodingSpec extends FlatSpec {
 
   }
 
+  it should "swap combining smooth breathing when it precedes a word" in {
+    //ὡς ἐμοίχευεν ̓Ερατοσθένης τὴν γυναῖκα
+      val eraucode = "Ἐρατοσθένης"
+      val lgs = LiteraryGreekString(literaryUcodeOf(eraucode))
+
+      assert(lgs.ascii == "*e)ratosqe/nhs")
+      println("Via ucodeof = " + lgs.ascii)
+      println("Direct: = " + LiteraryGreekString(eraucode).ascii)
+
+  }
 
 
 }

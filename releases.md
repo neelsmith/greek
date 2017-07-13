@@ -1,5 +1,8 @@
 # greek: release notes
 
+
+**1.3.4**:  cross-compile for Scala 2.12 as well as 2.11.
+
 **1.3.3**:  adds double quote mark to `LiteraryGreekString` characters.
 
 **1.3.2**:  adds em dash to `LiteraryGreekString` puncutation characters.
