@@ -1,10 +1,10 @@
 package edu.holycross.shot.greek
 
 import scala.scalajs.js
-import js.annotation.JSExport
+import scala.scalajs.js.annotation._
 
 
-@JSExport  case class AtticGreekString(str: String) extends GreekString {
+@JSExportAll  case class AtticGreekString(str: String) extends GreekString {
   val ascii = atticAsciiOf(str)
   val ucode = atticUcodeOf(str)
   val alphabetString ="abgdezqiklmnoprstufxh"

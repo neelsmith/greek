@@ -1,5 +1,6 @@
 # greek: release notes
 
+**1.3.5**: update ScalaJs version to support Scala up through most current version.
 
 **1.3.4**:  cross-compile for Scala 2.12 as well as 2.11.
 

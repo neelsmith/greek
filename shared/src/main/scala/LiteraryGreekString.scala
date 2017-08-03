@@ -1,10 +1,10 @@
 package edu.holycross.shot.greek
 
 import scala.scalajs.js
-import js.annotation.JSExport
+import scala.scalajs.js.annotation._
 
 
-@JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
+@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
   val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
   val ascii = literaryAsciiOf(fixedCombos.replaceAll("ς","σ"))
   val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))

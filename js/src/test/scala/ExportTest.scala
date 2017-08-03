@@ -13,12 +13,12 @@ class ExportTest extends FlatSpec {
     assert (litgs.ascii == "mh=nin")
   }*/
 
-  it should "be scaffolded for unicode normalization" in {
+  it should "be scaffolded for unicode normalization" in  pending /*{
     val s = "string1"
     val normalized = s.normalize()  //normalize(UnicodeNormalizationForm.NFC
 
     assert (s == normalized)
-  }
+  } */
 
 
   "A Literary Greek String" should "construct single-accented vowel in ancient Greek range" in {
@@ -31,7 +31,7 @@ class ExportTest extends FlatSpec {
     assert (s1 == s2)
     //assert (s1 == s3)
     // sadly, can't normalize in browser yet:
-    
+
     val s3 = LiteraryGreekString(wrongAlpha)
     assert(s3.ascii.contains("#"))
 
