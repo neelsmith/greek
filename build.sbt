@@ -1,8 +1,7 @@
 name := "Greek string library"
 
-//crossScalaVersions := Seq("2.10.6","2.11.8", "2.12.1")
-crossScalaVersions := Seq("2.11.8", "2.12.3")
-scalaVersion := "2.12.3"
+
+crossScalaVersions := Seq("2.10.6","2.11.8", "2.12.3")
 
 
 lazy val root = project.in(file(".")).
@@ -31,7 +30,6 @@ lazy val crossed = crossProject.in(file(".")).
     jsSettings(
       skip in packageJSDependencies := false,
       scalaJSUseMainModuleInitializer in Compile := true
-
 
     )
 

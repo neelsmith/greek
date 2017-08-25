@@ -1,20 +1,42 @@
 package edu.holycross.shot.greek
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation._
+import js.annotation.JSExport
 
-
+/** Representation of a Greek string written in conventional literary orthography.
+*
+* @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
+* system.
+*/
 @JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
+
+
   val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
   val ascii = literaryAsciiOf(fixedCombos.replaceAll("ς","σ"))
   val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
 
-  val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;. """ + "\n\r"
 
+  /** Compare this string to a second [[GreekString]] alphabetically
+  * using the [[GreekString]] trait's implementatoin of [[asciiCompare]].
+  *
+  * @param that Second [[GreekString]] to compare.
+  */
   override def compare(that:GreekString): Int = {
     asciiCompare(this.ascii, that.ascii)
   }
 
+
+  /** Required function to convert lowercase to uppercase form.
+  */
+  def toUpper: LiteraryGreekString = {
+    ucString(ascii,"")
+  }
+
+  /** Recursively converts characters in src to upper case form.
+  *
+  * @param src Ascii representation of a [[GreekString]] to convert to upper case.
+  * @param accumulator String of previously converted characters.
+  */
   private def ucString(src: String, accumulator: String) : LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)
@@ -29,9 +51,8 @@ import scala.scalajs.js.annotation._
       }
     }
   }
-  def toUpper: LiteraryGreekString = {
-    ucString(ascii,"")
-  }
+
+
 
   private def lcString(src: String, accumulator: String) : LiteraryGreekString = {
     if (src.isEmpty) {
@@ -78,6 +99,8 @@ import scala.scalajs.js.annotation._
       }
     }
   }
+  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
+
 }
 
 object LiteraryGreekString {
