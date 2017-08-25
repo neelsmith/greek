@@ -8,7 +8,7 @@ import js.annotation.JSExport
 * @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
 * system.
 */
-@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
+@JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
 
 
   val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
@@ -99,7 +99,7 @@ import js.annotation.JSExport
       }
     }
   }
-  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
+  val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
 
 }
 
