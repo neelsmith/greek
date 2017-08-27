@@ -100,6 +100,9 @@ trait GreekString  {
   * 0 if they are equal, and
   * -1 if s1 is less than s2.
   *
+  * With this function, it is trivial to extend the Scala `Ordered` trait
+  * for any implementation of the [[GreekString]] trait.
+  *
   * @param s1 First of two strings to compare.
   * @param s2 Second of two strings to compare.
   */

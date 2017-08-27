@@ -10,9 +10,19 @@ import js.annotation.JSExport
 */
 @JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
 
-  val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
+
+
+
+  /** The ASCII representation of this string.
+  */
   val ascii = literaryAsciiOf(fixedCombos.replaceAll("ς","σ"))
+
+  /** The representation of this string with glyphs in the "Greek and Coptic"
+  * and "Extended Greek" blocks of Unicode.
+  */
   val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
+
+  val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
 
 
   /** Compare this string to a second [[GreekString]] alphabetically
