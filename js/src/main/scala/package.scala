@@ -1,6 +1,8 @@
 package edu.holycross.shot
 
 
+import scala.scalajs.js.annotation._
+
 import scala.scalajs.js
 // Useless? import js.JSStringOps._
 
@@ -30,7 +32,7 @@ import scala.scalajs.js
 package object greek {
 
 
-  def literaryAsciiOf (s: String): String = {
+  @JSExport def literaryAsciiOf (s: String): String = {
     if (s.head.toInt > 127) {
       // Probably ONLY WORKS FOR Unicode in form NFC
       LiteraryGreekString.nfcToAscii(s,"")
@@ -40,7 +42,7 @@ package object greek {
     }
   }
 
-  def literaryUcodeOf(s: String) : String = {
+  @JSExport  def literaryUcodeOf(s: String) : String = {
     if (s.head.toInt > 127) {
       s
     } else {

@@ -1,5 +1,9 @@
 package edu.holycross.shot.greek
 
+
+/** Simple object testing accessibility of [[LiteraryGreekString]]
+* class in the JVM environment.
+*/
 object Main {
   def main(args: Array[String]): Unit = {
 

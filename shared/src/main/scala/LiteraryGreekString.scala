@@ -1,14 +1,15 @@
 package edu.holycross.shot.greek
 
 import scala.scalajs.js
-import js.annotation.JSExport
+//import js.annotation.JSExport
+import scala.scalajs.js.annotation._
 
 /** Representation of a Greek string written in conventional literary orthography.
 *
 * @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
 * system.
 */
-@JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
+@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
 
 
   /** The ASCII representation of this string.
@@ -22,7 +23,7 @@ import js.annotation.JSExport
 
 
 
-  val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
+  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
 
 
   /** Compare this string to a second [[GreekString]] alphabetically
@@ -112,6 +113,7 @@ import js.annotation.JSExport
   def stripAccent: LiteraryGreekString = {
     stripAccs(ascii,"")
   }
+
   private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)

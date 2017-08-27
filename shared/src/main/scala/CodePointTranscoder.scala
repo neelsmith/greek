@@ -1,11 +1,14 @@
 package edu.holycross.shot.greek
 
+import scala.scalajs.js.annotation._
 
 /** A pairing of an ASCII string with a single Unicode code point.
 *
-* @param ascii A string of characters used in the 
+* @param ascii A string of characters that can be used in the `ascii`
+* encoding of a class implementing the [[GreekString]] trait.
+* @param ucode A corresponding single Unicode codepoint, as a String.
 */
-case class CodePointPair(ascii: String, ucode: String)
+@JSExportAll case class CodePointPair(ascii: String, ucode: String)
 
 
 
@@ -13,12 +16,15 @@ case class CodePointPair(ascii: String, ucode: String)
 /** Manager for two-way mappings between ascii-based code point sequences
 * and code points in the Greek and Coptic or Extended Greek blocks of Unicode.
 */
-object CodePointTranscoder {
+@JSExportAll  object CodePointTranscoder {
 
 
 
-  /** Find a single Greek code point for a pair of ASCII
+  /** Find a single `ucode` code point, as a String, for a string of ASCII
   * characters.
+  *
+  * @param asciiCodePoint String of characters from `ascii` encoding
+  * equated with a single `ucode` codepoint.
   */
   def ucodeCodePoint(asciiCodePoint: String) : String ={
     val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
@@ -28,15 +34,19 @@ object CodePointTranscoder {
       case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
     }
   }
-    def asciiCodePoint(ucodeCodePoint: String) : String = {
-      val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
-      matchingPairs.size match {
-        case 0 => "#"
-        case 1 => matchingPairs(0).ascii
-        case _ => throw GreekException("Found multiple unicode mappings for " + ucodeCodePoint)
-      }
-    }
 
+  def asciiCodePoint(ucodeCodePoint: String) : String = {
+    val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
+    matchingPairs.size match {
+      case 0 => "#"
+      case 1 => matchingPairs(0).ascii
+      case _ => throw GreekException("Found multiple unicode mappings for " + ucodeCodePoint)
+    }
+  }
+
+
+// functoin to tidy up badly encoded unicode using
+// combining accents on spaces.  :-(
   def swapPrecedingBreathings(s: String): String = {
     s.replaceAll(" ̓Ε", " " + ucodeCodePoint("*e)")).
     replaceAll(" ̔Ε", " " + ucodeCodePoint("*e("))
@@ -45,6 +55,10 @@ object CodePointTranscoder {
     // A + rough
   }
 
+
+  /** All recognized pairings of `ascii` String encodings
+  * to `ucode` String encodings
+  */
   def pairings =
     Vector(
       //CodePointPair("*e)"," ̓Ε"),
