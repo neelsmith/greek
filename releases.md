@@ -1,5 +1,7 @@
 # greek: release notes
 
+**1.3.7**: uniform cross publication.
+
 **1.3.6**:  support Scala 2.10.6 through 2.12.3 and ScalaJS 1.0.
 
 **1.3.5**: update ScalaJs version to support Scala up through most current version.

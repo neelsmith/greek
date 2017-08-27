@@ -23,11 +23,15 @@ trait GreekString  {
   */
   def ucode: String
 
+  /** A single string listing all valid characters in the ASCII
+  * representation of this system in their alphabetic order.
+  */
+  val alphabetString: String
+
   /** Fixed definition of acute, grave and circumflex accents
   * in ASCII representational system.
   */
   val accents = Vector('/','\\','=')
-
 
   /** Convert uppercase characters to lowercase form if possible
   * in this encoding system.
@@ -46,7 +50,6 @@ trait GreekString  {
   def isAccent(c: Char): Boolean = {
     accents.contains(c)
   }
-
 
   /** Get first accent, if any, in this string.
   */
@@ -77,15 +80,29 @@ trait GreekString  {
   */
   def stripAccent: GreekString
 
-  /**
+
+  /** Find alphabetic sequence of a character in the ascii encoding
+  * system.
+  *
+  * @param c Character to find alphabetic sequence for.
   */
-  val alphabetString: String
   def sequenceOf(c: Char) =  {
     alphabetString.indexOf(c) match {
       case -1 => throw GreekException("Character " + c + " not in alphabet.")
       case idx => idx
     }
   }
+
+
+  /** Compare the ascii representation of two [[GreekString]]s.
+  * The result uses Java compare, so the result is:
+  * 1 if s1 is greater than s2,
+  * 0 if they are equal, and
+  * -1 if s1 is less than s2.
+  *
+  * @param s1 First of two strings to compare.
+  * @param s2 Second of two strings to compare.
+  */
   def asciiCompare(s1: String, s2: String): Int = {
     if (s1.isEmpty) {
       s2.isEmpty match {
@@ -101,6 +118,11 @@ trait GreekString  {
       }
     }
   }
+
+  /** True if this [[GreekString]] is identical to a second [[GreekString]].
+  *
+  * @param that The other [[GreeString]] to compare to this one.
+  */
   override def equals(that: Any): Boolean = {
     that match {
       case gs: GreekString => ((gs.ascii == this.ascii) && (gs.ucode == this.ucode))

@@ -114,6 +114,11 @@ import js.annotation.JSExport
       }
     }
   }
+
+
+  /** All valid characters in the ASCII representation of this system
+  * in their alphabetic order.
+  */
   val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
 
 }
