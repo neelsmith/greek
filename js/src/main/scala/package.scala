@@ -4,6 +4,9 @@ package edu.holycross.shot
 import scala.scalajs.js
 // Useless? import js.JSStringOps._
 
+/** Package for representing text in Ancient Greek, since fundamental
+* assumption of Unicode that script code points belong to a language is wrong.
+*/
 package object greek {
 
 

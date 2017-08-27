@@ -7,7 +7,7 @@ import scala.scalajs.js.annotation._
 @JSExportAll  case class AtticGreekString(str: String) extends GreekString {
   val ascii = atticAsciiOf(str)
   val ucode = atticUcodeOf(str)
-  val alphabetString ="abgdezqiklmnoprstufxh"
+
 
 
   def toUpper: AtticGreekString = {
@@ -40,4 +40,7 @@ import scala.scalajs.js.annotation._
       }
     }
   }
+  
+  val alphabetString ="abgdezqiklmnoprstufxh \n"
+
 }

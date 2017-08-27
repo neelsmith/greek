@@ -2,18 +2,27 @@ package edu.holycross.shot.greek
 
 case class CodePointPair(ascii: String, ucode: String)
 
+
+
+
+/** Manager for two-way mappings between ascii-based code point sequences
+* and code points in the Greek and Coptic or Extended Greek blocks of Unicode.
+*/
 object CodePointTranscoder {
 
 
 
-    def ucodeCodePoint(asciiCodePoint: String) : String ={
-      val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
-      matchingPairs.size match {
-        case 0 => "#"
-        case 1 => matchingPairs(0).ucode
-        case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
-      }
+  /** Find a single Greek code point for a pair of ASCII
+  * characters.
+  */
+  def ucodeCodePoint(asciiCodePoint: String) : String ={
+    val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
+    matchingPairs.size match {
+      case 0 => "#"
+      case 1 => matchingPairs(0).ucode
+      case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
     }
+  }
     def asciiCodePoint(ucodeCodePoint: String) : String = {
       val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
       matchingPairs.size match {

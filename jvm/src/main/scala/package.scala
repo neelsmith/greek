@@ -2,6 +2,9 @@ package edu.holycross.shot
 import java.text.Normalizer
 
 
+/** Package for representing text in Ancient Greek, since fundamental
+* assumption of Unicode that script code points belong to a language is wrong.
+*/
 package object greek {
 
   def literaryAsciiOf (s: String): String = {

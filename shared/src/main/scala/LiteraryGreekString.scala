@@ -10,7 +10,6 @@ import js.annotation.JSExport
 */
 @JSExport  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
 
-
   val fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
   val ascii = literaryAsciiOf(fixedCombos.replaceAll("ς","σ"))
   val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
@@ -52,8 +51,18 @@ import js.annotation.JSExport
     }
   }
 
+  /** Required function to convert uppercase to lowercase form.
+  */
+  def toLower: LiteraryGreekString = {
+    lcString(ascii,"")
+  }
 
 
+  /** Recursively converts characters in src to upper case form.
+  *
+  * @param src Ascii representation of a [[GreekString]] to convert to upper case.
+  * @param accumulator String of previously converted characters.
+  */
   private def lcString(src: String, accumulator: String) : LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)
@@ -66,10 +75,12 @@ import js.annotation.JSExport
       }
     }
   }
-  def toLower: LiteraryGreekString = {
-    lcString(ascii,"")
-  }
 
+
+
+  /** Capitalize first letter of the string if not already
+  * in uppercase form.
+  */
   def capitalize: LiteraryGreekString = {
     if (ascii.head == '*') {
       LiteraryGreekString(ascii)
@@ -78,12 +89,16 @@ import js.annotation.JSExport
     }
   }
 
+  /** Capitalize all white-space delimited words in the string.
+  */
   def camelCase: LiteraryGreekString = {
     val splits = ascii.split(" ").toVector.map(LiteraryGreekString(_))
     val camelAscii = splits.map(_.capitalize.ascii)
     LiteraryGreekString(camelAscii.mkString(" "))
   }
 
+  /**
+  */
   def stripAccent: LiteraryGreekString = {
     stripAccs(ascii,"")
   }
