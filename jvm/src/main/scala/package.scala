@@ -2,8 +2,10 @@ package edu.holycross.shot
 import java.text.Normalizer
 
 
-/** Package for representing text in Ancient Greek, since fundamental
-* assumption of Unicode that script code points belong to a language is wrong.
+/** Package for representing text in Ancient Greek, since the fundamental
+* assumption of Unicode that code points belong to a single language is wrong,
+* as is the definition in the ISO 639 standards of a single "Greek" dialect
+* for all Greek "to 1453".
 *
 *  ==Overview==
 * Classes implementing the [[GreekString]] trait define an encoding system
