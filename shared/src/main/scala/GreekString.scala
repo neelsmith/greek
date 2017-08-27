@@ -124,7 +124,7 @@ trait GreekString  {
 
   /** True if this [[GreekString]] is identical to a second [[GreekString]].
   *
-  * @param that The other [[GreeString]] to compare to this one.
+  * @param that The other [[GreekString]] to compare to this one.
   */
   override def equals(that: Any): Boolean = {
     that match {
