@@ -15,14 +15,14 @@ import scala.scalajs.js
 * for writing some form of ancient Greek with an ordered set of
 * characters drawn from the ASCII character set whenever possible.
 * The [[CodePointTranscoder]] object provides a mapping of ASCII character
-* sequence to glyphs taken primarily from the so-called "Greek and Coptic"
+* sequences to glyphs taken primarily from the so-called "Greek and Coptic"
 * and "Extended Greek" blocks of Unicode.  Using the concrete implementation of
 * the [[GreekString]] trait's `asciiCompare` function, any class extending
 * the [[GreekString]] trait can trivially extend Scala's `Ordered` trait as well.
 *
 *  ==JVM vs. Javascript implementation==
 * The JVM implementation normalizes all Unicode to Form NFC, using standard
-* Java classes.  No comparable exists for Javascript, and it is probable
+* Java classes.  No comparable library exists for Javascript, and it is probable
 * that String comparisons and conversions from `ascii` to `ucode` representations
 * of classes implementing the [[GreekString]] trait will only work correctly
 * for Unicode that is already normalized to Form NFC.
