@@ -1,5 +1,10 @@
 package edu.holycross.shot.greek
 
+
+/** A pairing of an ASCII string with a single Unicode code point.
+*
+* @param ascii A string of characters used in the 
+*/
 case class CodePointPair(ascii: String, ucode: String)
 
 

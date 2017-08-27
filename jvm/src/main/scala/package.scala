@@ -4,6 +4,16 @@ import java.text.Normalizer
 
 /** Package for representing text in Ancient Greek, since fundamental
 * assumption of Unicode that script code points belong to a language is wrong.
+*
+*  ==Overview==
+* Classes implementing the [[GreekString]] trait define an encoding system
+* for writing some form of ancient Greek with an ordered set of
+* characters drawn from the ASCII character set whenever possible.
+* The [[CodePointTranscoder]] object provides a mapping of ASCII character
+* sequence to glyphs taken primarily from the so-called "Greek and Coptic"
+* and "Extended Greek" blocks of Unicode.  Using the concrete implementation of
+* the [[GreekString]] trait's `asciiCompare` function, any class extending
+* the [[GreekString]] trait can trivially extend Scala's `Ordered` trait as well.
 */
 package object greek {
 
