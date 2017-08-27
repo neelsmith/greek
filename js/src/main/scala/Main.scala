@@ -3,7 +3,7 @@ package edu.holycross.shot.greek
 import scala.scalajs.js
 import js.JSStringOps._
 
-/** Simple object testing accessibility of [[LiteraryGreekString]]
+/** Simple object verifying the accessibility of the [[LiteraryGreekString]]
 * class in the Javascript environment.
 */
 object Main extends js.JSApp {

@@ -1,7 +1,7 @@
 package edu.holycross.shot.greek
 
 
-/** Simple object testing accessibility of [[LiteraryGreekString]]
+/** Simple object verifying the accessibility of the [[LiteraryGreekString]]
 * class in the JVM environment.
 */
 object Main {
