@@ -44,10 +44,6 @@ class JvmLiteraryGreekStringSpec extends FlatSpec {
     assert(literaryAsciiOf(s) == expected)
   }
 
-  it should "create the AtticGreekString's `ucode` view of strings not in form NFC" in  pending
 
-  val s = "me=nin"
-  val expected = Normalizer.normalize("μêνιν", Normalizer.Form.NFC)
-  assert(literaryUcodeOf(s) == expected)
 
 }

@@ -1,7 +1,6 @@
 package edu.holycross.shot.greek
 
 import scala.scalajs.js
-//import js.annotation.JSExport
 import scala.scalajs.js.annotation._
 
 /** Representation of a Greek string written in conventional literary orthography.
@@ -22,12 +21,13 @@ import scala.scalajs.js.annotation._
   val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
 
 
-
-  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
+  /**
+  */
+  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str).trim
 
 
   /** Compare this string to a second [[GreekString]] alphabetically
-  * using the [[GreekString]] trait's implementatoin of [[asciiCompare]].
+  * using the [[GreekString]] trait's implementation of [[asciiCompare]].
   *
   * @param that Second [[GreekString]] to compare.
   */
@@ -226,8 +226,6 @@ object LiteraryGreekString {
   }
 
 
-  // extract run of ascii chars to put in
-  // a single combined point
   /** Extract first series of characters from an ascii String
   * forming a single Unicode code point by recursively looking ahead
   * as long as following character is a combining character.

@@ -58,8 +58,221 @@ import scala.scalajs.js.annotation._
   * @param s String to fix.
   */
   def swapPrecedingBreathings(s: String): String = {
+    s.replaceAll("""\u0313\u0300\u0399""" ," " + ucodeCodePoint("*i)\\")).
+
+    replaceAll("""\u0313\u0301\u0391""" ," " + ucodeCodePoint("*a)/")).
+    replaceAll("""\u0313\u0301\u0395""", " " + ucodeCodePoint("*e)/")).
+    replaceAll("""\u0313\u0301\u0397""", " " + ucodeCodePoint("*h)/")).
+    replaceAll("""\u0313\u0301\u0399""", " " + ucodeCodePoint("*i)/")).
+    replaceAll("""\u0313\u0301\u039f""", " " + ucodeCodePoint("*o)/")).
+
+
+    replaceAll("""\u0313\u0342\u0391""", " " + ucodeCodePoint("*a)=")).
+    replaceAll("""\u0313\u0342\u0397""", " " + ucodeCodePoint("*h)=")).
+    replaceAll("""\u0313\u0342\u0399""", " " + ucodeCodePoint("*i)=")).
+    replaceAll("""\u0313\u0342\u03a9""", " " + ucodeCodePoint("*w)=")). //this is busted
+
+
+    replaceAll("""\u0313\u0391""", " " + ucodeCodePoint("*a)")).
+    replaceAll("""\u0313\u0395""", " " + ucodeCodePoint("*e)")).
+    replaceAll("""\u0313\u0399""", " " + ucodeCodePoint("*i)")).
+    replaceAll("""\u0313\u039f""", " " + ucodeCodePoint("*o)")).
+    replaceAll("""\u0313\u03a9""", " " + ucodeCodePoint("*w)"))
+
+
+
+/*
+
+5
+
+787	(313)	̓
+917	(395)	Ε (upper case)
+940	(3ac)	ά
+957	(3bd)	ν
+952	(3b8)	θ
+949	(3b5)	ε
+969	(3c9)	ω
+10	(a)
+
+787	(313)	̓
+921	(399)	Ι (upper case)
+940	(3ac)	ά
+948	(3b4)	δ
+945	(3b1)	α
+10	(a)
+
+787	(313)	̓
+927	(39f)	Ο (upper case)
+940	(3ac)	ά
+961	(3c1)	ρ
+8179	(1ff3)	ῳ
+10	(a)
+
+787	(313)	̓
+937	(3a9)	Ω (upper case)
+949	(3b5)	ε
+961	(3c1)	ρ
+972	(3cc)	ό
+951	(3b7)	η
+10	(a)
+
+788	(314)	̔
+768	(300)	̀
+917	(395)	Ε (upper case)
+955	(3bb)	λ
+955	(3bb)	λ
+951	(3b7)	η
+957	(3bd)	ν
+945	(3b1)	α
+962	(3c2)	ς
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+913	(391)	Α (upper case)
+953	(3b9)	ι
+948	(3b4)	δ
+951	(3b7)	η
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+917	(395)	Ε (upper case)
+946	(3b2)	β
+961	(3c1)	ρ
+959	(3bf)	ο
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+919	(397)	Η (upper case)
+946	(3b2)	β
+951	(3b7)	η
+962	(3c2)	ς
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+921	(399)	Ι (upper case)
+960	(3c0)	π
+960	(3c0)	π
+945	(3b1)	α
+961	(3c1)	ρ
+967	(3c7)	χ
+959	(3bf)	ο
+953	(3b9)	ι
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+927	(39f)	Ο (upper case)
+956	(3bc)	μ
+951	(3b7)	η
+961	(3c1)	ρ
+959	(3bf)	ο
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+769	(301)	́
+933	(3a5)	Υ (upper case)
+946	(3b2)	β
+955	(3bb)	λ
+8131	(1fc3)	ῃ
+10	(a)
+
+788	(314)	̔
+913	(391)	Α (upper case)
+955	(3bb)	λ
+943	(3af)	ί
+945	(3b1)	α
+961	(3c1)	ρ
+967	(3c7)	χ
+959	(3bf)	ο
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+917	(395)	Ε (upper case)
+954	(3ba)	κ
+945	(3b1)	α
+964	(3c4)	τ
+945	(3b1)	α
+943	(3af)	ί
+959	(3bf)	ο
+965	(3c5)	υ
+10	(a)
+
+788	(314)	̔
+919	(397)	Η (upper case)
+947	(3b3)	γ
+943	(3af)	ί
+951	(3b7)	η
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+921	(399)	Ι (upper case)
+941	(3ad)	έ
+961	(3c1)	ρ
+969	(3c9)	ω
+957	(3bd)	ν
+953	(3b9)	ι
+10	(a)
+
+788	(314)	̔
+927	(39f)	Ο (upper case)
+956	(3bc)	μ
+942	(3ae)	ή
+961	(3c1)	ρ
+959	(3bf)	ο
+965	(3c5)	υ
+10	(a)
+
+788	(314)	̔
+929	(3a1)	Ρ (upper case)
+942	(3ae)	ή
+947	(3b3)	γ
+953	(3b9)	ι
+959	(3bf)	ο
+957	(3bd)	ν
+10	(a)
+
+788	(314)	̔
+933	(3a5)	Υ (upper case)
+940	(3ac)	ά
+956	(3bc)	μ
+960	(3c0)	π
+959	(3bf)	ο
+955	(3bb)	λ
+953	(3b9)	ι
+957	(3bd)	ν
+10	(a)
+
+
+*/
+
+    // for (v <- vowels) {}
+    /*
+
+    V + smoothe
+    V + smoothe + acute
+    V + smoothe + circumflex
+    v + rough
+    v + rough + acute
+    v + rough + circumflex
+
+    */
+
+
+/*
     s.replaceAll(" ̓Ε", " " + ucodeCodePoint("*e)")).
-    replaceAll(" ̔Ε", " " + ucodeCodePoint("*e("))
+    replaceAll(" ̔Ε", " " + ucodeCodePoint("*e(")).
+    replaceAll("""\u0313\u0300\u0399""", " " + ucodeCodePoint("*i)\\"))
+    replaceAll(""\u0313\u0301\u0391""", " " + ucodeCodePoint("*a)/"))
+*/
 
     // A + smmooth " ̓Α"
     // A + rough
@@ -71,6 +284,9 @@ import scala.scalajs.js.annotation._
   */
   def pairings =
     Vector(
+
+      CodePointPair("e=", "ê"),
+      CodePointPair("o=", "ô"),
       //CodePointPair("*e)"," ̓Ε"),
       CodePointPair(" ", " "),
       CodePointPair("\n", "\n"),
