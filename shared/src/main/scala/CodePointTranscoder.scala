@@ -58,27 +58,30 @@ import scala.scalajs.js.annotation._
   * @param s String to fix.
   */
   def swapPrecedingBreathings(s: String): String = {
+    // initial vowel w smooth + grave
     s.replaceAll("""\u0313\u0300\u0399""" ," " + ucodeCodePoint("*i)\\")).
 
+    // initial vowel with smooth + acute
     replaceAll("""\u0313\u0301\u0391""" ," " + ucodeCodePoint("*a)/")).
     replaceAll("""\u0313\u0301\u0395""", " " + ucodeCodePoint("*e)/")).
     replaceAll("""\u0313\u0301\u0397""", " " + ucodeCodePoint("*h)/")).
     replaceAll("""\u0313\u0301\u0399""", " " + ucodeCodePoint("*i)/")).
     replaceAll("""\u0313\u0301\u039f""", " " + ucodeCodePoint("*o)/")).
 
-
+    // initial vowel with smooth + circumflex
     replaceAll("""\u0313\u0342\u0391""", " " + ucodeCodePoint("*a)=")).
     replaceAll("""\u0313\u0342\u0397""", " " + ucodeCodePoint("*h)=")).
     replaceAll("""\u0313\u0342\u0399""", " " + ucodeCodePoint("*i)=")).
     replaceAll("""\u0313\u0342\u03a9""", " " + ucodeCodePoint("*w)=")). //this is busted
 
-
+    // initial with smooth breathing
     replaceAll("""\u0313\u0391""", " " + ucodeCodePoint("*a)")).
     replaceAll("""\u0313\u0395""", " " + ucodeCodePoint("*e)")).
     replaceAll("""\u0313\u0399""", " " + ucodeCodePoint("*i)")).
     replaceAll("""\u0313\u039f""", " " + ucodeCodePoint("*o)")).
     replaceAll("""\u0313\u03a9""", " " + ucodeCodePoint("*w)")). // so is this.  all omegas?
 
+    // initial with rough + acute
     replaceAll("""\u0314\u0301\u0391""", " " + ucodeCodePoint("*a(/")).
     replaceAll("""\u0314\u0301\u0395""", " " + ucodeCodePoint("*e(/")).
     replaceAll("""\u0314\u0301\u0397""", " " + ucodeCodePoint("*h(/")).
@@ -86,7 +89,7 @@ import scala.scalajs.js.annotation._
     replaceAll("""\u0314\u0301\u039f""", " " + ucodeCodePoint("*o(/")).
     replaceAll("""\u0314\u0301\u03a5""", " " + ucodeCodePoint("*u(/")).
 
-
+    // initial with rough + acute
     replaceAll("""\u0314\u0391""", " " + ucodeCodePoint("*a(")).
     replaceAll("""\u0314\u0395""", " " + ucodeCodePoint("*e(")).
     replaceAll("""\u0314\u0397""", " " + ucodeCodePoint("*h(")).

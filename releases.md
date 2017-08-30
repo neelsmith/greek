@@ -1,5 +1,10 @@
 # greek: release notes
 
+
+**1.3.8**:  silently corrects the widespread error in many legacy texts of
+misformatting upper-case Greek words starting with vowels in such a way that
+accents and breathings are placing on a preceding space, not on the vowel.
+
 **1.3.7**: uniform cross publication.
 
 **1.3.6**:  support Scala 2.10.6 through 2.12.3 and ScalaJS 1.0.
