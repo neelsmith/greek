@@ -35,6 +35,12 @@ import scala.scalajs.js.annotation._
     }
   }
 
+
+  /** Find the `ascii` String encoding for a single `ucode` codepoint.
+  *
+  * @param ucodeCodePoint A String representing a single codepoint in the
+  * `ucode` encoding.
+  */
   def asciiCodePoint(ucodeCodePoint: String) : String = {
     val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
     matchingPairs.size match {
@@ -45,8 +51,12 @@ import scala.scalajs.js.annotation._
   }
 
 
-// functoin to tidy up badly encoded unicode using
-// combining accents on spaces.  :-(
+  /** Utility function to tidy up badly encoded Unicode when a combining
+  * accent is erroneously placed on a preceding space by luddites equating
+  * typesetting with encoding.
+  *
+  * @param s String to fix.
+  */
   def swapPrecedingBreathings(s: String): String = {
     s.replaceAll(" ̓Ε", " " + ucodeCodePoint("*e)")).
     replaceAll(" ̔Ε", " " + ucodeCodePoint("*e("))

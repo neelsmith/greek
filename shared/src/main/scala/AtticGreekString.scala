@@ -40,7 +40,13 @@ import scala.scalajs.js.annotation._
       }
     }
   }
-  
-  val alphabetString ="abgdezqiklmnoprstufxh \n"
 
+  val alphabetString = "abgdezqiklmnoprstufxh \n\r"
+}
+
+object AtticGreekString {
+
+  def asciiToUcode(s: String): String = {
+    s
+  }
 }

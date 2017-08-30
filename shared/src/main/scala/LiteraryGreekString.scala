@@ -108,12 +108,22 @@ import scala.scalajs.js.annotation._
     LiteraryGreekString(camelAscii.mkString(" "))
   }
 
-  /**
+  /** Required function to create a new [[GreekString]] with accents removed.
   */
   def stripAccent: LiteraryGreekString = {
     stripAccs(ascii,"")
   }
 
+
+  /** Create a [[LiteraryGreekString]] with no accent characters
+  * from an `ascii` String by recursively looking at the first character
+  * of the ascii string and adding it to a new string only if it is
+  * not an accent.
+  *
+  * @param src Remaining ascii String to strip accents from.
+  * @param accumulator String of non-accent characters accumulated so far.
+  *
+  */
   private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)
@@ -131,29 +141,74 @@ import scala.scalajs.js.annotation._
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order.
   */
-  val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
-
+  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
+  // temporarily leave out grave to make Atom's formatting sane
+  val alphabetString = "abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
 }
 
+/** Utility functions for working with definitions of the [[LiteraryGreekString]]
+* class's character encoding.
+*/
 object LiteraryGreekString {
+
+  /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
+  /** Alphabetically ordered Vector of consonant characters in `ascii` view.*/
   val consonants = Vector('b','g','d','z','q','k','l','m','n','c','p',
     'r','s','t','f','x','y','Σ')
+  /** Breathing characters. */
   val breathings = Vector(')', '(')
+  /** Accent characters. */
   val accents = Vector('=', '/', '\\')
+  /** Characters in addition to breathings and accents that combine with
+  * other characters in `ucode` view.
+  */
   val comboChars = Vector('|','+')
 
+  /** True if given character is a vowel.
+  *
+  * @param c Character to check.
+  */
   def isVowel (c: Character): Boolean = {vowels.contains(c)}
+
+  /** True if given character is a consonant.
+  *
+  * @param c Character to check.
+  */
   def isConsonant (c: Character): Boolean = {consonants.contains(c)}
+
+  /** True if given character is alphabetic.
+  *
+  * @param c Character to check.
+  */
   def isAlpha(c: Character): Boolean = (isVowel(c) || isConsonant(c))
+
+  /** True if given character is an accent.
+  *
+  * @param c Character to check.
+  */
   def isAccent(c: Character): Boolean = {accents.contains(c)}
+
+
+  /** True if given character is a breathing.
+  *
+  * @param c Character to check.
+  */
   def isBreathing(c: Character): Boolean = {breathings.contains(c)}
+
+  /** True if given character combines with other characters in `ucode` view.
+  *
+  * @param c Character to check.
+  */
   def isCombining(c: Character): Boolean = {
     (comboChars.contains(c) || isAccent(c) || isBreathing(c))
 
   }
 
-
+  /** String label for class of a character.
+  *
+  * @param c Character to classify.
+  */
   def classOfChar(c: Character): String = {
     if (vowels.contains(c)) {
       "vowel"
@@ -173,6 +228,14 @@ object LiteraryGreekString {
 
   // extract run of ascii chars to put in
   // a single combined point
+  /** Extract first series of characters from an ascii String
+  * forming a single Unicode code point by recursively looking ahead
+  * as long as following character is a combining character.
+  *
+  * @param s String to extract code point from.
+  * @param accumulator String accumulasted so far.
+  *
+  */
   def peekAhead(s: String, accumulator: String): String = {
     if (s.size < 2) {
       accumulator + s
@@ -193,6 +256,16 @@ object LiteraryGreekString {
       }
     }
   }
+
+
+  /** Use the [[CodePointTranscoder]] object to recursively
+  * convert code points represented in `ascii` view to
+  * `ucode` code points.
+  *
+  * @param ascii String to convert to `ucode` view.
+  * @param ucode Accumluated string of Unicode code  points
+  * in `ucode` view's encoding.
+  */
   def asciiToUcode(ascii: String, ucode: String): String = {
     if (ascii.size == 0 ) {
       ucode
@@ -208,8 +281,13 @@ object LiteraryGreekString {
     }
   }
 
-
-  //ucode must be already normalized to NFC
+  /** Recursively converts code points in a Unicode string in form NFC to
+  * equivalent characters in `ascii` view.
+  *
+  * @param ucode String to convert.  Note that the String must be in
+  * Unicode Form NFC.
+  * @param ascii String of `ascii` view accumulated so far.
+  */
   def nfcToAscii(ucode: String, ascii: String): String = {
     if (ucode.size == 0 ) {
       ascii

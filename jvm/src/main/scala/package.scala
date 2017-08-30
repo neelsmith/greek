@@ -83,7 +83,14 @@ package object greek {
   def atticAsciiOf(s: String) : String = {
     "ATTIC ASCII OF  " + s
   }
+
+
   def atticUcodeOf(s: String) : String = {
+    if (s.head.toInt > 127) {
+      Normalizer.normalize(s, Normalizer.Form.NFC)
+    } else {
+      AtticGreekString.asciiToUcode(s)
+    }
     "ATTIC Ucode OF  " + s
   }
 
