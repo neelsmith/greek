@@ -1,6 +1,9 @@
 # greek: release notes
 
 
+**1.4.0**:  restores cross publishing for multiple Scala versions in both JVM and ScalaJS environments.  Adds automated testing of end-user documentation with scala `tut` library.
+
+
 **1.3.8**:  silently corrects the widespread error in many legacy texts of
 misformatting upper-case Greek words starting with vowels in such a way that
 accents and breathings are placing on a preceding space, not on the vowel.
