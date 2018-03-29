@@ -1,8 +1,9 @@
 name := "Greek string library"
 
 
-crossScalaVersions := Seq("2.10.6","2.11.8", "2.12.3")
-scalaVersion := "2.12.3"
+crossScalaVersions in ThisBuild := Seq("2.10.6","2.11.8", "2.12.4")
+scalaVersion := (crossScalaVersions in ThisBuild).value.last
+
 
 lazy val root = project.in(file(".")).
     aggregate(crossedJVM, crossedJS).
@@ -16,7 +17,7 @@ lazy val crossed = crossProject.in(file(".")).
     settings(
       name := "greek",
       organization := "edu.holycross.shot",
-      version := "1.3.8",
+      version := "1.4.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       libraryDependencies ++= Seq(
@@ -25,7 +26,8 @@ lazy val crossed = crossProject.in(file(".")).
       )
     ).
     jvmSettings(
-
+      tutTargetDirectory := file("docs"),
+      tutSourceDirectory := file("shared/src/main/tut")
     ).
     jsSettings(
       skip in packageJSDependencies := false,
@@ -33,5 +35,5 @@ lazy val crossed = crossProject.in(file(".")).
 
     )
 
-lazy val crossedJVM = crossed.jvm
-lazy val crossedJS = crossed.js.enablePlugins(ScalaJSPlugin)
+lazy val crossedJVM = crossed.jvm.enablePlugins(TutPlugin)
+lazy val crossedJS = crossed.js
