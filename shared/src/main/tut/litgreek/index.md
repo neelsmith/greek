@@ -20,23 +20,19 @@ The following examples in Scala illusrate the main features of the library.
 Import the library:
 
 
-```scala
+```tut:silent
 import edu.holycross.shot.greek._
 ```
 
 ### Use either representation
 
 
-```scala
-scala>     val wrath1 = LiteraryGreekString("mh=nin")
-wrath1: edu.holycross.shot.greek.LiteraryGreekString = LiteraryGreekString(mh=nin)
+```tut
+    val wrath1 = LiteraryGreekString("mh=nin")
+    assert(wrath1.ucode == "μῆνιν")
 
-scala>     assert(wrath1.ucode == "μῆνιν")
-
-scala>     val wrath2 = LiteraryGreekString("μῆνιν")
-wrath2: edu.holycross.shot.greek.LiteraryGreekString = LiteraryGreekString(μῆνιν)
-
-scala>     assert(wrath2.ascii == "mh=nin")
+    val wrath2 = LiteraryGreekString("μῆνιν")
+    assert(wrath2.ascii == "mh=nin")
 ```
 
 
