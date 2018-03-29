@@ -24,31 +24,32 @@ Import the library:
 import edu.holycross.shot.greek._
 ```
 
-### Use either representation
+### Work with either representation
 
 
 ```scala
-scala>     val wrath1 = LiteraryGreekString("mh=nin")
-wrath1: edu.holycross.shot.greek.LiteraryGreekString = LiteraryGreekString(mh=nin)
+    val wrath1 = LiteraryGreekString("mh=nin")
+    assert(wrath1.ucode == "μῆνιν")
 
-scala>     assert(wrath1.ucode == "μῆνιν")
-
-scala>     val wrath2 = LiteraryGreekString("μῆνιν")
-wrath2: edu.holycross.shot.greek.LiteraryGreekString = LiteraryGreekString(μῆνιν)
-
-scala>     assert(wrath2.ascii == "mh=nin")
+    val wrath2 = LiteraryGreekString("μῆνιν")
+    assert(wrath2.ascii == "mh=nin")
 ```
 
 
 ### Equality testing
 
+
+```scala
     val wrath1 = LiteraryGreekString("mh=nin")
     val wrath2 = LiteraryGreekString("μῆνιν")
     assert (wrath1 == wrath2)
+```
 
 ### Alphabetic comparison
 
 `<`  means "precedes alphabetically"; `>` means "follows alphabetically".
+
+
 
     val horse1 = LiteraryGreekString("ἵππος ")
     val horse2 = LiteraryGreekString("i(/ppos ")
@@ -67,11 +68,14 @@ In the current version, characters not explicitly defined in the  `LiteraryGreek
 
 
 #### Example
+
 Code point 1008, `ϰ`, is a technical symbol represented by the Greek letter kappa:  it is not intended to represent the alphabetic character kappa in Greek text.  If we use code point 1008 to construct a Greek string, it will be mapped to an error in the ASCII representation.  The result of constructing a Greek string with code point 1008 is illustrated here:
+
 
 
     var bad = LiteraryGreekString("ϰαϰῶς")
     assert (bad.ascii == "#a#w=s")
+
 
 vs. this example correctly using code point 954, `κ`:
 
