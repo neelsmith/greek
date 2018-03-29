@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<div class="posts">
+<h3>News and opinions</h3>
+<ul>
+  {% for post in site.posts limit:3 %}
+  <li>
+  <span class="datelabel">{{ post.date | date: "%B %d, %Y" }}:</span>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+      {{ post.content | strip_html | strip_newlines | truncate: 120 }}
+    </li>
+  {% endfor %}
+  </ul>
+  <p><a href="news">Older news</a>
+  </p>
+</div>
+
+
+
+{{ content }}

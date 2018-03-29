@@ -1,0 +1,33 @@
+# Dependencies
+markdown:         kramdown
+redcarpet:
+ extensions: ["fenced_code_blocks", "autolink", "tables"]
+
+highlighter: rouge
+
+
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Greek string library
+#baseurl: http://neelsmith.github.io
+baseurl: ""
+
+
+author:
+  name:           'Neel Smith'
+
+
+
+links:
+  - title: NS on github
+    url: http://neelsmith.github.io/
+    external: true
+  - title: Binaries
+    url: https://bintray.com/neelsmith/maven/greek
+    external: true
+  - title: Github source repository
+    url: https://github.com/neelsmith/greek
+    external: true
