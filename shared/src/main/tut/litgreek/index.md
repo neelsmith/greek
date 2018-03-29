@@ -51,15 +51,20 @@ import edu.holycross.shot.greek._
 
 
 
+
+
+```tut:silent
     val horse1 = LiteraryGreekString("ἵππος ")
     val horse2 = LiteraryGreekString("i(/ppos ")
     val bird = LiteraryGreekString("ὄρνιθος")
     val animal = LiteraryGreekString("ζῷον")
-
-    assert(horse1 == horse2)
-    assert(animal < horse2)
     assert(animal < bird)
     assert(bird > horse2)
+    assert(animal < horse2)
+```
+    assert(horse1 == horse2)
+
+
 
 
 ### Invalid input
