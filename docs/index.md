@@ -15,7 +15,7 @@ All Greek strings are represented in two formats:
 ## Links
 
 -   [goals](goals) of the library
--   information about [implementations](implementations), including tutorials
+-   information about [implementations, including tutorials](implementations), 
 -   [API docs](api/edu/holycross/shot/greek/index.html) for version 1.4.0
 -   source repository:  [github](https://github.com/neelsmith/greek)
 -   binaries: [jcenter](https://bintray.com/neelsmith/maven/greek)
