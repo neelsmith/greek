@@ -12,8 +12,9 @@ Status:  **active development**. [Release notes](releases.md). Get automatic nof
 
 ## Documentation
 
--   [User guide](https://neelsmith.github.io/greek/)
--   API documentation is included in the binary release, or can be compiled from source (see below)
+
+<https://neelsmith.github.io/greek/>
+
 
 
 
