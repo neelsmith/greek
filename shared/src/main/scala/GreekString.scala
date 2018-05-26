@@ -57,7 +57,6 @@ trait GreekString  {
     getAccent(ascii)
   }
 
-
   /** Recursively examine first character in s to
   * find the first accent character.
   *
@@ -92,6 +91,7 @@ trait GreekString  {
       case idx => idx
     }
   }
+
 
 
   /** Compare the ascii representation of two [[GreekString]]s.
