@@ -26,7 +26,7 @@ trait GreekString  {
   /** A single string listing all valid characters in the ASCII
   * representation of this system in their alphabetic order.
   */
-  val alphabetString: String
+  def alphabetString: String
 
   /** Fixed definition of acute, grave and circumflex accents
   * in ASCII representational system.

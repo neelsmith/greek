@@ -25,7 +25,7 @@ import scala.scalajs.js.annotation._
   /** The representation of this string with glyphs in the "Greek and Coptic"
   * and "Extended Greek" blocks of Unicode.
   */
-  val ucode =    literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
+  val ucode =  literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
 
 
   /**
@@ -144,13 +144,8 @@ import scala.scalajs.js.annotation._
     }
   }
 
+  def alphabetString = LiteraryGreekString.alphabetString
 
-  /** All valid characters in the ASCII representation of this system
-  * in their alphabetic order.
-  */
-  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
-  // temporarily leave out grave to make Atom's formatting sane
-  val alphabetString = "abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
 }
 
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]
@@ -163,10 +158,20 @@ object LiteraryGreekString  extends MidOrthography {
   // required by MidOrthography trait
   def orthography: String = "Conventional modern orthography of literary Greek"
 
-  // required by MidOrthography trait
-  def validCP(cp: Int):  Boolean = {
-    false
+  def validAsciiCP(cp: Int): Boolean = {
+    val cArray = Character.toChars(cp)
+    alphabetString.contains(cArray(0))
   }
+
+  // required by MidOrthography trait
+  def validCP(cp: Int): Boolean = {
+    val s = Character.toChars(cp.toInt).toVector.mkString
+    val ascii = literaryAsciiOf(s)
+    val asciiCP = ascii(0).toInt
+    validAsciiCP(asciiCP)
+  }
+
+
 
   // required by MidOrthography trait
   def tokenCategories : Vector[MidTokenCategory] = Vector(
@@ -177,7 +182,12 @@ object LiteraryGreekString  extends MidOrthography {
   def tokenizeNode(n: CitableNode): Vector[MidToken] = Vector.empty[MidToken]
 
 
-
+  /** All valid characters in the ASCII representation of this system
+  * in their alphabetic order.
+  */
+  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
+  // temporarily leave out grave to make Atom's formatting sane
+  val alphabetString = "abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
