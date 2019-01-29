@@ -28,7 +28,6 @@ class MidOrthographySpec extends FlatSpec {
   }
   it should "implement the MidOrthography trait's tokenizeNode function" in {
     val tokens = LiteraryGreekString.tokenizeNode(cn)
-    println(tokens.mkString("\n"))
     val expectedTotal = 8
     val expectedLexical = 6
     val expectedPunct = 2
@@ -39,7 +38,6 @@ class MidOrthographySpec extends FlatSpec {
 
     val lexical = tokens.filter(_.tokenCategory.toString == "Some(LexicalToken)")
     assert(expectedLexical == lexical.size)
-
   }
 
   it should "determine if an ASCII code point is valid" in  {
