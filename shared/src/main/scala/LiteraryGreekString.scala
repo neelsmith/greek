@@ -15,21 +15,7 @@ import scala.scalajs.js.annotation._
 * @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
 * system.
 */
-@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] with MidOrthography {
-
-
-  // required by MidOrthography trait
-  def orthography: String = "Conventional modern orthography of literary Greek"
-
-  // required by MidOrthography trait
-  def validCP(cp: Int):  Boolean = false
-
-  // required by MidOrthography trait
-  def tokenCategories : Vector[MidTokenCategory] = Vector.empty[MidTokenCategory]
-
-  // required by MidOrthography trait
-  def tokenizeNode(n: CitableNode): Vector[MidToken] = Vector.empty[MidToken]
-
+@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString]  {
 
 
   /** The ASCII representation of this string.
@@ -170,7 +156,28 @@ import scala.scalajs.js.annotation._
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]
 * class's character encoding.
 */
-object LiteraryGreekString {
+object LiteraryGreekString  extends MidOrthography {
+
+
+
+  // required by MidOrthography trait
+  def orthography: String = "Conventional modern orthography of literary Greek"
+
+  // required by MidOrthography trait
+  def validCP(cp: Int):  Boolean = {
+    false
+  }
+
+  // required by MidOrthography trait
+  def tokenCategories : Vector[MidTokenCategory] = Vector(
+    PunctuationToken, LexicalToken, NumericToken
+  )
+
+  // required by MidOrthography trait
+  def tokenizeNode(n: CitableNode): Vector[MidToken] = Vector.empty[MidToken]
+
+
+
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
