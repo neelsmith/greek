@@ -1,14 +1,35 @@
 package edu.holycross.shot.greek
 
+
+import edu.holycross.shot.mid.validator._
+import edu.holycross.shot.ohco2._
+import edu.holycross.shot.cite._
+
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
+
 
 /** Representation of a Greek string written in conventional literary orthography.
 *
 * @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
 * system.
 */
-@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] {
+@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] with MidOrthography {
+
+
+  // required by MidOrthography trait
+  def orthography: String = "Conventional modern orthography of literary Greek"
+
+  // required by MidOrthography trait
+  def validCP(cp: Int):  Boolean = false
+
+  // required by MidOrthography trait
+  def tokenCategories : Vector[MidTokenCategory] = Vector.empty[MidTokenCategory]
+
+  // required by MidOrthography trait
+  def tokenizeNode(n: CitableNode): Vector[MidToken] = Vector.empty[MidToken]
+
 
 
   /** The ASCII representation of this string.
