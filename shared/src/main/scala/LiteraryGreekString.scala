@@ -178,9 +178,93 @@ object LiteraryGreekString  extends MidOrthography {
     PunctuationToken, LexicalToken, NumericToken
   )
 
-  // required by MidOrthography trait
-  def tokenizeNode(n: CitableNode): Vector[MidToken] = Vector.empty[MidToken]
+  def punctuationString: String = {
+    //"(),;:.?"
+    """,;:"."""
+  }
 
+
+  def depunctuate (s: String, depunctVector: Vector[String] = Vector.empty): Vector[String] = {
+    val trimmed = s.trim
+    val trailChar = s"${trimmed.last}"
+    if (punctuationString.contains(trailChar)) {
+      val dropLast = trimmed.reverse.tail.reverse
+      if (dropLast.nonEmpty) {
+        depunctuate(dropLast, trailChar +: depunctVector)
+      } else {
+        s +: depunctVector
+      }
+
+    } else {
+      s +: depunctVector
+    }
+  }
+
+
+  def lexicalCategory(s: String): Option[MidTokenCategory] = {
+    Some(LexicalToken)
+  }
+    /*
+    if (alphabet.numerics.contains(s(0).toUpper)) {
+      if (alphabet.numeric(s)) {
+        Some(NumericToken)
+      } else {
+        None
+      }
+    } else if (alphabet.alphabetString.contains(s(0).toLower)) {
+      if (alphabet.alphabetic(s)) {
+        Some(LexicalToken)
+      } else {
+        None
+      }
+
+    } else {
+      None
+    }
+  }*/
+
+
+
+  // required by MidOrthography trait
+  def tokenizeNode(n: CitableNode): Vector[MidToken] = {
+    val urn = n.urn
+    // initial chunking on white space
+    val units = n.text.split(" ").filter(_.nonEmpty)
+
+    val classified = for (unit <- units.zipWithIndex) yield {
+      val newPassage = urn.passageComponent + "." + unit._2
+      val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + "_tkns")
+      val newUrn = CtsUrn(newVersion.dropPassage.toString + newPassage)
+
+      val trimmed = unit._1.trim
+      // process praenomina first since "." is part
+      // of the token:
+      val tokensClassified: Vector[MidToken] =
+
+         if (trimmed(0) == '"') {
+        Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
+
+      } else {
+
+
+        val depunctuated = depunctuate(unit._1)
+        val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
+
+        val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
+          MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
+        }
+        println("DEPUNCT " + depunctuated)
+        first +: trailingPunct
+
+        //Vector.empty[MidToken]
+      }
+      //println("Token class is " + tokensClassified)
+      tokensClassified
+
+    }
+    //println("Classified is " + classified.toVector.flatten)
+    classified.toVector.flatten
+  }
 
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order.

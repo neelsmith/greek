@@ -1,6 +1,9 @@
 # greek: release notes
 
 
+**2.0.0**:   `LiteraryGreekString` object implements `MidOrthography` trait.  API-breaking change from `val` to function for `GreekString`'s `alphabetString`.
+
+
 **1.4.0**:  restores cross publishing for multiple Scala versions in both JVM and ScalaJS environments.  Adds automated testing of end-user documentation with scala `tut` library.
 
 
