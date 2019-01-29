@@ -239,30 +239,20 @@ object LiteraryGreekString  extends MidOrthography {
       val trimmed = unit._1.trim
       // process praenomina first since "." is part
       // of the token:
-      val tokensClassified: Vector[MidToken] =
-
-         if (trimmed(0) == '"') {
-        Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
+      val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
+          Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
 
       } else {
-
-
         val depunctuated = depunctuate(unit._1)
         val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
 
         val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
           MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
         }
-        println("DEPUNCT " + depunctuated)
         first +: trailingPunct
-
-        //Vector.empty[MidToken]
       }
-      //println("Token class is " + tokensClassified)
       tokensClassified
-
     }
-    //println("Classified is " + classified.toVector.flatten)
     classified.toVector.flatten
   }
 
