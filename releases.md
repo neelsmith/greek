@@ -1,5 +1,7 @@
 # greek: release notes
 
+**2.1.0**:  Updates to `MidOrthography` trait add new concreate functions to `LiteraryGreekString`.
+
 
 **2.0.0**:   `LiteraryGreekString` object implements `MidOrthography` trait.  API-breaking change from `val` to function for `GreekString`'s `alphabetString`.  Dependency on `midvalidator` library means that `greek` now compiles only for Scala >= 2.11.
 
