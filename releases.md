@@ -1,5 +1,7 @@
 # greek: release notes
 
+**2.1.1**:  Updates to `MidOrthography` library.
+
 **2.1.0**:  Updates to `MidOrthography` trait add new concreate functions to `LiteraryGreekString`.
 
 
