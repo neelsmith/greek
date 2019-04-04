@@ -107,6 +107,10 @@ import scala.scalajs.js.annotation._
   def pairings =
     Vector(
 
+      CodePointPair("“", "“"),
+      CodePointPair("”" , "”" ),
+    
+
       CodePointPair("e=", "ê"),
       CodePointPair("o=", "ô"),
       //CodePointPair("*e)"," ̓Ε"),

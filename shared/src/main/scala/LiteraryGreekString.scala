@@ -37,7 +37,13 @@ import scala.scalajs.js.annotation._
 
   /**
   */
-  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
+  def fixedCombos = {
+    if (str.head == '“') {
+      '“' +  CodePointTranscoder.swapPrecedingBreathings(str.tail)
+    } else {
+      CodePointTranscoder.swapPrecedingBreathings(str)
+    }
+  }
 
 
   /** Compare this string to a second [[GreekString]] alphabetically
@@ -273,13 +279,13 @@ object LiteraryGreekString  extends MidOrthography {
   */
   //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
   // temporarily leave out grave to make Atom's formatting sane
-  val alphabetString = "*abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
+  val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/=+,:;.“”— \n\r"
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
   /** Alphabetically ordered Vector of consonant characters in `ascii` view.*/
   val consonants = Vector('b','g','d','z','q','k','l','m','n','c','p',
-    'r','s','t','f','x','y','Σ')
+    'r','s','t','f','x','y') //,'Σ')
   /** Breathing characters. */
   val breathings = Vector(')', '(')
   /** Accent characters. */

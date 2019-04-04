@@ -1,7 +1,12 @@
 # greek: release notes
 
+**2.3.1**: fixes a bug when quoted word has initial breathing.
 
-**2.2.4**: work with terminal sigma
+**2.3.0**: add support for curly quotes and em-dash
+
+**2.2.5**: recognize elision.
+
+**2.2.4**: work with terminal sigma.
 
 **2.2.3**: recognizes valid capitalized ascii strings.
 
