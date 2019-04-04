@@ -27,6 +27,8 @@ import java.text.Normalizer
 package object greek {
 
 
+
+
   /** Create [[LiteraryGreekString]]'s `ascii` view of a String.
   * If the first character is <= 127, assume that the String
   * is already in `ascii` view; otherwise, normalize to Unicode
@@ -35,7 +37,13 @@ package object greek {
   * @param s String to create `ascii` view for.
   */
   def literaryAsciiOf (s: String): String = {
-    if (s.head.toInt > 127) {
+    val checkFirst = if (s.head == '“') {
+      s(1)
+    } else {
+      s.head
+    }
+
+    if (checkFirst.toInt > 127) {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
       LiteraryGreekString.nfcToAscii(normalized,"")
 
@@ -55,7 +63,13 @@ package object greek {
   * @param s String to create `ucode` view for.
   */
   def literaryUcodeOf(s: String) : String = {
-    if (s.head.toInt > 127) {
+      val checkFirst = if (s.head == '“') {
+        s(1)
+      } else {
+        s.head
+      }
+
+    if (checkFirst.toInt > 127) {
       /*
       if (s.head.toInt == 787){
         val asciified = CodePointTranscoder.asciiCodePoint(s.tail.head.toString) + ")" + literaryAsciiOf(s.tail.tail)

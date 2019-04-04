@@ -42,7 +42,12 @@ package object greek {
   }
 
   @JSExport  def literaryUcodeOf(s: String) : String = {
-    if (s.head.toInt > 127) {
+    val checkFirst = if (s.head == '“') {
+      s(1)
+    } else {
+      s.head
+    }
+    if (checkFirst.toInt > 127) {
       s
     } else {
       LiteraryGreekString.asciiToUcode(s,"")

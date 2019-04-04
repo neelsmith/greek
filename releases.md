@@ -1,5 +1,7 @@
 # greek: release notes
 
+**2.3.2**: fixes a bug determing Unicode or ASCII string in quoted words.
+
 **2.3.1**: fixes a bug when quoted word has initial breathing.
 
 **2.3.0**: add support for curly quotes and em-dash
