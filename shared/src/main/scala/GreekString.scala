@@ -92,6 +92,20 @@ trait GreekString  {
     }
   }
 
+  /** True if this GreekString is composed exclusively of valid
+  * characters in its ASCII encoding.
+  */
+  def valid :  Boolean = {
+    val tfValues = for (c <- ascii) yield {
+      try {
+        sequenceOf(c) >= 0
+      } catch {
+        case err: Throwable => false
+      }
+    }
+    (tfValues.toSet == Set(true))
+  }
+
 
 
   /** Compare the ascii representation of two [[GreekString]]s.
