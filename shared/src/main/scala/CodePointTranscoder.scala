@@ -29,7 +29,7 @@ import scala.scalajs.js.annotation._
   def ucodeCodePoint(asciiCodePoint: String) : String ={
     val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
     matchingPairs.size match {
-      case 0 => "#"
+      case 0 =>  "#" //{  println("No character for " + asciiCodePoint); "#"}
       case 1 => matchingPairs(0).ucode
       case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
     }
@@ -102,7 +102,7 @@ import scala.scalajs.js.annotation._
 
 
   /** All recognized pairings of `ascii` String encodings
-  * to `ucode` String encodings
+  * to `ucode` String encodings.  Ascii values must be unique.
   */
   def pairings =
     Vector(

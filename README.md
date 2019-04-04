@@ -4,7 +4,7 @@
 
 `greek` is a cross-platform library for working with strings representing ancient Greek.
 
-## Current version: 2.2.2
+## Current version: 2.2.4
 
 Status:  **active development**. [Release notes](releases.md). Get automatic nofication of new binary releases from jcenter:
 

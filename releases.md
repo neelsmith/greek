@@ -1,5 +1,10 @@
 # greek: release notes
 
+
+**2.2.4**: work with terminal sigma
+
+**2.2.3**: recognizes valid capitalized ascii strings.
+
 **2.2.2**: fixes a bug in sorting Greek strings.
 
 **2.2.1**: change all graves to acutes before comparing for sort

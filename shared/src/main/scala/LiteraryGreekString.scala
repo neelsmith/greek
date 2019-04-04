@@ -25,12 +25,19 @@ import scala.scalajs.js.annotation._
   /** The representation of this string with glyphs in the "Greek and Coptic"
   * and "Extended Greek" blocks of Unicode.
   */
-  val ucode =  literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("σ ", "ς "))
+  //val ucode =  literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("s$","Σ").replaceAll("σ ", "ς ").replaceAll("σ$", "ς"))
+
+  val ucode =  {
+    //println("Fixed combs: " + fixedCombos)
+    //println("LitU of that : " + literaryUcodeOf(fixedCombos))
+    val lowered = literaryUcodeOf(fixedCombos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
+    lowered
+  }
 
 
   /**
   */
-  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str).trim
+  def fixedCombos = CodePointTranscoder.swapPrecedingBreathings(str)
 
 
   /** Compare this string to a second [[GreekString]] alphabetically
@@ -39,7 +46,6 @@ import scala.scalajs.js.annotation._
   * @param that Second [[GreekString]] to compare.
   */
   override def compare(that:GreekString): Int = {
-
     asciiCompare(this.flipGrave.ascii, that.flipGrave.ascii)
   }
 
@@ -122,7 +128,7 @@ import scala.scalajs.js.annotation._
     stripAccs(ascii,"")
   }
 
-
+  /** Create a [[LiteraryGreekString]] with grave accent (barytone) converted to acute (oxytone).*/
   def flipGrave: LiteraryGreekString =  {
     val flipped = ascii.replaceAll("\\\\", "/")
     LiteraryGreekString(flipped)
@@ -267,7 +273,7 @@ object LiteraryGreekString  extends MidOrthography {
   */
   //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
   // temporarily leave out grave to make Atom's formatting sane
-  val alphabetString = "abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
+  val alphabetString = "*abgdezhqiklmncoprsΣtufxyw.|()/=+,:;. \n\r"
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
