@@ -42,6 +42,11 @@ import scala.scalajs.js.annotation._
     stripAccs(ascii,"")
   }
 
+  def flipGrave: AtticGreekString =  {
+    val flipped = ascii.replaceAll("\\\\", "/")
+    AtticGreekString(flipped)
+  }
+
   /** Create a [[AtticGreekString]] with no accent characters
   * from an `ascii` String by recursively looking at the first character
   * of the ascii string and adding it to a new string only if it is

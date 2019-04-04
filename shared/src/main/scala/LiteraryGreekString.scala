@@ -39,7 +39,8 @@ import scala.scalajs.js.annotation._
   * @param that Second [[GreekString]] to compare.
   */
   override def compare(that:GreekString): Int = {
-    asciiCompare(this.ascii, that.ascii)
+
+    asciiCompare(this.flipGrave.ascii, that.flipGrave.ascii)
   }
 
 
@@ -121,6 +122,11 @@ import scala.scalajs.js.annotation._
     stripAccs(ascii,"")
   }
 
+
+  def flipGrave: LiteraryGreekString =  {
+    val flipped = ascii.replaceAll("\\\\", "/")
+    LiteraryGreekString(flipped)
+  }
 
   /** Create a [[LiteraryGreekString]] with no accent characters
   * from an `ascii` String by recursively looking at the first character

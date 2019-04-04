@@ -1,5 +1,10 @@
 # greek: release notes
 
+
+**2.2.1**: change all graves to acutes before comparing for sort
+
+**2.2.0**: add concrete `valid` function to `GreekString` trait
+
 **2.1.1**:  Updates to `MidOrthography` library.
 
 **2.1.0**:  Updates to `MidOrthography` trait add new concreate functions to `LiteraryGreekString`.

@@ -80,6 +80,8 @@ trait GreekString  {
   def stripAccent: GreekString
 
 
+  def flipGrave: GreekString 
+
   /** Find alphabetic sequence of a character in the ascii encoding
   * system.
   *
