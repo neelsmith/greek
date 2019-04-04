@@ -35,4 +35,5 @@ class SortingSpec extends FlatSpec {
     assert (s1 < s2)
   }
 
+
 }

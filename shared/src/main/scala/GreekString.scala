@@ -80,7 +80,7 @@ trait GreekString  {
   def stripAccent: GreekString
 
 
-  def flipGrave: GreekString 
+  def flipGrave: GreekString
 
   /** Find alphabetic sequence of a character in the ascii encoding
   * system.
@@ -123,18 +123,29 @@ trait GreekString  {
   * @param s2 Second of two strings to compare.
   */
   def asciiCompare(s1: String, s2: String): Int = {
+
     if (s1.isEmpty) {
       s2.isEmpty match {
-        case true => 0
+        case true => {
+          0
+        }
         case false => -1
       }
     } else {
-      val cf = sequenceOf(s1.head) compare sequenceOf(s2.head)
-      if (cf == 0) {
-        asciiCompare(s1.drop(1), s2.drop(1))
-      } else {
-        cf
+      s2.isEmpty match {
+        case true => {
+          1
+        }
+        case false => {
+          val cf = sequenceOf(s1.head) compare sequenceOf(s2.head)
+          if (cf == 0) {
+            asciiCompare(s1.drop(1), s2.drop(1))
+          } else {
+            cf
+          }
+        }
       }
+
     }
   }
 

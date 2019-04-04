@@ -27,12 +27,12 @@ class CasingSpec extends FlatSpec {
   it should "capitalize a string" in {
     val s = LiteraryGreekString("i)/lias")
     assert (s.capitalize.ascii == "*i)/lias")
-    println(s.capitalize.ucode)
+    assert(s.capitalize.ucode == "Ἴλιασ")
   }
 
   it should "camel-case a string" in {
     val s = LiteraryGreekString("peri\\ paronu/mwn")
     assert (s.camelCase.ascii == "*peri\\ *paronu/mwn")
-    println(s.camelCase.ucode)
+    assert(s.camelCase.ucode == "Περὶ Παρονύμων")
   }
 }

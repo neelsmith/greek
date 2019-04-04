@@ -1,5 +1,6 @@
 # greek: release notes
 
+**2.2.2**: fixes a bug in sorting Greek strings.
 
 **2.2.1**: change all graves to acutes before comparing for sort
 

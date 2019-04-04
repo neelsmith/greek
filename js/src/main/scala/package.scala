@@ -1,6 +1,5 @@
 package edu.holycross.shot
 
-
 import scala.scalajs.js.annotation._
 
 import scala.scalajs.js
