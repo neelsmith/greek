@@ -1,5 +1,7 @@
 # greek: release notes
 
+**2.3.3**: adds omitted code point transcoding for upper-case omega.
+
 **2.3.2**: fixes a bug determing Unicode or ASCII string in quoted words.
 
 **2.3.1**: fixes a bug when quoted word has initial breathing.

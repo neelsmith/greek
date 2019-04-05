@@ -109,7 +109,7 @@ import scala.scalajs.js.annotation._
 
       CodePointPair("“", "“"),
       CodePointPair("”" , "”" ),
-    
+
 
       CodePointPair("e=", "ê"),
       CodePointPair("o=", "ô"),
@@ -374,14 +374,14 @@ import scala.scalajs.js.annotation._
       CodePointPair("w)=","ὦ"), //8038
       CodePointPair("w(=","ὧ"), //8039
 
-      CodePointPair("","Ὠ"), //8040
-      CodePointPair("","Ὡ"), //8041
-      CodePointPair("","Ὢ"), //8042
-      CodePointPair("","Ὣ"), //8043
-      CodePointPair("","Ὤ"), //8044
-      CodePointPair("","Ὥ"), //8045
-      CodePointPair("","Ὦ"), //8046
-      CodePointPair("","Ὧ"), //8047
+      CodePointPair("*w)","Ὠ"), //8040
+      CodePointPair("*w(","Ὡ"), //8041
+      CodePointPair("*w)\\","Ὢ"), //8042
+      CodePointPair("*w(\\)","Ὣ"), //8043
+      CodePointPair("*w)/","Ὤ"), //8044
+      CodePointPair("*w(/","Ὥ"), //8045
+      CodePointPair("*w)=","Ὦ"), //8046
+      CodePointPair("*w(=","Ὧ"), //8047
 
       CodePointPair("a\\","ὰ"), //8048
       //CodePointPair("a/","ά"), //8049

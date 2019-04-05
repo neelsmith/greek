@@ -44,6 +44,12 @@ class CodePointTranscodingSpec extends FlatSpec {
     }
   }
 
+  it should "catch upper case omega" in {
+    val s = "*w)="
+    val expected = "Ὦ"
+    assert( CodePointTranscoder.ucodeCodePoint(s) == expected)
+  }
+
 
 
 }
