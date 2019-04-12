@@ -1,4 +1,7 @@
-# greek: release notes
+# `greek` library: release notes
+
+
+**2.4.0**:  adds functions for stripping breathing from a `LiteraryGreekString`.  This is useful in applications like syllabification.
 
 **2.3.3**: adds omitted code point transcoding for upper-case omega.
 

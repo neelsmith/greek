@@ -17,6 +17,7 @@ import scala.scalajs.js.annotation._
 */
 @JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString]  {
 
+  require(str.nonEmpty, "Cannot create LiteraryGreekString from empty String")
 
   /** The ASCII representation of this string.
   */
@@ -131,7 +132,16 @@ import scala.scalajs.js.annotation._
   /** Required function to create a new [[GreekString]] with accents removed.
   */
   def stripAccent: LiteraryGreekString = {
-    stripAccs(ascii,"")
+    LiteraryGreekString.stripAccs(ascii,"")
+  }
+
+  def stripBreathing: LiteraryGreekString = {
+    LiteraryGreekString.stripBreathings(ascii,"")
+  }
+
+  def stripBreathingAccent: LiteraryGreekString = {
+    val noBreath = LiteraryGreekString.stripBreathings(ascii,"").ascii
+    LiteraryGreekString.stripAccs(noBreath,"")
   }
 
   /** Create a [[LiteraryGreekString]] with grave accent (barytone) converted to acute (oxytone).*/
@@ -140,27 +150,7 @@ import scala.scalajs.js.annotation._
     LiteraryGreekString(flipped)
   }
 
-  /** Create a [[LiteraryGreekString]] with no accent characters
-  * from an `ascii` String by recursively looking at the first character
-  * of the ascii string and adding it to a new string only if it is
-  * not an accent.
-  *
-  * @param src Remaining ascii String to strip accents from.
-  * @param accumulator String of non-accent characters accumulated so far.
-  *
-  */
-  private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
-    if (src.isEmpty) {
-      LiteraryGreekString(accumulator)
 
-    } else {
-      if (isAccent(src.head)) {
-        stripAccs(src.tail, accumulator)
-      } else {
-        stripAccs(src.tail, accumulator + src.head)
-      }
-    }
-  }
 
   def alphabetString = LiteraryGreekString.alphabetString
 
@@ -170,8 +160,6 @@ import scala.scalajs.js.annotation._
 * class's character encoding.
 */
 object LiteraryGreekString  extends MidOrthography {
-
-
 
   // required by MidOrthography trait
   def orthography: String = "Conventional modern orthography of literary Greek"
@@ -195,6 +183,46 @@ object LiteraryGreekString  extends MidOrthography {
   def tokenCategories : Vector[MidTokenCategory] = Vector(
     PunctuationToken, LexicalToken, NumericToken
   )
+
+
+  /** Create a [[LiteraryGreekString]] with no accent characters
+  * from an `ascii` String by recursively looking at the first character
+  * of the ascii string and adding it to a new string only if it is
+  * not an accent.
+  *
+  * @param src Remaining ascii String to strip accents from.
+  * @param accumulator String of non-accent characters accumulated so far.
+  *
+  */
+  private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
+    if (src.isEmpty) {
+      LiteraryGreekString(accumulator)
+
+    } else {
+      if (isAccent(src.head)) {
+        stripAccs(src.tail, accumulator)
+      } else {
+        stripAccs(src.tail, accumulator + src.head)
+      }
+    }
+  }
+
+
+  private def stripBreathings(src: String, accumulator: String): LiteraryGreekString = {
+
+
+    if (src.isEmpty) {
+      LiteraryGreekString(accumulator)
+
+    } else {
+
+      if (isBreathing(src.head)) {
+        stripBreathings(src.tail, accumulator)
+      } else {
+        stripBreathings(src.tail, accumulator + src.head)
+      }
+    }
+  }
 
   def punctuationString: String = {
     //"(),;:.?"

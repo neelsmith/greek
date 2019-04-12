@@ -497,11 +497,11 @@ import scala.scalajs.js.annotation._
       CodePointPair("","ῑ"), //8145
 
       CodePointPair("i\\+","ῒ"), //8146
-      //CodePointPair("i/+","ΐ"), //8147
+      CodePointPair("i/\\+","ΐ"), //8147
       //
       //
       CodePointPair("i=","ῖ"), //8150
-      CodePointPair("i=+","ῗ"), //8151
+      CodePointPair("i=\\+","ῗ"), //8151
 
       CodePointPair("","Ῐ"), //8152
       CodePointPair("","Ῑ"), //8153

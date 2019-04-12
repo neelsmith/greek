@@ -39,5 +39,17 @@ class LiteraryGreekStringSpec extends FlatSpec {
     assert(s1.ucode == expected)
   }
 
+  it should "be able to strip off breathings" in {
+    val s1 = LiteraryGreekString("e)/sti")
+    val expected = "e/sti"
+    assert(s1.stripBreathing.ascii == expected)
+  }
+
+  it should "be able to strip off breathings and accents in a single function" in {
+    val s1 = LiteraryGreekString("e)/sti")
+    val expected = "esti"
+    assert(s1.stripBreathingAccent.ascii == expected)
+  }
+
 
 }
