@@ -25,8 +25,29 @@ import java.text.Normalizer
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek {
+  val numericTick = '\u0374'
+
+  def milesianUcodeOf(s: String) : String = {
+    if (s.head.toInt > 127) {
+      Normalizer.normalize(s, Normalizer.Form.NFC)
+
+    } else {
+      LiteraryGreekString.asciiToUcode(s,"") + numericTick
+    }
+  }
 
 
+  def milesianAsciiOf (s: String): String = {
+    // catch special cases of stigma, qoppa and sampi
+    if (s.head.toInt > 127) {
+      val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
+      LiteraryGreekString.nfcToAscii(normalized,"")
+
+    } else {
+      // handle special cases
+      Normalizer.normalize(s + numericTick, Normalizer.Form.NFC)
+    }
+  }
 
 
   /** Create [[LiteraryGreekString]]'s `ascii` view of a String.

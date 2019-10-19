@@ -26,4 +26,6 @@ trait GreekNumeric  {
   val numericAlphabetString: String
 
   def toInt: Int
+
+  def toDouble: Double
 }
