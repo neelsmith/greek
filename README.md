@@ -1,8 +1,12 @@
 # `greek` library
 
+
+
 ## What it is
 
 `greek` is a cross-platform library for working with strings representing ancient Greek.
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master) Jupyter [notebooks illustrating usage](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master).
 
 ## Current version: 2.5.1
 
