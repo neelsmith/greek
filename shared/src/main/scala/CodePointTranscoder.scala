@@ -18,6 +18,9 @@ import scala.scalajs.js.annotation._
 */
 @JSExportAll  object CodePointTranscoder {
 
+  val leftCurly = "“"
+  val rightCurly = "”"
+  val emDash = "—"
 
 
   /** Find a single `ucode` code point, as a String, for a string of ASCII
@@ -108,11 +111,16 @@ import scala.scalajs.js.annotation._
 
     Vector(
 
-      CodePointPair(s"${numericTick}", s"${numericTick}"),
-      CodePointPair("“", "“"),
-      CodePointPair("”" , "”" ),
+      // Numeric values used in both ASCII and Unicode Milesian:
+      //
 
 
+      CodePointPair(MilesianNumeric.stigmaString, MilesianNumeric.stigmaString),
+      CodePointPair(MilesianNumeric.qoppaString, MilesianNumeric.qoppaString),
+      CodePointPair(MilesianNumeric.sampiString, MilesianNumeric.sampiString),
+      CodePointPair(leftCurly, leftCurly),
+      CodePointPair(rightCurly, rightCurly),
+      CodePointPair(emDash, emDash),
       CodePointPair("e=", "ê"),
       CodePointPair("o=", "ô"),
       //CodePointPair("*e)"," ̓Ε"),
@@ -126,7 +134,7 @@ import scala.scalajs.js.annotation._
       CodePointPair(":", ":"),
       CodePointPair(";", ";"),
       CodePointPair("'", "'"),
-      CodePointPair("—", "—"),
+      //CodePointPair("—", "—"),
       CodePointPair("\"", "\""),
 
       //CodePointPair("","Ͱ"), //880
@@ -236,15 +244,15 @@ import scala.scalajs.js.annotation._
       //CodePointPair("","ϖ"), //982
       //CodePointPair("","ϗ"), //983
       CodePointPair("","Ϙ"), //984
-      CodePointPair("","ϙ"), //985
+      //CodePointPair("","ϙ"), //985
       CodePointPair("","Ϛ"), //986
-      CodePointPair("","ϛ"), //987
+      //CodePointPair("","ϛ"), //987
       CodePointPair("","Ϝ"), //988
       CodePointPair("","ϝ"), //989
       CodePointPair("","Ϟ"), //990
       CodePointPair("","ϟ"), //991
       CodePointPair("","Ϡ"), //992
-      CodePointPair("","ϡ"), //993
+      //CodePointPair("","ϡ"), //993
 
       //CodePointPair("","ϰ"), //1008
       //CodePointPair("","ϱ"), //1009

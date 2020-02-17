@@ -20,6 +20,22 @@ class MilesianNumericSpec extends FlatSpec {
     assert(MilesianNumeric.MAX_INT > 0)
   }
 
+  it should "offer member values for hard-to-type Unicode characters" in {
+    val six = MilesianNumeric(MilesianNumeric.stigma + "")
+    //assert(six.toInt.get == 6)
+    //qoppa
+    //sampi
+    //MilesianNumeric.cp
+  }
+  it should "really do better with stigma" in {
+
+    val route1 = MilesianNumeric.toInt(MilesianNumeric.stigma).get
+    assert(route1 == 6)
+
+    val route2 = MilesianNumeric(MilesianNumeric.stigma + "").toInt.get
+    assert(route2 == 6)
+  }
+
   "A MilesianNumeric" should "recognize a simple integer string" in {
     val simpleInt = MilesianNumeric("a")
     assert(simpleInt.intString == "a")

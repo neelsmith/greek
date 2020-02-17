@@ -1,6 +1,9 @@
 # `greek` library: release notes
 
-**2.5.0**: implements usable functionality in the `MilesianNumeric` class and companion object for integer values up to MAX_INT = 999.
+**2.5.2**: fixes a bug in handling of numeric values for six, ninety and ninehundred in ASCII representation.
+
+
+**2.5.1**: implements usable functionality in the `MilesianNumeric` class and companion object for integer values up to MAX_INT = 999.
 
 **2.4.0**:  adds functions for stripping breathing from a `LiteraryGreekString`.  This is useful in applications like syllabification.
 

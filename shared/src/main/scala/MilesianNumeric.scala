@@ -132,10 +132,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
   val myriadCP = '\u039c'
   val stigma = '\u03DB'
+  val stigmaString = '\u03DB' + ""
   val upperStigma = '\u03DA'
   val qoppa = '\u03D9'
+  val qoppaString = '\u03D9' + ""
   val upperQoppa = '\u03D8'
   val sampi = '\u03E1'
+  val sampiString = '\u03E1' + ""
   val upperSampi = '\u03E0'
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order.
@@ -156,6 +159,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
   def toInt(s: String) : Option[Int] = {
     val cps = strToCps(s)
+    debug("cps from s: " + cps + " from " + s)
     val opts = cps.map(toInt(_))
     val total = opts.flatten.sum
     // what are appropriate checks and responses on bad characters?

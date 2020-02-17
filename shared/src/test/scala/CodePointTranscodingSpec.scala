@@ -33,7 +33,7 @@ class CodePointTranscodingSpec extends FlatSpec {
   }
 
   it should "accept quotation marks and em dashes as valid 'markup' characters in either encoding" in {
-    val markupChars = Vector("—","“",  "”")
+    val markupChars = Vector(CodePointTranscoder.emDash, CodePointTranscoder.leftCurly, CodePointTranscoder.rightCurly)
 
 
     var count = 0
