@@ -72,8 +72,6 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   }
 
 
-
-
   /** Unicode representation of integer component of this numeric.*/
   def  ucodeInt = {
     if (intString.isEmpty) { "" } else {
@@ -96,8 +94,10 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def numericAlphabetString = MilesianNumeric.numericAlphabetString
   def toDouble: Double = 0.0
 
-  def intStr = {
 
+
+  def toInt : Option[Int] = {
+    MilesianNumeric.toInt(asciiInt)
   }
 
 /*
@@ -121,10 +121,19 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   /** Unicode codepoint for numeric tick mark, as a String. */
   val numericTick: String = "ʹ"
 
+
+
   /** Double quote character is valid syntax in a  MilesianNumeric string
   * for the fractional, or secondary, segment of a String. */
   val seconds: String = "\""
 
+  val myriadCP = '\u039c'
+  val stigma = '\u03DB'
+  val upperStigma = '\u03DA'
+  val qoppa = '\u03D9'
+  val upperQoppa = '\u03D8'
+  val sampi = '\u03E1'
+  val upperSampi = '\u03E0'
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order.
   */
@@ -142,5 +151,62 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   //val chars = Vector('a','b','g','d','e','SIX')
 
 
+  def toInt(s: String) : Option[Int] = {
+    val cps = strToCps(s)
+    val opts = cps.map(toInt(_))
+    val total = opts.flatten.sum
+    // what are appropriate checks and responses on bad characters?
+    total match {
+      case 0 => None
+      case _ => Some(total)
+    }
 
+  }
+
+  /** Convert a code point to an integer if possible.
+  *
+  * @param Code point to convert.
+  */
+  def toInt(cp: Int) : Option[Int] = {
+    cp match {
+      case 'a' => Some(1)
+      case 'b' => Some(2)
+      case 'g' => Some(3)
+      case 'd' => Some(4)
+      case 'e' => Some(5)
+      case `stigma` => Some(6)
+      case `upperStigma` => Some(6)
+      case 'z' => Some(7)
+      case 'h' => Some(8)
+      case 'q' => Some(9)
+      case 'i' => Some(10)
+      case 'k' => Some(20)
+      case 'l' => Some(30)
+      case 'm' => Some(40)
+      case 'n' => Some(50)
+      case 'c' => Some(60)
+      case 'o' => Some(70)
+      case 'p' => Some(80)
+      case `qoppa` => Some(90)
+      case 'r' => Some(100)
+      case 's' => Some(200)
+      case 't' => Some(300)
+      case 'u' => Some(400)
+      case 'f' => Some(500)
+      case 'x' => Some(600)
+      case 'y' => Some(700)
+      case 'w' => Some(800)
+      case `sampi` => Some(900)
+      case _ => None
+    }
+  }
+/*
+  override def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
+   if (idx >= s.length) {
+     cpVector
+   } else {
+     val cp = s.codePointAt(idx)
+     strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
+   }
+ }*/
 }

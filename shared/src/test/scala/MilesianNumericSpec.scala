@@ -11,6 +11,10 @@ class MilesianNumericSpec extends FlatSpec {
     assert(MilesianNumeric.seconds == expectedSeconds)
   }
 
+  it should "define a character for myriad" in {
+    println(MilesianNumeric.myriadCP)
+  }
+
   "A MilesianNumeric" should "recognize a simple integer string" in {
     val simpleInt = MilesianNumeric("a")
     assert(simpleInt.intString == "a")
@@ -63,7 +67,26 @@ class MilesianNumericSpec extends FlatSpec {
     assert(one.ucode == expected)
   }
 
-  it should "produce an integer value for a numeric string" in pending
+  it should "produce an integer value for a single-digit numeric string" in {
+    val one = MilesianNumeric("a'")
+    assert (one.toInt.get == 1)
+  }
+  it should "produce an integer value for a two-digit numeric string" in {
+    val one = MilesianNumeric("ia'")
+    assert (one.toInt.get == 11)
+  }
+  it should "produce an integer value for a three-digit numeric string" in {
+    val one = MilesianNumeric("ra'")
+    assert (one.toInt.get == 101)
+  }
+
+  it should "ignore fractional components in convertint to an integer value" in {
+    val oneAndAThird = MilesianNumeric("a' g")
+    assert (oneAndAThird.toInt.get == 1)
+  }
+
+
+  
   it should "produce a double value for a numeric string" in pending
 
 }
