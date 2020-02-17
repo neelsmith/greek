@@ -19,7 +19,7 @@ import scala.scalajs.js.annotation._
 * system.
 */
 @JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] with LogSupport  {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  Logger.setDefaultLogLevel(LogLevel.INFO)
   require(str.nonEmpty, "Cannot create LiteraryGreekString from empty String")
 
   /** The ASCII representation of this string.
