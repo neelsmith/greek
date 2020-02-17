@@ -118,6 +118,9 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 */
 @JSExportAll object MilesianNumeric extends MidOrthography  with LogSupport {
 
+  /** Maximum integer value currently supported in numeric conversions.*/
+  val MAX_INT = 999
+
   /** Unicode codepoint for numeric tick mark, as a String. */
   val numericTick: String = "ʹ"
 

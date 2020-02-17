@@ -12,7 +12,12 @@ class MilesianNumericSpec extends FlatSpec {
   }
 
   it should "define a character for myriad" in {
-    println(MilesianNumeric.myriadCP)
+    val upperMu = 'Μ'
+    assert(MilesianNumeric.myriadCP == upperMu)
+  }
+
+  it should "define a MAX_INT value greater than 0" in {
+    assert(MilesianNumeric.MAX_INT > 0)
   }
 
   "A MilesianNumeric" should "recognize a simple integer string" in {
@@ -86,7 +91,7 @@ class MilesianNumericSpec extends FlatSpec {
   }
 
 
-  
+
   it should "produce a double value for a numeric string" in pending
 
 }
