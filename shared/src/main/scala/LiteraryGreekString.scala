@@ -5,6 +5,9 @@ import edu.holycross.shot.mid.validator._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 
+import wvlet.log._
+import wvlet.log.LogFormatter.SourceCodeLogFormatter
+
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
@@ -15,8 +18,8 @@ import scala.scalajs.js.annotation._
 * @param str A string in either the ascii or ucode representation of the [[LiteraryGreekString]]
 * system.
 */
-@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString]  {
-
+@JSExportAll  case class LiteraryGreekString(str: String) extends GreekString with  Ordered[GreekString] with LogSupport  {
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
   require(str.nonEmpty, "Cannot create LiteraryGreekString from empty String")
 
   /** The ASCII representation of this string.
@@ -159,7 +162,7 @@ import scala.scalajs.js.annotation._
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]
 * class's character encoding.
 */
-object LiteraryGreekString  extends MidOrthography {
+object LiteraryGreekString  extends MidOrthography with LogSupport {
 
   // required by MidOrthography trait
   def orthography: String = "Conventional modern orthography of literary Greek"
@@ -423,6 +426,7 @@ object LiteraryGreekString  extends MidOrthography {
   * in `ucode` view's encoding.
   */
   def asciiToUcode(ascii: String, ucode: String): String = {
+    debug("asciiToUcode? waht is a vs u " + ascii + " vs " + ucode)
     if (ascii.size == 0 ) {
       ucode
 

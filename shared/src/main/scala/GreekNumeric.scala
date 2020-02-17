@@ -23,9 +23,7 @@ trait GreekNumeric  {
   /** A single string listing all valid characters in the ASCII
   * representation of this system in their alphabetic order.
   */
-  val numericAlphabetString: String
-
-  def toInt: Int
+  def numericAlphabetString: String
 
   def toDouble: Double
 }

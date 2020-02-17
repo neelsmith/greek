@@ -1,6 +1,8 @@
 package edu.holycross.shot
 import java.text.Normalizer
 
+import wvlet.log._
+import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 /** Package for representing text in Ancient Greek, since the fundamental
 * assumption of Unicode that code points belong to a single language is wrong,
@@ -24,7 +26,8 @@ import java.text.Normalizer
 * of classes implementing the [[GreekString]] trait will only work correctly
 * for Unicode that is already normalized to Form NFC.
 */
-package object greek {
+package object greek extends LogSupport {
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
   val numericTick = '\u0374'
 
   def milesianUcodeOf(s: String) : String = {
@@ -32,7 +35,8 @@ package object greek {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
     } else {
-      LiteraryGreekString.asciiToUcode(s,"") + numericTick
+      debug("Create LiteraryGreekString of " + s)
+      LiteraryGreekString.asciiToUcode(s,"") //+ numericTick
     }
   }
 
@@ -45,7 +49,8 @@ package object greek {
 
     } else {
       // handle special cases
-      Normalizer.normalize(s + numericTick, Normalizer.Form.NFC)
+      Normalizer.normalize(s , Normalizer.Form.NFC)
+///        + numericTick
     }
   }
 
@@ -91,6 +96,10 @@ package object greek {
       }
 
     if (checkFirst.toInt > 127) {
+      Normalizer.normalize(s, Normalizer.Form.NFC)
+
+
+      // waht was all this about?
       /*
       if (s.head.toInt == 787){
         val asciified = CodePointTranscoder.asciiCodePoint(s.tail.head.toString) + ")" + literaryAsciiOf(s.tail.tail)
@@ -102,8 +111,6 @@ package object greek {
         //smoothUpperCase(s.tail.tail)
         Normalizer.normalize(s, Normalizer.Form.NFC)
       } else {*/
-        Normalizer.normalize(s, Normalizer.Form.NFC)
-      //}
 
 
     } else {

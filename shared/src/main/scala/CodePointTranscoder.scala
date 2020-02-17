@@ -100,13 +100,15 @@ import scala.scalajs.js.annotation._
 
   }
 
-
+  val numericTick = '\u0374'
   /** All recognized pairings of `ascii` String encodings
   * to `ucode` String encodings.  Ascii values must be unique.
   */
   def pairings =
+
     Vector(
 
+      CodePointPair(s"${numericTick}", s"${numericTick}"),
       CodePointPair("“", "“"),
       CodePointPair("”" , "”" ),
 
