@@ -11,9 +11,7 @@ import scala.scalajs.js.annotation._
 @JSExportAll case class CodePointPair(ascii: String, ucode: String)
 
 
-
-
-/** Manager for two-way mappings between ascii-based code point sequences
+/** Manager for two-way mappings between ascii-based character sequences
 * and code points in the Greek and Coptic or Extended Greek blocks of Unicode.
 */
 @JSExportAll  object CodePointTranscoder {
@@ -114,6 +112,8 @@ import scala.scalajs.js.annotation._
       // Numeric values used in both ASCII and Unicode Milesian:
       //
 
+      CodePointPair("½", MilesianNumeric.halfString),
+      CodePointPair("⅓", MilesianNumeric.twoThirdsString),
 
       CodePointPair(MilesianNumeric.stigmaString, MilesianNumeric.stigmaString),
       CodePointPair(MilesianNumeric.qoppaString, MilesianNumeric.qoppaString),

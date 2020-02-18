@@ -92,9 +92,14 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   }
 
   def numericAlphabetString = MilesianNumeric.numericAlphabetString
-  def toDouble: Double = 0.0
 
+  def toDouble: Double = {
+    toInt.getOrElse(0) + fract.getOrElse(0.0)
+  }
 
+  def fract: Option[Double] = {
+    MilesianNumeric.fract(asciiFract)
+  }
 
   def toInt : Option[Int] = {
     MilesianNumeric.toInt(asciiInt)
@@ -117,6 +122,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * class's character encoding.
 */
 @JSExportAll object MilesianNumeric extends MidOrthography  with LogSupport {
+  Logger.setDefaultLogLevel(LogLevel.INFO)
 
   /** Maximum integer value currently supported in numeric conversions.*/
   val MAX_INT = 999
@@ -124,13 +130,14 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   /** Unicode codepoint for numeric tick mark, as a String. */
   val numericTick: String = "ʹ"
 
-
-
   /** Double quote character is valid syntax in a  MilesianNumeric string
   * for the fractional, or secondary, segment of a String. */
   val seconds: String = "\""
 
+  val ouden = 'Ο' // upper-case Omicron
+  val oudenString = "Ο" // upper-case Omicron
   val myriadCP = '\u039c'
+  val myriadString = myriadCP + ""
   val stigma = '\u03DB'
   val stigmaString = '\u03DB' + ""
   val upperStigma = '\u03DA'
@@ -140,6 +147,10 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   val sampi = '\u03E1'
   val sampiString = '\u03E1' + ""
   val upperSampi = '\u03E0'
+
+  val halfString = "𐅵"
+  val twoThirdsString = "𐅷"
+
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order.
   */
@@ -153,9 +164,6 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def tokenCategories: Vector[MidTokenCategory] = Vector.empty[MidTokenCategory]
 
   def tokenizeNode (cn: CitableNode) : Vector[MidToken]  = Vector.empty[MidToken]
-  /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
-  //val chars = Vector('a','b','g','d','e','SIX')
-
 
   def toInt(s: String) : Option[Int] = {
     val cps = strToCps(s)
@@ -167,7 +175,22 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
       case 0 => None
       case _ => Some(total)
     }
+  }
 
+
+  def fract(s: String): Option[Double] = {
+    debug("FRACT FROM " + s)
+    val pieces = s.split("[\\s]+").toVector
+    val subTotals = pieces.map(piece => toInt(piece)).flatten
+    debug("From str " + s + " subTotals " + subTotals)
+    if (subTotals.isEmpty) {
+      None
+
+    } else {
+      debug("subTotals : "  + subTotals)
+      val total = subTotals.map(i => 1.0 / i)
+      Some(total.sum)
+    }
   }
 
   /** Convert a code point to an integer if possible.
@@ -207,13 +230,5 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
       case _ => None
     }
   }
-/*
-  override def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
-   if (idx >= s.length) {
-     cpVector
-   } else {
-     val cp = s.codePointAt(idx)
-     strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
-   }
- }*/
+
 }
