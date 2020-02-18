@@ -16,9 +16,18 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * @param str A string in either the ascii or ucode representation of the [[GreekNumeric]]
 * system.
 */
-@JSExportAll  case class MilesianNumeric(str: String) extends GreekNumeric with  Ordered[GreekNumeric] {
+@JSExportAll  case class MilesianNumeric(str: String) extends GreekNumeric with  Ordered[GreekNumeric] with LogSupport {
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
-  def expandedFractions = str.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ")
+
+  // DETERMINE WHETHER TO SUB b or β
+  def expandedFractions = if (isAscii(str)) {
+    str.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ")
+  } else {
+    str.replaceAll(MilesianNumeric.halfString, "β ").replaceAll(MilesianNumeric.twoThirdsString, "β " + MilesianNumeric.stigma + " ")
+  }
+
+
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
@@ -84,6 +93,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   /** Unicode representation of fractional component of this numeric.*/
   def ucodeFract = {
     if (fractString.isEmpty) { "" } else {
+      debug("Get ucode of fract " + fractString)
       milesianUcodeOf(fractString) +"\""
     }
   }

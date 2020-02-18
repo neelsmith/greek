@@ -1,6 +1,8 @@
 # `greek` library: release notes
 
 
+**2.6.1**: fixes a bug in transcoding of numeric expressions mixing ASCII with codepoints BMP.
+
 **2.6.0**: adds support for minutes in `MilesianNumeric` class.
 
 

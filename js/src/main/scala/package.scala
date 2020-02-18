@@ -29,13 +29,20 @@ import scala.scalajs.js
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek {
+
+  @JSExport def isAscii(s: String): Boolean = {
+    val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
+    asciiAlphas.contains(true)
+  }
+
+
   @JSExport def milesianAsciiOf (s: String): String = {
-    if (s.head.toInt > 127) {
-      // Probably ONLY WORKS FOR Unicode in form NFC
-      LiteraryGreekString.nfcToAscii(s,"")
+
+    if (isAscii(s)) {
+      s
 
     } else {
-      s
+      LiteraryGreekString.nfcToAscii(s,"")
     }
   }
 

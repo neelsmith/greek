@@ -30,6 +30,13 @@ package object greek extends LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
   val numericTick = '\u0374'
 
+
+
+  def isAscii(s: String): Boolean = {
+    val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
+    asciiAlphas.contains(true)
+  }
+
   def milesianUcodeOf(s: String) : String = {
     if (s.head.toInt > 127) {
       Normalizer.normalize(s, Normalizer.Form.NFC)
@@ -39,6 +46,7 @@ package object greek extends LogSupport {
       LiteraryGreekString.asciiToUcode(s,"") //+ numericTick
     }
   }
+
 
 
   def milesianAsciiOf (s: String): String = {

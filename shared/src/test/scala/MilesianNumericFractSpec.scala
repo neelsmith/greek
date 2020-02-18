@@ -3,6 +3,7 @@ import org.scalatest.FlatSpec
 
 
 class MilesianNumericFractSpec extends FlatSpec {
+// MilesianNumeric(ιβ' 𐅵 γ")
 
   "The MilesianNumeric object"  should "recognize symbols for half and third" in {
     val half = MilesianNumeric(MilesianNumeric.halfString + "\"")
@@ -33,6 +34,12 @@ class MilesianNumericFractSpec extends FlatSpec {
     assert(hemiolon.toDouble == 9.75)
   }
 
+  it should "handle accepted unicode characters from BMP" in {
+    val twelvePoint8 = MilesianNumeric("ιβ' 𐅵 γ\"")
+    val expectedUcode = "ιβʹβ  γ\""
 
+    println(twelvePoint8.expandedFractions)
+    assert(twelvePoint8.ucode == expectedUcode)
+  }
 
 }
