@@ -18,10 +18,12 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 */
 @JSExportAll  case class MilesianNumeric(str: String) extends GreekNumeric with  Ordered[GreekNumeric] {
 
+  def expandedFractions = str.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ")
+
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
   def unicodeTickString = {
-    str.replaceFirst("'", MilesianNumeric.numericTick)
+    expandedFractions.replaceFirst("'", MilesianNumeric.numericTick)
   }
 
   /** Split string into integer versus fractional parts.

@@ -1,5 +1,9 @@
 # `greek` library: release notes
 
+
+**2.6.0**: adds support for minutes in `MilesianNumeric` class.
+
+
 **2.5.2**: fixes a bug in handling of numeric values for six, ninety and ninehundred in ASCII representation.
 
 

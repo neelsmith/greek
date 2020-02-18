@@ -108,6 +108,4 @@ class MilesianNumericSpec extends FlatSpec {
 
 
 
-  it should "produce a double value for a numeric string" in pending
-
 }

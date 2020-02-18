@@ -8,7 +8,7 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master) Jupyter [notebooks illustrating usage](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master).
 
-## Current version: 2.5.1
+## Current version: 2.6.0
 
 Status:  **active development**. [Release notes](releases.md). Get automatic nofication of new binary releases from jcenter:
 
