@@ -20,7 +20,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
-  def partial: Option[MilesianPartial] = None
+  
   def partialDouble: Option[Double] = doublePrecision(3)
   def doublePrecision(digits: Int = 3): Option[Double]  = None
   def stringParts: (String, String) = ("","")

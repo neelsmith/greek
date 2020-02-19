@@ -21,7 +21,7 @@ class MilesianNumericSpec extends FlatSpec {
   }
 
   it should "offer member values for hard-to-type Unicode characters" in {
-    val six = MilesianNumeric(MilesianNumeric.stigma + "")
+    val six = MilesianWithFraction(MilesianNumeric.stigma + "")
     //assert(six.toInt.get == 6)
     //qoppa
     //sampi
@@ -32,77 +32,77 @@ class MilesianNumericSpec extends FlatSpec {
     val route1 = MilesianNumeric.toInt(MilesianNumeric.stigma).get
     assert(route1 == 6)
 
-    val route2 = MilesianNumeric(MilesianNumeric.stigma + "").toInt.get
+    val route2 = MilesianWithFraction(MilesianNumeric.stigma + "").toInt.get
     assert(route2 == 6)
   }
 
   "A MilesianNumeric" should "recognize a simple integer string" in {
-    val simpleInt = MilesianNumeric("a")
+    val simpleInt = MilesianWithFraction("a")
     assert(simpleInt.intString == "a")
-    assert(simpleInt.fractString.isEmpty)
+    assert(simpleInt.partialString.isEmpty)
   }
   it should "recognize a simple integer including numeric tick" in {
-    val tickedInt = MilesianNumeric("a'")
+    val tickedInt = MilesianWithFraction("a'")
     assert(tickedInt.intString == "a")
-    assert(tickedInt.fractString.isEmpty)
+    assert(tickedInt.partialString.isEmpty)
   }
   it should "accept unicode tick point as tick mark" in {
-    val tickedInt = MilesianNumeric(s"a${MilesianNumeric.numericTick}")
+    val tickedInt = MilesianWithFraction(s"a${MilesianNumeric.numericTick}")
     assert(tickedInt.intString == "a")
-    assert(tickedInt.fractString.isEmpty)
+    assert(tickedInt.partialString.isEmpty)
   }
 
   it should "correctly split integer and fractional components" in {
-    val tickedInt = MilesianNumeric("a' γ")
+    val tickedInt = MilesianWithFraction("a' γ")
     assert(tickedInt.intString == "a")
-    assert(tickedInt.fractString == "γ")
+    assert(tickedInt.partialString == "γ")
   }
 
   it should "correctly split integer and fractional components including optional seconds marker" in {
-    val tickedInt = MilesianNumeric("a' γ\"")
+    val tickedInt = MilesianWithFraction("a' γ\"")
     assert(tickedInt.intString == "a")
-    assert(tickedInt.fractString == "γ")
+    assert(tickedInt.partialString == "γ")
   }
 
   it should "correctly split integer and fractional components using unicode tick mark" in {
-    val tickedInt = MilesianNumeric(s"a${MilesianNumeric.numericTick} γ")
+    val tickedInt = MilesianWithFraction(s"a${MilesianNumeric.numericTick} γ")
     assert(tickedInt.intString == "a")
-    assert(tickedInt.fractString == "γ")
+    assert(tickedInt.partialString == "γ")
   }
 
   it should "recognize a simple fractional value" in {
-    val third = MilesianNumeric("γ\"")
+    val third = MilesianWithFraction("γ\"")
     assert (third.intString.isEmpty)
-    assert (third.fractString == "γ")
+    assert (third.partialString == "γ")
   }
 
   it should "produce an ascii encoding of an ASCII Milesian string for an integer" in{
-    val one = MilesianNumeric("aʹ")
+    val one = MilesianWithFraction("aʹ")
     val expected = "aʹ"
     assert(one.ascii == expected)
   }
 
   it  should "produce a unicode encoding of ASCII Milesian string for an integer" in {
-    val one = MilesianNumeric("a'")
+    val one = MilesianWithFraction("a'")
     val expected = s"α${MilesianNumeric.numericTick}"
     assert(one.ucode == expected)
   }
 
   it should "produce an integer value for a single-digit numeric string" in {
-    val one = MilesianNumeric("a'")
+    val one = MilesianWithFraction("a'")
     assert (one.toInt.get == 1)
   }
   it should "produce an integer value for a two-digit numeric string" in {
-    val one = MilesianNumeric("ia'")
+    val one = MilesianWithFraction("ia'")
     assert (one.toInt.get == 11)
   }
   it should "produce an integer value for a three-digit numeric string" in {
-    val one = MilesianNumeric("ra'")
+    val one = MilesianWithFraction("ra'")
     assert (one.toInt.get == 101)
   }
 
   it should "ignore fractional components in convertint to an integer value" in {
-    val oneAndAThird = MilesianNumeric("a' g")
+    val oneAndAThird = MilesianWithFraction("a' g")
     assert (oneAndAThird.toInt.get == 1)
   }
 

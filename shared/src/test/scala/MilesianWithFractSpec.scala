@@ -3,9 +3,9 @@ import org.scalatest.FlatSpec
 
 
 class MilesianWithFractSpec extends FlatSpec {
-// MilesianNumeric(ιβ' 𐅵 γ")
+// MilesianWithFraction(ιβ' 𐅵 γ")
 
-  "The MilesianNumeric object"  should "split strings into integer and fractional components" in {
+  "The MilesianWithFraction object"  should "split strings into integer and fractional components" in {
     val s = "ιβ' 𐅵 γ\""
     val fract = MilesianWithFraction(s)
     val expected = ("ιβ", "β  γ")
@@ -49,18 +49,18 @@ class MilesianWithFractSpec extends FlatSpec {
   }
 
   it should "accumulate unit fractions" in {
-    val threeQuarters = MilesianNumeric("b d\"")
+    val threeQuarters = MilesianWithFraction("b d\"")
     assert(threeQuarters.toDouble == 0.75)
   }
 
 
   it should "correctly combine int and fract parts" in {
-    val hemiolon = MilesianNumeric("q' b d\"")
+    val hemiolon = MilesianWithFraction("q' b d\"")
     assert(hemiolon.toDouble == 9.75)
   }
 
   it should "handle accepted unicode characters from BMP" in {
-    val twelvePoint8 = MilesianNumeric("ιβ' 𐅵 γ\"")
+    val twelvePoint8 = MilesianWithFraction("ιβ' 𐅵 γ\"")
     val expectedUcode = "ιβʹβ  γ\""
 
     println(twelvePoint8.expandedFractions)
