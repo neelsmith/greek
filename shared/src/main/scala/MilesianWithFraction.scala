@@ -17,15 +17,31 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial with  Ordered[GreekNumeric] with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
 
   def partial: Option[MilesianPartial] = None
 
-
-  def asciiPartial: String = ""
-  def ucodePartial: String = ""
   def numericAlphabetString = ""
+
+  /** Ascii encoding of fractional component with
+  * conventional "seconds" mark (double quote). */
+  def asciiPartial: String = {
+    debug("Encode as ascii: " + partialString)
+    if (partialString.isEmpty) { "" } else {
+      milesianAsciiOf(partialString) +"\""
+    }
+  }
+
+
+  /** Encoding of fractional component using Unicode
+  * Greek code points, with conventional "seconds" mark
+  * (double quote).*/
+  def ucodePartial: String = {
+    if (partialString.isEmpty) { "" } else {
+      milesianUcodeOf(partialString) +"\""
+    }
+  }
 
   override def compare(that: GreekNumeric): Int = {
     this.toDouble compare that.toDouble
@@ -34,9 +50,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   /** Substitute expanded fractional representation for shorthand 1/2 and 2/3
   * characters. */
   def expandedFractions = if (isAscii(str)) {
-    str.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ")
+    val trimmed = str.trim.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ").trim
+    debug("Trimmed ascii: #" + trimmed + "#")
+    trimmed
   } else {
-    str.replaceAll(MilesianNumeric.halfString, "β ").replaceAll(MilesianNumeric.twoThirdsString, "β " + MilesianNumeric.stigma + " ")
+    val trimmed = str.trim.replaceAll(MilesianNumeric.halfString, "β ").replaceAll(MilesianNumeric.twoThirdsString, "β " + MilesianNumeric.stigma + " ").trim
+    debug("Trimmed: #" + trimmed + "#")
+    trimmed
   }
 
 
@@ -51,14 +71,16 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     segments.size match {
       case 1 => {
         if (segments(0).contains("\"")) {
-          ("", segments(0).trim.replaceFirst("\"", ""))
+          ("", segments(0).trim.replaceFirst("\"", "").trim)
         } else {
           (segments(0).trim, "")
         }
       }
-      case 2 => (segments(0).trim, segments(1).trim.replaceFirst("\"", ""))
+      case 2 => (segments(0).trim, segments(1).trim.replaceFirst("\"", "").trim)
     }
   }
-
+  def unicodeTickString : String = {
+    expandedFractions.replaceFirst("'", MilesianNumeric.numericTick)
+  }
 
 }

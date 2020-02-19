@@ -8,18 +8,39 @@ class MilesianWithFractSpec extends FlatSpec {
   "The MilesianNumeric object"  should "split strings into integer and fractional components" in {
     val s = "ιβ' 𐅵 γ\""
     val fract = MilesianWithFraction(s)
-    val expected = ("ιβ", "𐅵 γ")
+    val expected = ("ιβ", "β  γ")
     assert(fract.stringParts == expected)
   }
 
+  it should "expand strings for short-hand characters" in {
+    val half = MilesianWithFraction(MilesianNumeric.halfString + "\"")
+    assert(half.expandedFractions == "β \"")
+  }
 
-  it should "recognize symbols for half and third" in pending /*{
+  it should "trim white space in splitting into parts" in {
+    val half = MilesianWithFraction(MilesianNumeric.halfString + "\"")
+    assert(half.asciiPartial == "b\"")
+    assert(half.ucodePartial == "β\"")
+
+    val twoThirds = MilesianWithFraction(MilesianNumeric.twoThirdsString + "\"")
+    assert(twoThirds.asciiPartial == "b ϛ\"")
+    assert(twoThirds.ucodePartial == "β ϛ\"")
+  }
+
+
+  it should "recognize symbols for half and third" in  {
     val half = MilesianWithFraction(MilesianNumeric.halfString + "\"")
     val twoThirds = MilesianWithFraction(MilesianNumeric.twoThirdsString + "\"")
     println( Vector(half.ascii, half.ucode, half.toDouble).mkString(" == ") )
     println (Vector(twoThirds.ascii, twoThirds.ucode, twoThirds.toDouble).mkString(" == ") )
+
+    assert(twoThirds.ucode == "β ϛ\"")
+    assert(half.ucode == "β\"")
+    assert(half.ascii == "b\"")
+    assert(twoThirds.ascii == "b ϛ\"")
+
   }
-*/
+
 /*
   it should "convert fracts to doubles" in {
     val half = MilesianNumeric("b d\"")

@@ -20,14 +20,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
-
   def partial: Option[MilesianPartial] = None
 
   def stringParts: (String, String) = ("","")
   def asciiPartial: String = ""
   def ucodePartial: String = ""
-  def numericAlphabetString = ""
-
+  def numericAlphabetString: String = ""
+  def unicodeTickString : String = ""
   override def compare(that: GreekNumeric): Int = {
     this.toDouble compare that.toDouble
   }

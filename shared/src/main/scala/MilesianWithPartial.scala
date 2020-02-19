@@ -43,9 +43,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
-  def unicodeTickString = {
-    str.replaceFirst("'", MilesianNumeric.numericTick)
-  }
+  def unicodeTickString : String 
 
   /** Integer component, if any, of raw String.
   * If no integer component, this value is an empty String.*/

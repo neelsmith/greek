@@ -27,7 +27,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
   val numericTick = '\u0374'
 
 
@@ -50,6 +50,7 @@ package object greek extends LogSupport {
 
 
   def milesianAsciiOf (s: String): String = {
+    debug("milesianAsciiOf " + s)
     // catch special cases of stigma, qoppa and sampi
     //val flagged = s.replaceAll(MilesianNumeric.sigmaString,"STIGMA").replaceAll(MilesianNumeric.qoppaString,"QOPPA").replaceAll
 
