@@ -449,10 +449,13 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   * @param ascii String of `ascii` view accumulated so far.
   */
   def nfcToAscii(ucode: String, ascii: String): String = {
+    debug("nfcToAscii: " + ucode + " and " + ascii)
     if (ucode.size == 0 ) {
+      debug("going with provided ascii " + ascii)
       ascii
 
     } else if (ucode.size == 1) {
+      debug("transcoding ucode " + ucode)
       ascii +  CodePointTranscoder.asciiCodePoint(ucode)
 
     } else {

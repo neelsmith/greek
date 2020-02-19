@@ -38,6 +38,8 @@ class MilesianWithFractSpec extends FlatSpec {
     assert(half.ucode == "β\"")
     assert(half.ascii == "b\"")
     assert(twoThirds.ascii == "b ϛ\"")
+    assert(half.toDouble == 0.5)
+    assert(twoThirds.toDouble == 0.667)
 
   }
 

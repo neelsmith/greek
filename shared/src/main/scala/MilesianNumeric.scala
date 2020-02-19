@@ -17,7 +17,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianNumeric(str: String) extends GreekNumeric with  Ordered[GreekNumeric] with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
   // DETERMINE WHETHER TO SUB b or β
@@ -190,7 +190,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   }
 
 
-  def fract(s: String): Option[Double] = {
+  def fract(s: String, digits: Int = 3): Option[Double] = {
     debug("FRACT FROM " + s)
     val pieces = s.split("[\\s]+").toVector
     val subTotals = pieces.map(piece => toInt(piece)).flatten
@@ -201,7 +201,8 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     } else {
       debug("subTotals : "  + subTotals)
       val total = subTotals.map(i => 1.0 / i)
-      Some(total.sum)
+      val rounded = BigDecimal(total.sum).setScale(digits, BigDecimal.RoundingMode.HALF_UP).toDouble
+      Some(rounded)
     }
   }
 

@@ -16,20 +16,25 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * @param str A string in either the ascii or ucode representation of the [[GreekNumeric]]
 * system.
 */
-@JSExportAll  case class MilesianWithSexagesimal(str: String) extends MilesianWithPartial with  Ordered[GreekNumeric] with LogSupport {
+@JSExportAll  case class MilesianSexagesimal(str: String) extends MilesianPartial  with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
+  /** Integer component, if any, of submitted String.
+  * If no integer component, this value is an empty String.*/
+  def partialString = str.trim
 
-  def partial: Option[MilesianPartial] = None
-  def partialDouble: Option[Double] = None
-  def stringParts: (String, String) = ("","")
-  def asciiPartial: String = ""
-  def ucodePartial: String = ""
-  def numericAlphabetString: String = ""
-  def unicodeTickString : String = ""
-  override def compare(that: GreekNumeric): Int = {
-    this.toDouble compare that.toDouble
+  /** Ascii representation of this numeric.*/
+  def ascii: String = {
+      milesianAsciiOf(str) +"\""
   }
 
+  /** Unicode representation of this numeric.*/
+  def ucode: String = {
+    milesianUcodeOf(str) +"\""
+  }
+
+  def toDouble: Double = {
+    0.0
+  }
 
 }

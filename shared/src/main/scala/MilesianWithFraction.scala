@@ -17,8 +17,11 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial with  Ordered[GreekNumeric] with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  Logger.setDefaultLogLevel(LogLevel.INFO)
 
+  def partialDouble: Option[Double] = {
+    MilesianNumeric.fract(asciiPartial)
+  }
 
   def partial: Option[MilesianPartial] = None
 
@@ -79,8 +82,12 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
       case 2 => (segments(0).trim, segments(1).trim.replaceFirst("\"", "").trim)
     }
   }
+
   def unicodeTickString : String = {
     expandedFractions.replaceFirst("'", MilesianNumeric.numericTick)
   }
+
+
+
 
 }

@@ -39,11 +39,11 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   /** Unicode representation of fractional component of this numeric.*/
   def ucodePartial: String
 
-  def partialDouble: Option[Double] =  None
+  def partialDouble: Option[Double]
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
-  def unicodeTickString : String 
+  def unicodeTickString : String
 
   /** Integer component, if any, of raw String.
   * If no integer component, this value is an empty String.*/
