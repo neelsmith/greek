@@ -39,7 +39,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   /** Unicode representation of fractional component of this numeric.*/
   def ucodePartial: String
 
-  def partialDouble: Option[Double]
+  def partialDouble(digits: Int = 3): Option[Double]
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
@@ -78,10 +78,12 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   }
 
   def toDouble: Double = {
-    toInt.getOrElse(0) + partialDouble.getOrElse(0.0)
+    toInt.getOrElse(0) + partialDouble().getOrElse(0.0)
   }
 
-
+  def toDouble(digits: Int): Double = {
+    toInt.getOrElse(0) + partialDouble(digits).getOrElse(0.0)
+  }
 
 
   /** Int value, if any, for this Milesian numeric.*/

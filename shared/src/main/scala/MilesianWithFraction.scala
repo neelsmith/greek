@@ -19,8 +19,8 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 @JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial with  Ordered[GreekNumeric] with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
-  def partialDouble: Option[Double] = {
-    MilesianNumeric.fract(asciiPartial)
+  def partialDouble(digits: Int = 3): Option[Double] = {
+    MilesianNumeric.fract(asciiPartial, digits)
   }
 
   def partial: Option[MilesianPartial] = None

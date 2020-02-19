@@ -40,7 +40,12 @@ class MilesianWithFractSpec extends FlatSpec {
     assert(twoThirds.ascii == "b ϛ\"")
     assert(half.toDouble == 0.5)
     assert(twoThirds.toDouble == 0.667)
+  }
 
+  it should "support specifiying precision of fractions" in {
+    val twoThirds = MilesianWithFraction(MilesianNumeric.twoThirdsString + "\"")
+    assert(twoThirds.toDouble(4) == 0.6667)
+    assert(twoThirds.toDouble(5) == 0.66667)
   }
 
 /*

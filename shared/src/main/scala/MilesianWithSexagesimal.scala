@@ -22,6 +22,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
   def partial: Option[MilesianPartial] = None
   def partialDouble: Option[Double] = None
+  def partialDouble(digits: Int = 3): Option[Double]  = None
   def stringParts: (String, String) = ("","")
   def asciiPartial: String = ""
   def ucodePartial: String = ""
