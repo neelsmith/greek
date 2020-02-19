@@ -44,8 +44,8 @@ class MilesianWithFractSpec extends FlatSpec {
 
   it should "support specifiying precision of fractions" in {
     val twoThirds = MilesianWithFraction(MilesianNumeric.twoThirdsString + "\"")
-    assert(twoThirds.toDouble(4) == 0.6667)
-    assert(twoThirds.toDouble(5) == 0.66667)
+    assert(twoThirds.doublePrecision(4).get == 0.6667)
+    assert(twoThirds.doublePrecision(5).get == 0.66667)
   }
 
   it should "accumulate unit fractions" in {
