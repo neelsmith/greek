@@ -19,18 +19,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
-  def partial: Option[MilesianPartial]
 
   /** Raw string value allowed in constructoin of Milesian values.*/
   def str: String
 
-
   override def compare(that: GreekNumeric): Int = {
     this.toDouble compare that.toDouble
   }
-
-  def int: Option[MilesianInteger] = None
-
 
   /** Split string into integer versus partial components. */
   def stringParts: (String, String)
@@ -39,7 +34,13 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   /** Unicode representation of fractional component of this numeric.*/
   def ucodePartial: String
 
-  def partialDouble(digits: Int = 3): Option[Double]
+  /** Double value to a given precision for partial component of numeric.
+  *
+  * @param Number of significant digits to right of decimal.
+  */
+  //def partialDouble(digits: Int): Option[Double]
+
+  def partialDouble: Option[Double]
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
@@ -78,12 +79,13 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   }
 
   def toDouble: Double = {
-    toInt.getOrElse(0) + partialDouble().getOrElse(0.0)
+    toInt.getOrElse(0) + partialDouble.getOrElse(0.0)
   }
 
+/*
   def toDouble(digits: Int): Double = {
     toInt.getOrElse(0) + partialDouble(digits).getOrElse(0.0)
-  }
+  }*/
 
 
   /** Int value, if any, for this Milesian numeric.*/

@@ -16,14 +16,16 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * @param str A string in either the ascii or ucode representation of the [[GreekNumeric]]
 * system.
 */
-@JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial with  Ordered[GreekNumeric] with LogSupport {
+@JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial  with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
-  def partialDouble(digits: Int = 3): Option[Double] = {
+  def doublePrecision(digits: Int): Option[Double] = {
     MilesianNumeric.fract(asciiPartial, digits)
   }
 
-  def partial: Option[MilesianPartial] = None
+  def partialDouble : Option[Double] = {
+    doublePrecision(3)
+  }
 
   def numericAlphabetString = ""
 
@@ -86,8 +88,5 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def unicodeTickString : String = {
     expandedFractions.replaceFirst("'", MilesianNumeric.numericTick)
   }
-
-
-
 
 }
