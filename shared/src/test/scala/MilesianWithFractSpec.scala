@@ -48,22 +48,11 @@ class MilesianWithFractSpec extends FlatSpec {
     assert(twoThirds.toDouble(5) == 0.66667)
   }
 
-/*
-  it should "convert fracts to doubles" in {
-    val half = MilesianNumeric("b d\"")
-    println(half + " == " + half.toDouble)
-  }
-
   it should "accumulate unit fractions" in {
     val threeQuarters = MilesianNumeric("b d\"")
     assert(threeQuarters.toDouble == 0.75)
   }
 
-  it should "accumulate unit fractions for two thirds" in {
-    val twoThirds = MilesianNumeric("b " + MilesianNumeric.stigma + "\"")
-    //assert(twoThirds.toDouble == 0.75)
-    println(twoThirds.ucode + " = " + twoThirds.toDouble)
-  }
 
   it should "correctly combine int and fract parts" in {
     val hemiolon = MilesianNumeric("q' b d\"")
@@ -76,6 +65,7 @@ class MilesianWithFractSpec extends FlatSpec {
 
     println(twelvePoint8.expandedFractions)
     assert(twelvePoint8.ucode == expectedUcode)
+    assert(twelvePoint8.toDouble == 12.833)
   }
-*/
+
 }
