@@ -19,12 +19,34 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 @JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial  with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
+
+  /** Find [[MilesianInteger]] object, if any, that
+  * is part of the fractional expression.
+  */
+  def intOpt : Option[MilesianInteger] = {
+    if (stringParts._1.isEmpty) {
+      None
+    } else {
+      Some(MilesianInteger(stringParts._1))
+    }
+  }
+
+
+  /** Compute value of this expression as a Double to
+  * a specified number of significant decimal points.
+  *
+  * @param digits Significant digits to the right of
+  * the decimal point.
+  */
   def doublePrecision(digits: Int): Option[Double] = {
     MilesianNumeric.fract(asciiPartial, digits)
   }
 
-  def partialDouble : Option[Double] = {
-    doublePrecision(3)
+
+  /** Find the value of this expression as a Double, if any.
+  */
+  def partialDouble : Double = {
+    doublePrecision(3).getOrElse(0.0)
   }
 
   def numericAlphabetString = ""

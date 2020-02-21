@@ -20,6 +20,8 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
+  def intOpt : Option[MilesianInteger]
+
   /** Raw string value allowed in constructoin of Milesian values.*/
   def str: String
 
@@ -40,7 +42,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   */
   //def partialDouble(digits: Int): Option[Double]
 
-  def partialDouble: Option[Double]
+  def partialDouble: Double
 
   /** Permit keyboard entry of single quote as numeric tick mark,
   * but replace with proper Unicode code point.*/
@@ -55,10 +57,16 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   def partialString = stringParts._2.trim
 
   /** Ascii representation of integer component of this numeric.*/
-  def asciiInt = {
-    if (intString.isEmpty) { "" } else {
+  def asciiInt : String= {
+
+    intOpt match {
+      case None => ""
+      case  Some(milInt) => milInt.ascii
+    }
+  /*  if (intString.isEmpty) { "" } else {
       milesianAsciiOf(intString) + MilesianNumeric.numericTick
     }
+    */
   }
 
   /** Ascii representation of this numeric.*/
@@ -79,18 +87,19 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   }
 
   def toDouble: Double = {
-    toInt.getOrElse(0) + partialDouble.getOrElse(0.0)
+    toInt + partialDouble
   }
 
-/*
-  def toDouble(digits: Int): Double = {
-    toInt.getOrElse(0) + partialDouble(digits).getOrElse(0.0)
-  }*/
-
-
   /** Int value, if any, for this Milesian numeric.*/
-  def toInt : Option[Int] = {
-    MilesianNumeric.toInt(asciiInt)
+  def toInt : Int = {
+
+    debug("Try to use point method on " + intOpt)
+    intOpt match {
+      case None => 0
+      case Some(milInt) => milInt.toInt
+    }
+
+    //MilesianNumeric.toInt(asciiInt)
   }
 
 }

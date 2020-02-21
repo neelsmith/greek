@@ -5,12 +5,30 @@ import org.scalatest.FlatSpec
 class MilesianWithFractSpec extends FlatSpec {
 // MilesianWithFraction(ιβ' 𐅵 γ")
 
-  "The MilesianWithFraction object"  should "split strings into integer and fractional components" in {
+  "The MilesianWithFraction object"  should "split strings into integer and fractional components" in  {
     val s = "ιβ' 𐅵 γ\""
     val fract = MilesianWithFraction(s)
     val expected = ("ιβ", "β  γ")
     assert(fract.stringParts == expected)
   }
+
+  it should "correctly parse integers and fractions with no separating space" in  {
+     val hemiolon = MilesianWithFraction("a'" + MilesianNumeric.halfString + "\"")
+     println(hemiolon.ucode + " = " + hemiolon.toDouble)
+  }
+
+
+
+  it should "handle accepted unicode characters from BMP" in {
+    val twelvePoint8 = MilesianWithFraction("ιβ' 𐅵 γ\"")
+    val expectedUcode = "ιβʹβ  γ\""
+
+    println(twelvePoint8.expandedFractions)
+    assert(twelvePoint8.ucode == expectedUcode)
+    assert(twelvePoint8.toDouble == 12.833)
+  }
+
+
 
   it should "expand strings for short-hand characters" in {
     val half = MilesianWithFraction(MilesianNumeric.halfString + "\"")
@@ -55,17 +73,25 @@ class MilesianWithFractSpec extends FlatSpec {
 
 
   it should "correctly combine int and fract parts" in {
-    val hemiolon = MilesianWithFraction("q' b d\"")
-    assert(hemiolon.toDouble == 9.75)
+    val nineThreeQuarters = MilesianWithFraction("q' b d\"")
+    assert(nineThreeQuarters.toDouble == 9.75)
   }
 
-  it should "handle accepted unicode characters from BMP" in {
-    val twelvePoint8 = MilesianWithFraction("ιβ' 𐅵 γ\"")
-    val expectedUcode = "ιβʹβ  γ\""
+  it should "find the Int value of the integer part of the expression" in {
+    val nineThreeQuarters = MilesianWithFraction("q' b d\"")
+    val expectedInt = 9
+    assert(nineThreeQuarters.toInt == expectedInt)
+  }
 
-    println(twelvePoint8.expandedFractions)
-    assert(twelvePoint8.ucode == expectedUcode)
-    assert(twelvePoint8.toDouble == 12.833)
+  it should "find the Double value of the fractional part of the expression" in {
+    val nineThreeQuarters = MilesianWithFraction("q' b d\"")
+    val expectedFract = 0.75
+    assert(nineThreeQuarters.partialDouble == expectedFract)
+  }
+
+  it should "find the complete Double value of the expression" in {
+    val nineThreeQuarters = MilesianWithFraction("q' b d\"")
+    assert(nineThreeQuarters.toDouble == 9.75)
   }
 
 }

@@ -27,10 +27,9 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  Logger.setDefaultLogLevel(LogLevel.INFO)
+
   val numericTick = '\u0374'
-
-
 
   def isAscii(s: String): Boolean = {
     val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
@@ -47,20 +46,23 @@ package object greek extends LogSupport {
     }
   }
 
-
-
   def milesianAsciiOf (s: String): String = {
-    debug("milesianAsciiOf " + s)
-    // catch special cases of stigma, qoppa and sampi
-    //val flagged = s.replaceAll(MilesianNumeric.sigmaString,"STIGMA").replaceAll(MilesianNumeric.qoppaString,"QOPPA").replaceAll
+    if (s.isEmpty) {""} else {
 
-    val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
-    if (s.head.toInt > 127) {
-      LiteraryGreekString.nfcToAscii(normalized,"")
 
-    } else {
-      // handle special cases
-      normalized
+      debug("milesianAsciiOf " + s)
+      // catch special cases of stigma, qoppa and sampi
+      //val flagged = s.replaceAll(MilesianNumeric.sigmaString,"STIGMA").replaceAll(MilesianNumeric.qoppaString,"QOPPA").replaceAll
+
+      val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
+
+      if (s.head.toInt > 127) {
+        LiteraryGreekString.nfcToAscii(normalized,"")
+
+      } else {
+        // handle special cases
+        normalized
+      }
     }
   }
 

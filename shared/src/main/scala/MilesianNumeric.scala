@@ -59,23 +59,28 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
   def tokenizeNode (cn: CitableNode) : Vector[MidToken]  = Vector.empty[MidToken]
 
-  def toInt(s: String) : Option[Int] = {
+
+  // This works on ASCII version
+  def toInt(s: String) : Int = {
     val cps = strToCps(s)
-    debug("cps from s: " + cps + " from " + s)
-    val opts = cps.map(toInt(_))
+    debug("toInt: codepoints from s: " + cps + " from " + s)
+    val opts = cps.map(toIntOpt(_))
+    debug("Yields opts " + opts)
     val total = opts.flatten.sum
+
     // what are appropriate checks and responses on bad characters?
-    total match {
-      case 0 => None
+    /*total match {
+      case 0 => 0
       case _ => Some(total)
-    }
+    }*/
+    total
   }
 
 
   def fract(s: String, digits: Int = 3): Option[Double] = {
     debug("FRACT FROM " + s)
-    val pieces = s.split("[\\s]+").toVector
-    val subTotals = pieces.map(piece => toInt(piece)).flatten
+    val pieces = s.replaceFirst("\"", "").split("[\\s]+").toVector
+    val subTotals = pieces.map(piece => toInt(piece)) //.flatten
     debug("From str " + s + " subTotals " + subTotals)
     if (subTotals.isEmpty) {
       None
@@ -92,8 +97,9 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   *
   * @param Code point to convert.
   */
-  def toInt(cp: Int) : Option[Int] = {
-    cp match {
+  def toIntOpt(cp: Int) : Option[Int] = {
+    debug("Get opt for int " + cp + " = " + cp.toChar)
+    val intOpt = cp match {
       case 'a' => Some(1)
       case 'b' => Some(2)
       case 'g' => Some(3)
@@ -124,6 +130,8 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
       case `sampi` => Some(900)
       case _ => None
     }
+    debug("Got intOpt " + intOpt)
+    intOpt
   }
 
 }

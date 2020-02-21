@@ -16,22 +16,32 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * @param str A string in either the ascii or ucode representation of the [[GreekNumeric]]
 * system.
 */
-@JSExportAll  case class MilesianWithSexagesimal(str: String) extends MilesianWithPartial with LogSupport {
+@JSExportAll  case class MilesianInteger(str: String) extends GreekNumeric  with  Ordered[GreekNumeric]  with LogSupport {
   Logger.setDefaultLogLevel(LogLevel.INFO)
 
-  def intOpt : Option[MilesianInteger] = None
 
-  def partialDouble: Double = 0.0
-  def doublePrecision(digits: Int = 3): Option[Double]  = None
-  def stringParts: (String, String) = ("","")
-  def asciiPartial: String = ""
-  def ucodePartial: String = ""
-  def numericAlphabetString: String = ""
-  def unicodeTickString : String = ""
+  def numericAlphabetString = ""
+
+  def ascii: String =  milesianAsciiOf(unticked) + MilesianNumeric.numericTick
+  def ucode: String = "???"
+  def toDouble: Double = {
+    toInt.toDouble
+  }
+
+  def toInt: Int = {
+    debug("MIlesianInteger convert unticked form " + ascii + " to int.")
+    val intified = MilesianNumeric.toInt(ascii) //.getOrElse(0)
+    debug("It was " + intified)
+    intified
+  }
 
   override def compare(that: GreekNumeric): Int = {
     this.toDouble compare that.toDouble
   }
 
+
+  def unticked : String = {
+    str.replaceFirst("['MilesianNumeric.numericTick]", "")
+  }
 
 }

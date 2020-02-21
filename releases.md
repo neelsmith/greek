@@ -1,5 +1,10 @@
 # `greek` library: release notes
 
+**3.0.0**:  API-breaking revisions of classes for working with numeric values in Milesian notation.
+
+
+**2.6.2**: shut up insanely verbose logging.
+
 
 **2.6.1**: fixes a bug in transcoding of numeric expressions mixing ASCII with codepoints BMP.
 
