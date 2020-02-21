@@ -60,7 +60,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def asciiPartial: String = {
     debug("Encode as ascii: " + partialString)
     if (partialString.isEmpty) { "" } else {
-      milesianAsciiOf(partialString) +"\""
+      milesianAsciiOf(partialString.trim) +"\""
     }
   }
 

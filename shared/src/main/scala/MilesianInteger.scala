@@ -17,22 +17,42 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianInteger(str: String) extends GreekNumeric  with  Ordered[GreekNumeric]  with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
   def numericAlphabetString = ""
 
-  def ascii: String =  milesianAsciiOf(unticked) + MilesianNumeric.numericTick
-  def ucode: String = "???"
+  def ascii: String =  {
+    if (unticked == MilesianNumeric.oudenString) {
+      MilesianNumeric.oudenString
+    } else {
+      milesianAsciiOf(unticked) + MilesianNumeric.numericTick
+    }
+
+  }
+  def ucode: String = {
+    debug("EXAMINE UNTICKED FOR UCODE: " + unticked)
+    if (unticked == MilesianNumeric.oudenString) {
+      MilesianNumeric.oudenString
+    } else {
+      milesianUcodeOf(unticked) + MilesianNumeric.numericTick
+    }
+  }
+
+
   def toDouble: Double = {
     toInt.toDouble
   }
 
   def toInt: Int = {
-    debug("MIlesianInteger convert unticked form " + ascii + " to int.")
-    val intified = MilesianNumeric.toInt(ascii) //.getOrElse(0)
-    debug("It was " + intified)
-    intified
+    if (unticked ==   MilesianNumeric.oudenString) {
+      0
+    }  else {
+      debug("MIlesianInteger convert unticked form " + unticked + " to int.")
+      val intified = MilesianNumeric.toInt(ascii) //.getOrElse(0)
+      debug("It was " + intified)
+      intified
+    }
+
   }
 
   override def compare(that: GreekNumeric): Int = {
@@ -41,7 +61,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 
   def unticked : String = {
-    str.replaceFirst("['MilesianNumeric.numericTick]", "")
+    str.replaceFirst( MilesianNumeric.numericTick, "").replaceFirst("'", "")
   }
 
 }

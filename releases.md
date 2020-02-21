@@ -1,5 +1,6 @@
 # `greek` library: release notes
 
+**4.0.2**: correctly parse allowed values for OUDEN.
 
 **4.0.1**: fixes a bug in parsing empty fractional values.
 

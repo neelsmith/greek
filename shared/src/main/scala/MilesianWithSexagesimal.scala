@@ -17,7 +17,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianWithSexagesimal(str: String) extends MilesianWithPartial with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+
 
   def intOpt : Option[MilesianInteger] = None
 

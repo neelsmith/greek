@@ -16,7 +16,6 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * class's character encoding.
 */
 @JSExportAll object MilesianNumeric extends MidOrthography  with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
 
   /** Maximum integer value currently supported in numeric conversions.*/
   val MAX_INT = 999
@@ -67,12 +66,6 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     val opts = cps.map(toIntOpt(_))
     debug("Yields opts " + opts)
     val total = opts.flatten.sum
-
-    // what are appropriate checks and responses on bad characters?
-    /*total match {
-      case 0 => 0
-      case _ => Some(total)
-    }*/
     total
   }
 
@@ -80,7 +73,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def fract(s: String, digits: Int = 3): Option[Double] = {
     debug("FRACT FROM " + s)
     val pieces = s.replaceFirst("\"", "").split("[\\s]+").toVector
-    val subTotals = pieces.map(piece => toInt(piece)) //.flatten
+    val subTotals = pieces.filter(_.nonEmpty).map(piece => toInt(piece)) //.flatten
     debug("From str " + s + " subTotals " + subTotals)
     if (subTotals.isEmpty) {
       None

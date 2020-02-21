@@ -27,7 +27,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+
 
   val numericTick = '\u0374'
 

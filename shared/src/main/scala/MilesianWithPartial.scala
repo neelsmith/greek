@@ -17,7 +17,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+
 
 
   def intOpt : Option[MilesianInteger]
@@ -58,7 +58,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
 
   /** Ascii representation of integer component of this numeric.*/
   def asciiInt : String= {
-
+    debug("Create asciiInt based on opt " + intOpt)
     intOpt match {
       case None => ""
       case  Some(milInt) => milInt.ascii
@@ -75,8 +75,11 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
   }
 
   /** Unicode representation of integer component of this numeric.*/
-  def  ucodeInt = {
-    if (intString.isEmpty) { "" } else {
+  def  ucodeInt: String = {
+    debug("UCODE INT LOOKS AT " + intString)
+    if (intString == MilesianNumeric.oudenString) {
+      MilesianNumeric.oudenString
+    } else if (intString.isEmpty) { "" } else {
       milesianUcodeOf(intString) + MilesianNumeric.numericTick
     }
   }
