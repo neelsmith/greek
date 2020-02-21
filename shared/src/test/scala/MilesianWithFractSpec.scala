@@ -12,6 +12,13 @@ class MilesianWithFractSpec extends FlatSpec {
     assert(fract.stringParts == expected)
   }
 
+  it should "correctly parse strings with no fractional component" in {
+    val elf = MilesianWithFraction("ια'")
+    assert(elf.partialDouble == 0.0)
+    assert(elf.asciiPartial.isEmpty)
+  }
+
+
   it should "correctly parse integers and fractions with no separating space" in  {
      val hemiolon = MilesianWithFraction("a'" + MilesianNumeric.halfString + "\"")
      println(hemiolon.ucode + " = " + hemiolon.toDouble)

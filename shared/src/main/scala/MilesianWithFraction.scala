@@ -39,13 +39,17 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   * the decimal point.
   */
   def doublePrecision(digits: Int): Option[Double] = {
-    MilesianNumeric.fract(asciiPartial, digits)
+    debug("Get double precion")
+    if (asciiPartial.isEmpty) { None } else {
+      MilesianNumeric.fract(asciiPartial, digits)
+    }
   }
 
 
   /** Find the value of this expression as a Double, if any.
   */
   def partialDouble : Double = {
+
     doublePrecision(3).getOrElse(0.0)
   }
 

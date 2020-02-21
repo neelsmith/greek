@@ -1,6 +1,8 @@
 # `greek` library: release notes
 
 
+**4.0.1**: fixes a bug in parsing empty fractional values.
+
 **4.0.0**:  Make signatures of `toInt` and `toDouble` consistent.
 
 **3.0.0**:  API-breaking revisions of classes for working with numeric values in Milesian notation.
