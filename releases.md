@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**4.1.0**: adds support for SJS 1.0.
+
 **4.0.2**: correctly parse allowed values for OUDEN.
 
 **4.0.1**: fixes a bug in parsing empty fractional values.

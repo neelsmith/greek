@@ -1,13 +1,13 @@
 package edu.holycross.shot.greek
 
-import scala.scalajs.js
-import js.JSStringOps._
+
+//import js.JSStringOps._
 
 /** Simple object verifying the accessibility of the [[LiteraryGreekString]]
 * class in the Javascript environment.
 */
-object Main extends js.JSApp {
-  def main(): Unit = {
+object Main {
+  def main(args: Array[String]): Unit = {
 
     val litgs = LiteraryGreekString("mh=nin")
     println("Create greek string with ascii: ")
