@@ -14,5 +14,5 @@ All Greek strings are represented in two formats:
 
 ## Links
 
--   [goals](goals) of the library
--   information about [implementations, including tutorials](implementations),
+-   [goals](./goals/) of the library
+-   information about [implementations, including tutorials](./implementations/),
