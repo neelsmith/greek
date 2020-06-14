@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.0.0**: API-breaking change to use new MID `orthography` library.
+
 **4.1.0**: adds support for SJS 1.0.
 
 **4.0.2**: correctly parse allowed values for OUDEN.

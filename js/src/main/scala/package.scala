@@ -1,8 +1,8 @@
 package edu.holycross.shot
 
-import scala.scalajs.js.annotation._
+//import scala.scalajs.js.annotation._
 
-import scala.scalajs.js
+//import scala.scalajs.js
 // Useless? import js.JSStringOps._
 
 
@@ -30,13 +30,14 @@ import scala.scalajs.js
 */
 package object greek {
 
-  @JSExport def isAscii(s: String): Boolean = {
+  def isAscii(s: String): Boolean = {
     val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
     asciiAlphas.contains(true)
   }
 
 
-  @JSExport def milesianAsciiOf (s: String): String = {
+
+  def milesianAsciiOf (s: String): String = {
 
     if (isAscii(s)) {
       s
@@ -46,7 +47,7 @@ package object greek {
     }
   }
 
-  @JSExport  def milesianUcodeOf(s: String) : String = {
+   def milesianUcodeOf(s: String) : String = {
     val checkFirst = if (s.head == '“') {
       s(1)
     } else {
@@ -59,7 +60,7 @@ package object greek {
     }
   }
 
-  @JSExport def literaryAsciiOf (s: String): String = {
+  def literaryAsciiOf (s: String): String = {
     if (s.head.toInt > 127) {
       // Probably ONLY WORKS FOR Unicode in form NFC
       LiteraryGreekString.nfcToAscii(s,"")
@@ -69,7 +70,7 @@ package object greek {
     }
   }
 
-  @JSExport  def literaryUcodeOf(s: String) : String = {
+   def literaryUcodeOf(s: String) : String = {
     val checkFirst = if (s.head == '“') {
       s(1)
     } else {

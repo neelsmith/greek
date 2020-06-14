@@ -4,7 +4,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 
 
-import edu.holycross.shot.mid.validator._
+import edu.holycross.shot.mid.orthography._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 

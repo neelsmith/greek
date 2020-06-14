@@ -1,12 +1,13 @@
+lazy val scala211 = "2.11.12"
 lazy val scala212 = "2.12.10"
-lazy val supportedScalaVersions = List(scala212)
+lazy val supportedScalaVersions = List(scala212, scala211)
+
 ThisBuild / scalaVersion := scala212
 ThisBuild / turbo := true
 
-
-lazy val root = project.in(file(".")).
-    aggregate(crossed.js, crossed.jvm).
-    settings(
+lazy val root = (project in file("."))
+  .aggregate(crossed.js, crossed.jvm)
+  .settings(
         crossScalaVersions := Nil,
         publish / skip := true
     )
@@ -15,15 +16,16 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     settings(
       name := "greek",
       organization := "edu.holycross.shot",
-      version := "4.1.0",
+      version := "5.0.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       libraryDependencies ++= Seq(
         "org.scalatest" %%% "scalatest" % "3.1.2" % "test",
         "org.wvlet.airframe" %%% "airframe-log" % "20.5.2",
 
-        "edu.holycross.shot" %%% "midvalidator" % "12.3.0", // for MidOrthography
-
+        "edu.holycross.shot.mid" %%% "orthography" % "1.0.0",
+        "edu.holycross.shot.cite" %%% "xcite" % "4.3.0",
+        "edu.holycross.shot" %%% "ohco2" % "10.19.0",
 
       )
     ).
@@ -35,7 +37,6 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     jsSettings(
       // JS-specific settings:
         scalaJSUseMainModuleInitializer := true,
-
     )
 
     lazy val docs = project       // new documentation project
@@ -47,6 +48,6 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
         mdocOut := file("docs"),
         mdocExtraArguments := Seq("--no-link-hygiene"),
         mdocVariables := Map(
-          "VERSION" -> "4.1.0"
+          "VERSION" -> "5.0.0"
         )
       )

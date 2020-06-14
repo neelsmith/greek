@@ -1,7 +1,7 @@
 package edu.holycross.shot.greek
 
 
-import edu.holycross.shot.mid.validator._
+import edu.holycross.shot.mid.orthography._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 
