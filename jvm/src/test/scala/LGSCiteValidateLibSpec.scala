@@ -26,15 +26,25 @@ class LGSCiteValidateLibSpec extends FlatSpec {
     val rslts = lgsv.validate(lib)
     val good = rslts.filter(_.success)
     val bad = rslts.filterNot(_.success)
-    println("TOTAL: " + rslts.size + s"\nGood: ${good.size}\nBad ${bad.size}")
+    println("LIBRARY TOTAL: " + rslts.size + s"\nGood: ${good.size}\nBad ${bad.size}")
+  }
+
+
+
+  it should "validate a text corpus" in {
+    val rslts = lgsv.validate(lib.textRepository.get.corpus)
+    val good = rslts.filter(_.success).size
+    val bad = rslts.filterNot(_.success).size
+    println(s"Corpus total: ${good + bad}\nGood/bad: ${good}/${bad}")
   }
 
   it should "apply the validate method of the CiteValidator trait to a physical surface" in {
-
+    val pg = Cite2Urn("urn:cite2:hmt:msB.v1:303r")
+    val rslts = lgsv.validate(pg)
+    val good = rslts.filter(_.success).size
+    val bad = rslts.filterNot(_.success).size
+    println(s"Surface ${pg} total: ${good + bad}\nGood/bad: ${good}/${bad}")
   }
-
-
-
 
   it should "validate the contents of a CitableNode" in {
     val urn = CtsUrn("urn:cts:greekLit:tlg0012.tlg001.msA:1.1")

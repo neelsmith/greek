@@ -16,7 +16,7 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     settings(
       name := "greek",
       organization := "edu.holycross.shot",
-      version := "5.0.1",
+      version := "5.1.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       libraryDependencies ++= Seq(
@@ -26,12 +26,22 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
         "edu.holycross.shot.mid" %%% "orthography" % "1.0.0",
         "edu.holycross.shot.cite" %%% "xcite" % "4.3.0",
         "edu.holycross.shot" %%% "ohco2" % "10.19.0",
+        "edu.holycross.shot" %%% "citevalidator" % "1.1.2",
+        "edu.holycross.shot" %%% "scm" % "7.3.0",
+
 
       )
     ).
     jvmSettings(
       libraryDependencies ++= Seq(
           "org.scala-js" %% "scalajs-stubs" % "1.0.0" % "provided",
+
+          // These are for unit tests using files.
+          // They can (and should) be removed
+          // when we get a better test harness
+          "edu.holycross.shot" %%% "midvalidator" % "13.0.0",
+          "edu.holycross.shot.mid" %%% "markupreader" % "1.0.0",
+          "org.homermultitext" %% "hmt-textmodel" % "7.0.0",
         )
     ).
     jsSettings(
@@ -48,6 +58,6 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
         mdocOut := file("docs"),
         mdocExtraArguments := Seq("--no-link-hygiene"),
         mdocVariables := Map(
-          "VERSION" -> "5.0.0"
+          "VERSION" -> "5.1.0"
         )
       )

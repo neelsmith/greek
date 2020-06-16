@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.1.0**: `LiteraryGreekString` implements the `CiteValidator` trait.
+
 **5.0.1**: fixes a bug in handling barytone accent.
 
 **5.0.0**: API-breaking change to use new MID `orthography` library.

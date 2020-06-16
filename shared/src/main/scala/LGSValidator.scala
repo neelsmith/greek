@@ -5,6 +5,7 @@ import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 import edu.holycross.shot.citevalidator._
 import edu.holycross.shot.scm._
+import edu.holycross.shot.dse._
 
 import wvlet.log._
 import wvlet.log.LogFormatter.SourceCodeLogFormatter
@@ -20,6 +21,8 @@ import scala.annotation.tailrec
 * system.
 */
 @JSExportAll  case class LGSValidator(lib: CiteLibrary) extends CiteValidator[LiteraryGreekString] with LogSupport  {
+  lazy val corpus = lib.textRepository.get.corpus
+
   // 4 methods required by CiteValidator.
   //
   // required by CiteValidator trait
@@ -35,11 +38,30 @@ import scala.annotation.tailrec
   }
 
   // required by CiteValidator trait
-  def validate(surface: Cite2Urn) : Vector[TestResult[LiteraryGreekString]] =  Vector.empty[TestResult[LiteraryGreekString]]
+  def validate(surface: Cite2Urn) : Vector[TestResult[LiteraryGreekString]] =  {
+    val dsev = DseVector.fromCiteLibrary(lib)
+    val surfaceDse = dsev.passages.filter(_.surface == surface)
+
+    val rslts = for (dsePsg <- surfaceDse) yield {
+      val subcorpus = corpus ~~ dsePsg.passage.dropSubref
+      val nodeResults = for (n <- subcorpus.nodes)  yield {
+          validate(n)
+      }
+      nodeResults.flatten
+    }
+    rslts.flatten
+  }
 
   // required by CiteValidator trait
   def verify(surface: Cite2Urn) : String = "# VERIFICATION RESULTS GO HERE\n"
 
+
+  def validate (c: Corpus): Vector[TestResult[LiteraryGreekString]]  = {
+    val rslts = for (n <- c.nodes) yield {
+      validate(n)
+    }
+    rslts.flatten
+  }
 
   /** Validate text contents of a CitableNode.
   *
