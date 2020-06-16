@@ -3,7 +3,7 @@ layout: page
 title: Examples of usage of the LiteraryGreekString class
 ---
 
-**Version 5.0.0**
+**Version 5.1.0**
 
 ## Examples of usage
 
