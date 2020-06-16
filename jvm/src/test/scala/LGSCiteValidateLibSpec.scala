@@ -19,10 +19,10 @@ class LGSCiteValidateLibSpec extends FlatSpec {
   def readersMap : Map[String, Vector[MidMarkupReader]] = Map(
     "DiplomaticReader" ->   Vector(DiplomaticReader)
   )
-  val lib = EditorsRepo("jvm/src/test/resources/iliad23-2020", readersMap).library
+  val lib = EditorsRepo("jvm/src/test/resources/hmtexample", readersMap).library
   val lgsv = LGSValidator(lib)
 
-  "An LGSValidator" should  "apply the validate method of the CiteValidator trait to a library" in {
+  "An LGSValidator" should  "apply the validate method of the CiteValidator trait to a library" in  pending /*{
     val rslts = lgsv.validate(lib)
     val good = rslts.filter(_.success)
     val bad = rslts.filterNot(_.success)
@@ -65,7 +65,28 @@ class LGSCiteValidateLibSpec extends FlatSpec {
     val expectedBad = 1
     assert(validationResults.filter(_.success).size == expectedGood)
     assert(validationResults.filterNot(_.success).size == expectedBad)
-  }
+  }*/
 
+
+
+  it should "find LGS tokens for a surface in the corpus" in {
+    val page = Cite2Urn("urn:cite2:hmt:msB.v1:303r")
+    val tkns = lgsv.tokensForSurface(page)
+    //println(tkns.size + " units for " + page)
+    //println(tkns.mkString("\n\n"))
+
+  }
+  it should "find LGS tokens for a CTS URN reference in the corpus" in {
+    val urn = CtsUrn("urn:cts:greekLit:tlg0012.tlg001.msB:23.1")
+    val tkns = lgsv.tokensForUrn(urn)
+  //  println(tkns)
+  }
+  it should "generate a verify document for a surface" in {
+    val page = Cite2Urn("urn:cite2:hmt:msB.v1:303r")
+    val verify = lgsv.verify(page)
+    import java.io.PrintWriter
+    new PrintWriter("testout.md"){write(verify);close;}
+
+  }
 
 }

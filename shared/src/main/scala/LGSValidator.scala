@@ -52,8 +52,54 @@ import scala.annotation.tailrec
     rslts.flatten
   }
 
+
+  // Vectors of canonically citable passages containing a Vector of tokens
+  def tokensForUrn(psg: CtsUrn) : Vector[Vector[MidToken]]= {
+    val subcorpus = corpus ~~ psg
+    for (n <- subcorpus.nodes) yield {
+      LiteraryGreekString.tokenizeNode(n)
+    }
+  }
+
+
+  // Vectors of canonically citable passages containing a Vector of tokens
+  def tokensForSurface(surface: Cite2Urn): Vector[Vector[MidToken]] = {
+    val dsev = DseVector.fromCiteLibrary(lib)
+    val surfaceDse = dsev.passages.filter(_.surface == surface)
+    val allTokens = for (dsePsg <- surfaceDse) yield {
+       tokensForUrn(dsePsg.passage.dropSubref)
+    }
+    allTokens.flatten
+  }
+
   // required by CiteValidator trait
-  def verify(surface: Cite2Urn) : String = "# VERIFICATION RESULTS GO HERE\n"
+  def verify(surface: Cite2Urn) : String = {
+    val tokensList = tokensForSurface(surface).flatten
+    val badTokens = tokensList.filterNot(t => LiteraryGreekString.validString(t.text))
+    println("BAD\n" + badTokens.mkString("\n"))
+    println("TOTAL TOKENS: " + tokensList.size)
+    println("BAD TOKENS: " + badTokens.size)
+    val grouped = badTokens.groupBy(t => t.text)
+    println("Groups: " + grouped.size)
+
+    // Sort later...
+    //val keysSorted = grouped.keySet.toVector.map ( k => (k, LiteraryGreekString(k))).sortBy(_._2)
+
+    val msgs  = grouped.keySet.toVector.map ( tkn => {
+        val plural = grouped(tkn).size match {
+          case 1 => ""
+          case _ => "s"
+        }
+        s"- **${tkn}**:  ${grouped(tkn).size} occurrence${plural}. (" + grouped(tkn).map(t => t.urn).mkString(", ") + ")"
+      }
+    )
+
+    /*val msgs = keysSorted.map ( tkn =>
+      s"- **${tkn}**:  ${grouped(tkn).size} occurrences. (" + grouped(tkn).map(t => t.urn).mkString(", ") + ")"
+    )*/
+    val hdr = s"# Verification of `LiteraryGreekString` orthography\n\nSurface: ${surface}\n\n"
+    hdr + msgs.mkString("\n")
+  }
 
 
   def validate (c: Corpus): Vector[TestResult[LiteraryGreekString]]  = {

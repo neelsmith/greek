@@ -3,7 +3,7 @@ layout: page
 title: Greek string library
 ---
 
-**Version 5.1.0**
+**Version 5.2.0**
 
 In the twenty-first century, it's still not possible to use internet standards to represent ancient Greek digitally.  The library documented here offers a way to work with semantically explicit representations of the numerous alphabetic writing systems used in the archaic and classical Greek world.
 
