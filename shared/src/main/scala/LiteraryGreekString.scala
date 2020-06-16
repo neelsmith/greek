@@ -1,9 +1,10 @@
 package edu.holycross.shot.greek
 
-
 import edu.holycross.shot.mid.orthography._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
+import edu.holycross.shot.citevalidator._
+import edu.holycross.shot.scm._
 
 import wvlet.log._
 import wvlet.log.LogFormatter.SourceCodeLogFormatter
@@ -37,7 +38,6 @@ import scala.annotation.tailrec
     val lowered = literaryUcodeOf(fixedCombos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
     lowered
   }
-
 
   /**
   */
@@ -162,15 +162,52 @@ import scala.annotation.tailrec
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]
 * class's character encoding.
 */
-object LiteraryGreekString  extends MidOrthography with LogSupport {
+object LiteraryGreekString  extends MidOrthography with LogSupport with CiteValidator[LiteraryGreekString] {
 
+  // 4 methods required by CiteValidator.
+  //
+  // required by CiteValidator trait
+  /** Label for validation.*/
+  def label: String = "Validate orthography of LiteraryGreekStrings"
+
+  // required by CiteValidator trait
+  def validate(library: CiteLibrary) : Vector[TestResult[LiteraryGreekString]] = {
+    val analyzedNodes = for (n <- library.textRepository.get.corpus.nodes) yield {
+      validate(n)
+    }
+    analyzedNodes.flatten
+    //Vector.empty[TestResult[LiteraryGreekString]]
+  }
+
+  // required by CiteValidator trait
+  def validate(surface: Cite2Urn) : Vector[TestResult[LiteraryGreekString]] =  Vector.empty[TestResult[LiteraryGreekString]]
+
+  // required by CiteValidator trait
+  def verify(surface: Cite2Urn) : String = "# VERIFICATION RESULTS GO HERE\n"
+
+
+  /** Validate text contents of a CitableNode.
+  *
+  * @param textNode Citable node with text contents
+  * expected to follow GreekLiteraryString.
+  */
+  def validate(textNode: CitableNode) : Vector[TestResult[LiteraryGreekString]] = {
+    val tokens = LiteraryGreekString.tokenizeNode(textNode)
+    val lgsList = tokens.map(t => (t.urn, LiteraryGreekString(t.text)))
+    val goodOnes = lgsList.filter { case (u,lgs) => LiteraryGreekString.validString(lgs.ascii) }
+
+    for( (urn, lgs) <- lgsList) yield {
+      LiteraryGreekString.validString(lgs.ascii) match {
+        case true => TestResult(true, s"${lgs.ucode} (${urn}) valid.", lgs)
+        case false => TestResult(false, s"${lgs.ucode} invalid (${urn}):  ${LiteraryGreekString.hiliteBadCps(lgs.ascii)} ", lgs)
+      }
+    }
+  }
+
+  // 4 methods required by MidOrthography
+  //
   // required by MidOrthography trait
   def orthography: String = "Conventional modern orthography of literary Greek"
-
-  def validAsciiCP(cp: Int): Boolean = {
-    val cArray = Character.toChars(cp)
-    alphabetString.contains(cArray(0))
-  }
 
   // required by MidOrthography trait
   def validCP(cp: Int): Boolean = {
@@ -180,12 +217,47 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
     validAsciiCP(asciiCP)
   }
 
-
   // required by MidOrthography trait
   def tokenCategories : Vector[MidTokenCategory] = Vector(
     PunctuationToken, LexicalToken, NumericToken
   )
 
+  // required by MidOrthography trait
+  def tokenizeNode(n: CitableNode): Vector[MidToken] = {
+    val urn = n.urn
+    // initial chunking on white space
+    val units = n.text.split(" ").filter(_.nonEmpty)
+
+    val classified = for (unit <- units.zipWithIndex) yield {
+      val newPassage = urn.passageComponent + "." + unit._2
+      val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + "_tkns")
+      val newUrn = CtsUrn(newVersion.dropPassage.toString + newPassage)
+
+      val trimmed = unit._1.trim
+      // process praenomina first since "." is part
+      // of the token:
+      val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
+          Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
+
+      } else {
+        val depunctuated = depunctuate(unit._1)
+        val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
+
+        val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
+          MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
+        }
+        first +: trailingPunct
+      }
+      tokensClassified
+    }
+    classified.toVector.flatten
+  }
+
+
+  def validAsciiCP(cp: Int): Boolean = {
+    val cArray = Character.toChars(cp)
+    alphabetString.contains(cArray(0))
+  }
 
   /** Create a [[LiteraryGreekString]] with no accent characters
   * from an `ascii` String by recursively looking at the first character
@@ -273,36 +345,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
 
 
 
-  // required by MidOrthography trait
-  def tokenizeNode(n: CitableNode): Vector[MidToken] = {
-    val urn = n.urn
-    // initial chunking on white space
-    val units = n.text.split(" ").filter(_.nonEmpty)
 
-    val classified = for (unit <- units.zipWithIndex) yield {
-      val newPassage = urn.passageComponent + "." + unit._2
-      val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + "_tkns")
-      val newUrn = CtsUrn(newVersion.dropPassage.toString + newPassage)
-
-      val trimmed = unit._1.trim
-      // process praenomina first since "." is part
-      // of the token:
-      val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
-          Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
-
-      } else {
-        val depunctuated = depunctuate(unit._1)
-        val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
-
-        val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
-          MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
-        }
-        first +: trailingPunct
-      }
-      tokensClassified
-    }
-    classified.toVector.flatten
-  }
 
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
