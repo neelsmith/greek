@@ -5,6 +5,7 @@ import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 import edu.holycross.shot.citevalidator._
 import edu.holycross.shot.scm._
+import edu.holycross.shot.dse._
 
 import wvlet.log._
 import wvlet.log.LogFormatter.SourceCodeLogFormatter
@@ -162,47 +163,7 @@ import scala.annotation.tailrec
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]
 * class's character encoding.
 */
-object LiteraryGreekString  extends MidOrthography with LogSupport with CiteValidator[LiteraryGreekString] {
-
-  // 4 methods required by CiteValidator.
-  //
-  // required by CiteValidator trait
-  /** Label for validation.*/
-  def label: String = "Validate orthography of LiteraryGreekStrings"
-
-  // required by CiteValidator trait
-  def validate(library: CiteLibrary) : Vector[TestResult[LiteraryGreekString]] = {
-    val analyzedNodes = for (n <- library.textRepository.get.corpus.nodes) yield {
-      validate(n)
-    }
-    analyzedNodes.flatten
-    //Vector.empty[TestResult[LiteraryGreekString]]
-  }
-
-  // required by CiteValidator trait
-  def validate(surface: Cite2Urn) : Vector[TestResult[LiteraryGreekString]] =  Vector.empty[TestResult[LiteraryGreekString]]
-
-  // required by CiteValidator trait
-  def verify(surface: Cite2Urn) : String = "# VERIFICATION RESULTS GO HERE\n"
-
-
-  /** Validate text contents of a CitableNode.
-  *
-  * @param textNode Citable node with text contents
-  * expected to follow GreekLiteraryString.
-  */
-  def validate(textNode: CitableNode) : Vector[TestResult[LiteraryGreekString]] = {
-    val tokens = LiteraryGreekString.tokenizeNode(textNode)
-    val lgsList = tokens.map(t => (t.urn, LiteraryGreekString(t.text)))
-    val goodOnes = lgsList.filter { case (u,lgs) => LiteraryGreekString.validString(lgs.ascii) }
-
-    for( (urn, lgs) <- lgsList) yield {
-      LiteraryGreekString.validString(lgs.ascii) match {
-        case true => TestResult(true, s"${lgs.ucode} (${urn}) valid.", lgs)
-        case false => TestResult(false, s"${lgs.ucode} invalid (${urn}):  ${LiteraryGreekString.hiliteBadCps(lgs.ascii)} ", lgs)
-      }
-    }
-  }
+object LiteraryGreekString  extends MidOrthography with LogSupport  {
 
   // 4 methods required by MidOrthography
   //
@@ -213,8 +174,13 @@ object LiteraryGreekString  extends MidOrthography with LogSupport with CiteVali
   def validCP(cp: Int): Boolean = {
     val s = Character.toChars(cp.toInt).toVector.mkString
     val ascii = literaryAsciiOf(s)
-    val asciiCP = ascii(0).toInt
-    validAsciiCP(asciiCP)
+    if (ascii.isEmpty){
+      warn("NO LITERARY ASCII found for " + s)
+      false
+    } else {
+      val asciiCP = ascii(0).toInt
+      validAsciiCP(asciiCP)
+    }
   }
 
   // required by MidOrthography trait
