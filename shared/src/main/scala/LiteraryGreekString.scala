@@ -11,7 +11,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
-
+import scala.annotation.tailrec
 
 /** Representation of a Greek string written in conventional literary orthography.
 *
@@ -181,7 +181,6 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   }
 
 
-
   // required by MidOrthography trait
   def tokenCategories : Vector[MidTokenCategory] = Vector(
     PunctuationToken, LexicalToken, NumericToken
@@ -197,7 +196,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   * @param accumulator String of non-accent characters accumulated so far.
   *
   */
-  private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
+  @tailrec private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
     if (src.isEmpty) {
       LiteraryGreekString(accumulator)
 
@@ -211,7 +210,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   }
 
 
-  private def stripBreathings(src: String, accumulator: String): LiteraryGreekString = {
+  @tailrec private def stripBreathings(src: String, accumulator: String): LiteraryGreekString = {
 
 
     if (src.isEmpty) {
@@ -229,11 +228,11 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
 
   def punctuationString: String = {
     //"(),;:.?"
-    """,;:"."""
+    """,;:".—"""
   }
 
 
-  def depunctuate (s: String, depunctVector: Vector[String] = Vector.empty): Vector[String] = {
+  @tailrec def depunctuate (s: String, depunctVector: Vector[String] = Vector.empty): Vector[String] = {
     val trimmed = s.trim
     val trailChar = s"${trimmed.last}"
     if (punctuationString.contains(trailChar)) {
@@ -305,12 +304,6 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
     classified.toVector.flatten
   }
 
-  /** All valid characters in the ASCII representation of this system
-  * in their alphabetic order.
-  */
-  //val alphabetString ="""abgdezhqiklmncoprsΣtufxyw|()/\=+,:;.""" + " \n\r"
-  // temporarily leave out grave to make Atom's formatting sane
-  val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/=+,:;.“”— \n\r"
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
@@ -325,6 +318,19 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   * other characters in `ucode` view.
   */
   val comboChars = Vector('|','+')
+
+  val whiteSpace = Vector(' ','\t', '\n', '\r' )
+
+  val typography = Vector('\'',  '*')
+
+  val validList = vowels.mkString("") + consonants.mkString("") + breathings.mkString("") + accents.mkString("") + comboChars.mkString("") + punctuationString.mkString("") + whiteSpace.mkString("") + typography.mkString("")
+
+
+  /** All valid characters in the ASCII representation of this system
+  * in their alphabetic order in Greek.
+  */
+  val alphabetString = "*abgdezhqiklmncoprstufxyw'.|()/\\=+,:;.— \n\r"
+  //val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/\\=+,:;.“”— \n\r"
 
   /** True if given character is a vowel.
   *
@@ -395,7 +401,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   * @param accumulator String accumulasted so far.
   *
   */
-  def peekAhead(s: String, accumulator: String): String = {
+  @tailrec def peekAhead(s: String, accumulator: String): String = {
     if (s.size < 2) {
       accumulator + s
     } else {
@@ -425,8 +431,9 @@ object LiteraryGreekString  extends MidOrthography with LogSupport {
   * @param ucode Accumluated string of Unicode code  points
   * in `ucode` view's encoding.
   */
-  def asciiToUcode(ascii: String, ucode: String): String = {
-    debug("asciiToUcode? waht is a vs u " + ascii + " vs " + ucode)
+  @tailrec def asciiToUcode(ascii: String, ucode: String): String = {
+    //Logger.setDefaultLogLevel(LogLevel.INFO)
+    debug("asciiToUcode: a vs u " + ascii + " vs " + ucode)
     if (ascii.size == 0 ) {
       ucode
 

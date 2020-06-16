@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.0.1**: fixes a bug in handling barytone accent.
+
 **5.0.0**: API-breaking change to use new MID `orthography` library.
 
 **4.1.0**: adds support for SJS 1.0.
