@@ -1,6 +1,8 @@
 # `greek` library: release notes
 
 
+**5.3.0**: `LiteraryGreekString` adds `xlit` method.
+
 **5.2.0**: Meaningful output from `verify` method of `CiteValidator` trait.
 
 **5.1.0**: `LiteraryGreekString` implements the `CiteValidator` trait.

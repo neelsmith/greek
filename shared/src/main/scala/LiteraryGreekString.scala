@@ -154,7 +154,14 @@ import scala.annotation.tailrec
     LiteraryGreekString(flipped)
   }
 
+  def xlit: String = {
+    val replacements = stripBreathingAccent.ascii.replaceAll("h", "ê").replaceAll("q", "th").
+    replaceAll("c", "x").replaceAll("f", "ph").replaceAll("x", "ch").
+    replaceAll("y", "ps").replaceAll("w", "ô")
 
+    val uc = "\\*(.)".r
+    uc.replaceAllIn(replacements,m => m.group(1).toUpperCase)
+  }
 
   def alphabetString = LiteraryGreekString.alphabetString
 

@@ -51,5 +51,16 @@ class LiteraryGreekStringSpec extends FlatSpec {
     assert(s1.stripBreathingAccent.ascii == expected)
   }
 
+  it should "offer a transliteration for easy reading" in {
+    val s1 = LiteraryGreekString("mh=nis")
+    val expected = "mênis"
+    assert(s1.xlit == expected)
+  }
+
+  it should "respect case in transliterating" in {
+    val s1 = LiteraryGreekString("Μῆνις")
+    val expected = "Mênis"
+    assert(s1.xlit == expected)
+  }
 
 }
