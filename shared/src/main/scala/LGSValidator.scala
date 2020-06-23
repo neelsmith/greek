@@ -76,11 +76,11 @@ import scala.annotation.tailrec
   def verify(surface: Cite2Urn) : String = {
     val tokensList = tokensForSurface(surface).flatten
     val badTokens = tokensList.filterNot(t => LiteraryGreekString.validString(t.text))
-    println("BAD\n" + badTokens.mkString("\n"))
-    println("TOTAL TOKENS: " + tokensList.size)
-    println("BAD TOKENS: " + badTokens.size)
+    debug("BAD\n" + badTokens.mkString("\n"))
+    debug("TOTAL TOKENS: " + tokensList.size)
+    debug("BAD TOKENS: " + badTokens.size)
     val grouped = badTokens.groupBy(t => t.text)
-    println("Groups: " + grouped.size)
+    debug("Groups: " + grouped.size)
 
     // Sort later...
     //val keysSorted = grouped.keySet.toVector.map ( k => (k, LiteraryGreekString(k))).sortBy(_._2)
