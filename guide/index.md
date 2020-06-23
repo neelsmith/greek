@@ -33,6 +33,10 @@ The library defines an abstract trait, `GreekString`, that is implemented by:
 -   `AtticGreekString` (in preliminaryt development): a digital representation of the Athenian writing system prior to the alphabetic reform of the archon Euclid (403 BCE).
 
 
-The `LiteraryGreekString` also implements the `MidOrthography` trait, which includes methods for [classified tokenizations of Greek strings](./litgreek/tokenization/).
+The `LiteraryGreekString` also implements:
 
-A companion `LGSValidator` class implements the `CiteValidator` trait, and can be plugged into pipelines for automated reporting on validation and verification such as the one supported by the [MID project validator](https://github.com/hcmid/projectvalidator).
+-  the `MidOrthography` trait, including methods for [classified tokenizations of Greek strings](./litgreek/tokenization/).
+
+A companion `LGSValidator` class implements:
+
+-  the `CiteValidator` trait, and can be plugged into pipelines for automated reporting on validation and verification such as the one supported by the [MID project validator](https://github.com/hcmid/projectvalidator).
