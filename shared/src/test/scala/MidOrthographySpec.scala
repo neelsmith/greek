@@ -17,27 +17,9 @@ class MidOrthographySpec extends FlatSpec {
     assert(LiteraryGreekString.orthography == expected)
   }
 
-
   // validate code points for ascii versions
   it should "implement the MidOrthography trait's validCP function" in {
 
-  }
-  it should "implement the MidOrthography trait's tokenCategories function" in {
-    val expected = Vector(PunctuationToken, LexicalToken, NumericToken).toSet
-    assert (LiteraryGreekString.tokenCategories.toSet == expected)
-  }
-  it should "implement the MidOrthography trait's tokenizeNode function" in {
-    val tokens = LiteraryGreekString.tokenizeNode(cn)
-    val expectedTotal = 8
-    val expectedLexical = 6
-    val expectedPunct = 2
-    assert(expectedTotal == tokens.size)
-
-    val punct = tokens.filter(_.tokenCategory.toString == "Some(PunctuationToken)")
-    assert(punct.size == expectedPunct)
-
-    val lexical = tokens.filter(_.tokenCategory.toString == "Some(LexicalToken)")
-    assert(expectedLexical == lexical.size)
   }
 
   it should "determine if an ASCII code point is valid" in  {
@@ -50,6 +32,4 @@ class MidOrthographySpec extends FlatSpec {
     assert(LiteraryGreekString.validCP('a'.toInt))
   }
 
-
-  it should "correctly depunctuate strings" in pending
 }
