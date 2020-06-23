@@ -15,9 +15,18 @@ Support for numeric notation in the "Milesian" system is not yet fully integrate
 import edu.holycross.shot.greek._
 ```
 
-Implementations include the `MilesianInteger`.
+Implementations include:
+
+-  the `MilesianInteger`.
 
 ```scala mdoc
 val milesianInt = MilesianInteger("ra'")
 println(milesianInt.ucode + " == " + milesianInt.toInt)
+```
+
+- the `MilesianWithFraction`
+
+```scala mdoc
+val hemiolon = MilesianWithFraction("q' b d\"")
+hemiolon.toDouble
 ```
