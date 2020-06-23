@@ -173,7 +173,7 @@ import scala.annotation.tailrec
 * class's character encoding.
 */
 object LiteraryGreekString  extends MidOrthography with LogSupport  {
-
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
   // 4 methods required by MidOrthography
   //
   // 1. required by MidOrthography trait
@@ -462,7 +462,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
   */
   @tailrec def asciiToUcode(ascii: String, ucode: String): String = {
     //Logger.setDefaultLogLevel(LogLevel.INFO)
-    debug("asciiToUcode: a vs u " + ascii + " vs " + ucode)
+    //debug("asciiToUcode: a vs u " + ascii + " vs " + ucode)
     if (ascii.size == 0 ) {
       ucode
 
@@ -485,7 +485,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
   * @param ascii String of `ascii` view accumulated so far.
   */
   def nfcToAscii(ucode: String, ascii: String): String = {
-    debug("nfcToAscii: " + ucode + " and " + ascii)
+    //debug("nfcToAscii: " + ucode + " and " + ascii)
     if (ucode.size == 0 ) {
       debug("going with provided ascii " + ascii)
       ascii

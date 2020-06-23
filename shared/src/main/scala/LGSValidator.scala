@@ -21,15 +21,18 @@ import scala.annotation.tailrec
 * system.
 */
 @JSExportAll  case class LGSValidator(lib: CiteLibrary) extends CiteValidator[LiteraryGreekString] with LogSupport  {
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  // useful short hands
   lazy val corpus = lib.textRepository.get.corpus
+  lazy val dsev = DseVector.fromCiteLibrary(lib)
 
   // 4 methods required by CiteValidator.
   //
-  // required by CiteValidator trait
+  // 1. required by CiteValidator trait
   /** Label for validation.*/
   def label: String = "Validate orthography of LiteraryGreekStrings"
 
-  // required by CiteValidator trait
+  // 2. required by CiteValidator trait
   def validate(library: CiteLibrary) : Vector[TestResult[LiteraryGreekString]] = {
     val analyzedNodes = for (n <- library.textRepository.get.corpus.nodes) yield {
       validate(n)
@@ -37,9 +40,9 @@ import scala.annotation.tailrec
     analyzedNodes.flatten
   }
 
-  // required by CiteValidator trait
+  // 3. required by CiteValidator trait
   def validate(surface: Cite2Urn) : Vector[TestResult[LiteraryGreekString]] =  {
-    val dsev = DseVector.fromCiteLibrary(lib)
+
     val surfaceDse = dsev.passages.filter(_.surface == surface)
 
     val rslts = for (dsePsg <- surfaceDse) yield {
@@ -52,6 +55,48 @@ import scala.annotation.tailrec
     rslts.flatten
   }
 
+  // 4. required by CiteValidator trait
+  def verify(surface: Cite2Urn) : String = {
+    println("verify surface " + surface)
+    val hdr = s"# Verification of `LiteraryGreekString` orthography\n\nSurface: ${surface}\n\n"
+
+    val txtUrns = dsev.textsForTbs(surface)
+    val grouped = txtUrns.groupBy(u => u.dropPassage)
+
+    val msgs = for (group <- grouped.keySet) yield {
+      val sectionHeader = s"**${group}**\n\n"
+
+      val urns = grouped(group)
+      val sorted = corpus.sortPassages(urns)
+      val formatted = sorted.map { u =>
+
+        val matched = corpus ~~ u
+
+        val formattedNode = matched.nodes.size match {
+          case 1 => {
+            val cn = matched.nodes.head
+            val lgs = LiteraryGreekString(cn.text)
+            s"${cn.urn}\n\n${lgs.ucode}\n\n${lgs.xlit}\n\n"
+          }
+          case 0 => ""
+          case _ => {
+            println("too many matches?")
+            val cn = matched.nodes.head
+            val lgs = LiteraryGreekString(cn.text)
+            s"${cn.urn}\n\n${lgs.ucode}\n\n${lgs.xlit}\n\n"
+          }
+        }
+        formattedNode + "\n\n---\n\n"
+        //u.toString + " " + matched.nodes.head + "\n\n---\n\n"
+      }
+      //sectionHeader + formatted + "---\n\n"
+      sectionHeader + formatted.mkString("\n")
+    }
+
+
+
+    hdr + msgs.mkString("\n")
+  }
 
   // Vectors of canonically citable passages containing a Vector of tokens
   def tokensForUrn(psg: CtsUrn) : Vector[Vector[MidToken]]= {
@@ -66,40 +111,17 @@ import scala.annotation.tailrec
   def tokensForSurface(surface: Cite2Urn): Vector[Vector[MidToken]] = {
     val dsev = DseVector.fromCiteLibrary(lib)
     val surfaceDse = dsev.passages.filter(_.surface == surface)
+    //println("DSE MATCHED " + surfaceDse.size + " passages")
+    debug("DSE MATCHED " + surfaceDse.size + " passages")
+
     val allTokens = for (dsePsg <- surfaceDse) yield {
+        //println("DSE: " + dsePsg.passage.dropSubref)
        tokensForUrn(dsePsg.passage.dropSubref)
     }
+    //println("ALL TKENS: \n" + allTokens.flatten.mkString("\n") )
     allTokens.flatten
   }
 
-  // required by CiteValidator trait
-  def verify(surface: Cite2Urn) : String = {
-    val tokensList = tokensForSurface(surface).flatten
-    val badTokens = tokensList.filterNot(t => LiteraryGreekString.validString(t.text))
-    debug("BAD\n" + badTokens.mkString("\n"))
-    debug("TOTAL TOKENS: " + tokensList.size)
-    debug("BAD TOKENS: " + badTokens.size)
-    val grouped = badTokens.groupBy(t => t.text)
-    debug("Groups: " + grouped.size)
-
-    // Sort later...
-    //val keysSorted = grouped.keySet.toVector.map ( k => (k, LiteraryGreekString(k))).sortBy(_._2)
-
-    val msgs  = grouped.keySet.toVector.map ( tkn => {
-        val plural = grouped(tkn).size match {
-          case 1 => ""
-          case _ => "s"
-        }
-        s"- **${tkn}**:  ${grouped(tkn).size} occurrence${plural}. (" + grouped(tkn).map(t => t.urn).mkString(", ") + ")"
-      }
-    )
-
-    /*val msgs = keysSorted.map ( tkn =>
-      s"- **${tkn}**:  ${grouped(tkn).size} occurrences. (" + grouped(tkn).map(t => t.urn).mkString(", ") + ")"
-    )*/
-    val hdr = s"# Verification of `LiteraryGreekString` orthography\n\nSurface: ${surface}\n\n"
-    hdr + msgs.mkString("\n")
-  }
 
 
   def validate (c: Corpus): Vector[TestResult[LiteraryGreekString]]  = {

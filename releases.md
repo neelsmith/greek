@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.4.0**: improved output of verification from `LGSValidator`
+
 **5.3.1**: correct publication of binaries.
 
 **5.3.0**: `LiteraryGreekString` adds `xlit` method.

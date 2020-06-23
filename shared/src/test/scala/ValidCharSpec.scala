@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 
 
 
-class ValidationSpec extends FlatSpec {
+class ValidCharSpec extends FlatSpec {
 
 
   "A Literary Greek String" should "identify a valid string" in {
