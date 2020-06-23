@@ -6,20 +6,18 @@
 
 `greek` is a cross-platform library for working with strings representing ancient Greek.
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master) Jupyter [notebooks illustrating usage](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master).
+
 
 ## Current version: 5.3.1
 
-Status:  **active development**. [Release notes](releases.md). Get automatic nofication of new binary releases from jcenter:
+Status:  **active development**. [Release notes](releases.md).
 
-<a href='https://bintray.com/neelsmith/maven/greek?source=watch' alt='Get automatic notifications about new "greek" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 ## Documentation
 
 
-<https://neelsmith.github.io/greek/>
-
-
+ - [User guide](https://neelsmith.github.io/greek/)
+- Jupyter [notebooks illustrating usage](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/neelsmith/greek-ipynb/master)
 
 
 
