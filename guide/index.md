@@ -39,4 +39,4 @@ The `LiteraryGreekString` also implements:
 
 A companion `LGSValidator` class implements:
 
--  the `CiteValidator` trait, and can be plugged into pipelines for automated reporting on validation and verification such as the one supported by the [MID project validator](https://github.com/hcmid/projectvalidator).
+-  the `CiteValidator` trait [for automated reporting on validation and verification](./validation/) 
