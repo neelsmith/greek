@@ -199,7 +199,8 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
   def tokenizeNode(n: CitableNode): Vector[MidToken] = {
     val urn = n.urn
     // initial chunking on white space
-    val units = n.text.split(" ").filter(_.nonEmpty)
+    val lgs = LiteraryGreekString(n.text)
+    val units = lgs.ascii.split(" ").filter(_.nonEmpty)
 
     val classified = for (unit <- units.zipWithIndex) yield {
       val newPassage = urn.passageComponent + "." + unit._2
