@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Examples of usage of the LiteraryGreekString class
+title: Examples of LiteraryGreekString
 ---
 
 **Version 5.3.1**

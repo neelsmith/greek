@@ -30,5 +30,5 @@ Main design goals:
 
 The library defines an abstract trait, `GreekString`, that is implemented by:
 
--   `LiteraryGreekString`: polytonic Greek in the orthography of modern print editions. [User's guide  and tutorial](./litgreek/)
+-   `LiteraryGreekString`: [polytonic Greek in the orthography of modern print editions](./litgreek/).
 -   `AtticGreekString` (in preliminaryt development): a digital representation of the Athenian writing system prior to the alphabetic reform of the archon Euclid (403 BCE).

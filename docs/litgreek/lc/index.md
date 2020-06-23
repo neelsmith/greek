@@ -1,9 +1,9 @@
 ---
 layout: page
-title: "LiteraryGreekString: lower-case mappings"
+title: "Lower-case mappings"
 ---
 
-
+## Summary for the ``LiteraryGreekString`` class
 
 | Unicode | ASCII |
 |:--------|:------|
