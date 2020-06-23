@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Greek string library
+title: Home
 ---
 
 **Version @VERSION@**
