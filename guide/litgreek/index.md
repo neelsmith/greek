@@ -3,24 +3,26 @@ layout: page
 title: The LiteraryGreekString class
 ---
 
-
-
-
 The `LiteraryGreekString` class defines a digital representation of polytonic Greek as it appears in the orthography of modern print editions.  It associates 232 Unicode code points with unique ASCII strings composed from a set of lower-case ASCII characters and non-alphabetic characters.
 
 -  [Examples of usage](./examples/)
 
-## Summary
+It implements the `MidOrthography` trait, so you can use it to create a classified tokenization of Greek texts.
+
+- [Tokenization](./tokenization/)
 
 
 
-## Alphabetic characters
+## ASCII <-> Unicode mappings
+
+### Alphabetic characters
 
 The ASCII representation follows the same mapping for lower-case Greek letters used by the Perseus project, the SophoKeys keyboard extension for OS X, and others. Upper-case characters are represented by preceding the lower case letter with an asterisk, e.g., `a` == `α` and `*a` ==  `Α`.
 
- See a [full list of lower-case mappings](../lc).
+- See a [full list of lower-case mappings](./lc/).
 
-## Breathings, accents, diacritics
+### Breathings, accents, diacritics
+
 The following ASCII characters are used for breathing, accent and diacritical characters:
 
 | Greek character  | ASCII representation |
@@ -41,9 +43,7 @@ The ordering of ASCII characters is
 
 Unlike the ASCII mapping used by the Perseus project and others, the ordering of characters is not affected by case. E.g., `a)/` == `ἄ` and `*a)/` == `Ἄ`.
 
-
-
-## Punctuation
+### Punctuation
 
 Greek punctuation characters are represented as follows:
 
@@ -56,7 +56,7 @@ Greek punctuation characters are represented as follows:
 | comma | , (comma)|
 | elision | `'` (single quote) |
 
-## White space
+### White space
 
 Space, tab, carriage-feed and new line characters and equated in both Unicode and ASCII representations.
 

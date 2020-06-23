@@ -1,11 +1,10 @@
 ---
 layout: page
-title: Examples
+title: Usage
 ---
 
 **Version @VERSION@**
 
-## Examples of usage of the `LiteraryGreekString` class
 
 Import the library:
 
@@ -14,8 +13,7 @@ Import the library:
 import edu.holycross.shot.greek._
 ```
 
-### Work with either representation
-
+Work with ASCII or Unicode representation:
 
 ```scala mdoc
     val wrath1 = LiteraryGreekString("mh=nin")
@@ -26,19 +24,15 @@ import edu.holycross.shot.greek._
 ```
 
 
-### Equality testing
+Equality testing works on the computed ASCII form:
 
 
 ```scala mdoc
     assert (wrath1 == wrath2)
 ```
 
-### Alphabetic comparison
-
-`<`  means "precedes alphabetically"; `>` means "follows alphabetically".
-
-
-
+Alphabetic comparison follows the logic of the Greek alphabet.  The functions
+`<`  and `>` mean "precedes alphabetically" and "follows alphabetically" respectively.
 
 
 ```scala mdoc
@@ -52,19 +46,10 @@ import edu.holycross.shot.greek._
     assert(horse1 == horse2)
 ```
 
+In converting between ASCII and Unicode forms, characters not explicitly defined in the  `LiteraryGreekString` are mapped to an "error  character," `#`.
 
 
-
-
-### Invalid input
-
-In the current version, characters not explicitly defined in the  `LiteraryGreekString` are mapped to an "error  character," `#`.
-
-
-#### Example
-
-Code point 1008, `ϰ`, is a technical symbol represented by the Greek letter kappa:  it is not intended to represent the alphabetic character kappa in Greek text.  If we use code point 1008 to construct a Greek string, it will be mapped to an error in the ASCII representation.  The result of constructing a Greek string with code point 1008 is illustrated here:
-
+**Example**: code point 1008, `ϰ`, is a technical symbol represented by the Greek letter kappa:  it is not intended to represent the alphabetic character kappa in Greek text.  If we use code point 1008 to construct a Greek string, it will be mapped to an error in the ASCII representation.
 
 ```scala mdoc
     var bad = LiteraryGreekString("ϰαϰῶς")

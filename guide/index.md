@@ -13,7 +13,6 @@ All Greek strings are represented in two formats:
 2.  a primarily or exclusively ASCII representation
 
 
-
 ## Goals
 
 Main design goals:
