@@ -16,16 +16,16 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     settings(
       name := "greek",
       organization := "edu.holycross.shot",
-      version := "5.4.0",
+      version := "5.5.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       libraryDependencies ++= Seq(
         "org.scalatest" %%% "scalatest" % "3.1.2" % "test",
         "org.wvlet.airframe" %%% "airframe-log" % "20.5.2",
 
-        "edu.holycross.shot.mid" %%% "orthography" % "1.0.0",
+        "edu.holycross.shot.mid" %%% "orthography" % "2.0.0",
         "edu.holycross.shot.cite" %%% "xcite" % "4.3.0",
-        "edu.holycross.shot" %%% "ohco2" % "10.19.0",
+        "edu.holycross.shot" %%% "ohco2" % "10.20.0",
         "edu.holycross.shot" %%% "citevalidator" % "1.1.2",
         "edu.holycross.shot" %%% "scm" % "7.3.0",
 
@@ -58,6 +58,6 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
         mdocOut := file("docs"),
         mdocExtraArguments := Seq("--no-link-hygiene"),
         mdocVariables := Map(
-          "VERSION" -> "5.4.0"
+          "VERSION" -> "5.5.0"
         )
       )

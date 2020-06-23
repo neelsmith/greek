@@ -53,11 +53,22 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 
   def validCP(cp: Int): Boolean = false
+  def exemplarId: String = "milnumtkn"
   def orthography: String = "Greek numeric value in Milesian notation"
   def tokenCategories: Vector[MidTokenCategory] = Vector.empty[MidTokenCategory]
 
   def tokenizeNode (cn: CitableNode) : Vector[MidToken]  = Vector.empty[MidToken]
 
+
+  /** Turn a string into a Vector of code points. */
+	def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
+		if (idx >= s.length) {
+			cpVector
+		} else {
+			val cp = s.codePointAt(idx)
+			strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
+		}
+	}
 
   // This works on ASCII version
   def toInt(s: String) : Int = {

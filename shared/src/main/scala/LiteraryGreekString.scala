@@ -239,6 +239,8 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
     classified.toVector.flatten
   }
 
+  def exemplarId: String = "lgstkn"
+
 
   def validAsciiCP(cp: Int): Boolean = {
     val cArray = Character.toChars(cp)

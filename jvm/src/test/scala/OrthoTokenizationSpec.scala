@@ -7,7 +7,7 @@ import edu.holycross.shot.scm._
 
 class OrthoTokenizationSpec extends FlatSpec {
 
-  val f = "jvm/src/test/resources/hmt-extract.cex"
+  val f = "jvm/src/test/resources/hmt-reduced.cex"
   val lib = CiteLibrarySource.fromFile(f)
 
   "An LiteraryGreekString" should "tokenize a citable node" in {
