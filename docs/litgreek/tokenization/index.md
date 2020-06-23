@@ -4,6 +4,6 @@ title: Tokenization
 ---
 
 
-**Version 5.3.1**
+**Version 5.4.0**
 
 - `MidOrthography` trait is implemented

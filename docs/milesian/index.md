@@ -4,7 +4,7 @@ title:  "'Milesian' numerals"
 ---
 
 
-**Version 5.3.1**
+**Version 5.4.0**
 
 
 Support for numeric notation in the "Milesian" system is not yet fully integrated within the `LiteraryGreekString` class, but there is a similar, separate `GreekNumeric` trait.  In addition to conversion between ASCII and Unicode notation, its classes can compute numeric values.

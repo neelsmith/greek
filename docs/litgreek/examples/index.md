@@ -3,7 +3,7 @@ layout: page
 title: Usage
 ---
 
-**Version 5.3.1**
+**Version 5.4.0**
 
 
 Import the library:
