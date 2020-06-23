@@ -3,4 +3,7 @@ layout: page
 title: Validation
 ---
 
-- the `CiteValidator` trait is implemented by the `LGSValidator` 
+
+**Version 5.3.1**
+
+- the `CiteValidator` trait is implemented by the `LGSValidator`
