@@ -1,5 +1,6 @@
 # `greek` library: release notes
 
+**5.3.1**: correct publication of binaries.
 
 **5.3.0**: `LiteraryGreekString` adds `xlit` method.
 
