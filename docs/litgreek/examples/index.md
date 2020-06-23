@@ -1,14 +1,11 @@
 ---
 layout: page
-title: Examples of LiteraryGreekString
+title: Examples
 ---
 
 **Version 5.3.1**
 
-## Examples of usage
-
-The following examples in Scala illusrate the main features of the library.
-
+## Examples of usage of the `LiteraryGreekString` class
 
 Import the library:
 
