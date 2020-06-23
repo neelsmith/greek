@@ -154,6 +154,8 @@ import scala.annotation.tailrec
     LiteraryGreekString(flipped)
   }
 
+  /** Format a transliterated version of the string value for
+  * human readers. */
   def xlit: String = {
     val replacements = stripBreathingAccent.ascii.replaceAll("h", "ê").replaceAll("q", "th").
     replaceAll("c", "x").replaceAll("f", "ph").replaceAll("x", "ch").
@@ -174,10 +176,15 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
 
   // 4 methods required by MidOrthography
   //
-  // required by MidOrthography trait
+  // 1. required by MidOrthography trait
+  /** Label for orthographic system.*/
   def orthography: String = "Conventional modern orthography of literary Greek"
 
-  // required by MidOrthography trait
+  // 2. required by MidOrthography trait
+  /** Test if cp is a valid code point.
+  *
+  * @param cp Code point to test.
+  */
   def validCP(cp: Int): Boolean = {
     val s = Character.toChars(cp.toInt).toVector.mkString
     val ascii = literaryAsciiOf(s)
@@ -190,12 +197,17 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
     }
   }
 
-  // required by MidOrthography trait
+  // 3. required by MidOrthography trait
+  /** Complete enumeration of MidTokenCategory values. */
   def tokenCategories : Vector[MidTokenCategory] = Vector(
     PunctuationToken, LexicalToken, NumericToken
   )
 
-  // required by MidOrthography trait
+  // 4. required by MidOrthography trait
+  /** Tokenize a citable node.
+  *
+  * @param n Node to tokenize.
+  */
   def tokenizeNode(n: CitableNode): Vector[MidToken] = {
     val urn = n.urn
     // initial chunking on white space

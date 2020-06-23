@@ -47,7 +47,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     if (unticked ==   MilesianNumeric.oudenString) {
       0
     }  else {
-      debug("MIlesianInteger convert unticked form " + unticked + " to int.")
+      debug("MilesianInteger convert unticked form " + unticked + " to int.")
       val intified = MilesianNumeric.toInt(ascii) //.getOrElse(0)
       debug("It was " + intified)
       intified
