@@ -18,9 +18,9 @@ class MidOrthographySpec extends FlatSpec {
   }
 
   // validate code points for ascii versions
-  it should "implement the MidOrthography trait's validCP function" in {
+  it should "implement the MidOrthography trait's validCP function" in pending/*{
 
-  }
+  }*/
 
   it should "determine if an ASCII code point is valid" in  {
     assert(LiteraryGreekString.validAsciiCP('a'.toInt))
@@ -30,6 +30,13 @@ class MidOrthographySpec extends FlatSpec {
   it should "determine if a code point in the Unicode range is valid" in  {
     assert(LiteraryGreekString.validCP('α'.toInt))
     assert(LiteraryGreekString.validCP('a'.toInt))
+  }
+
+  it should "depunctuate" in {
+    val comma  = "δὲ,"
+    val depunctuated = (LiteraryGreekString.depunctuate(comma))
+    assert(depunctuated.size == 2)
+    assert(depunctuated(1) == ",")
   }
 
 }
