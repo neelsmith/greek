@@ -216,12 +216,11 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
 
     val classified = for (unit <- units.zipWithIndex) yield {
       val newPassage = urn.passageComponent + "." + unit._2
-      val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + "_tkns")
+      val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + LiteraryGreekString.exemplarId)
       val newUrn = CtsUrn(newVersion.dropPassage.toString + newPassage)
 
       val trimmed = unit._1.trim
-      // process praenomina first since "." is part
-      // of the token:
+      // Catch leading quotation?
       val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
           Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
 
@@ -239,7 +238,7 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
     classified.toVector.flatten
   }
 
-  def exemplarId: String = "lgstkn"
+  def exemplarId: String = "_lgstkn"
 
 
   def validAsciiCP(cp: Int): Boolean = {
@@ -292,10 +291,18 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
   }
 
 
-  @tailrec def depunctuate (s: String, depunctVector: Vector[String] = Vector.empty): Vector[String] = {
+
+  /** Recursively strips punctuation tokens off the end of a String,
+  * to build list of tokens.
+  *
+  * @param s String to depunctuate.
+  * @param depunctVector List of result tokens.
+  * @param punctuation String containing all punctuation characters.
+  */
+  @tailrec def depunctuate (s: String, depunctVector: Vector[String] = Vector.empty, punctuationChars: String = punctuationString): Vector[String] = {
     val trimmed = s.trim
     val trailChar = s"${trimmed.last}"
-    if (punctuationString.contains(trailChar)) {
+    if (punctuationChars.contains(trailChar)) {
       val dropLast = trimmed.reverse.tail.reverse
       if (dropLast.nonEmpty) {
         depunctuate(dropLast, trailChar +: depunctVector)
@@ -309,31 +316,28 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
   }
 
 
-  def lexicalCategory(s: String): Option[MidTokenCategory] = {
-    Some(LexicalToken)
-  }
-    /*
-    if (alphabet.numerics.contains(s(0).toUpper)) {
-      if (alphabet.numeric(s)) {
-        Some(NumericToken)
-      } else {
-        None
-      }
-    } else if (alphabet.alphabetString.contains(s(0).toLower)) {
-      if (alphabet.alphabetic(s)) {
-        Some(LexicalToken)
-      } else {
-        None
-      }
+  /** Identify token type of a string.  Numeric tokens are flagged by
+  * the trailing numeric tick character.  Punctuation tokens are those
+  * found in an list that defaults to the punctuationString.  Other valid
+  * strings are lexical tokens.
+  *
+  * @param s String to classify.
+  * @param punctuationChars List of punctuation characters.
+  */
+  def lexicalCategory(s: String, punctuationChars: String = punctuationString): Option[MidTokenCategory] = {
+    if (s.last == numericTick) {
+      Some(NumericToken)
+
+    } else if (punctuationChars.contains(s)) {
+      Some(PunctuationToken)
+
+    } else if (LiteraryGreekString(s).valid) {
+      Some(LexicalToken)
 
     } else {
       None
     }
-  }*/
-
-
-
-
+  }
 
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
@@ -352,7 +356,8 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
 
   val whiteSpace = Vector(' ','\t', '\n', '\r' )
 
-  val typography = Vector('\'',  '*')
+  val numericTick: Character = 'ʹ'
+  val typography = Vector('\'',  '*', numericTick)
 
   val validList = vowels.mkString("") + consonants.mkString("") + breathings.mkString("") + accents.mkString("") + comboChars.mkString("") + punctuationString.mkString("") + whiteSpace.mkString("") + typography.mkString("")
 

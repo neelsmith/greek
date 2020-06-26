@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.5.1**: corrects assignment of lexical category in tokenzing `LiteraryGreekString`s.
+
 **5.5.0**: support version 2.0.0 of `MidOrthography` trait.
 
 **5.4.0**: improved output of verification from `LGSValidator`
