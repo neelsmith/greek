@@ -2,6 +2,9 @@ package edu.holycross.shot.greek
 
 import scala.scalajs.js.annotation._
 
+import wvlet.log._
+
+
 /** A pairing of an ASCII string with a single Unicode code point.
 *
 * @param ascii A string of characters that can be used in the `ascii`
@@ -14,7 +17,7 @@ import scala.scalajs.js.annotation._
 /** Manager for two-way mappings between ascii-based character sequences
 * and code points in the Greek and Coptic or Extended Greek blocks of Unicode.
 */
-@JSExportAll  object CodePointTranscoder {
+@JSExportAll  object CodePointTranscoder extends LogSupport {
 
   val leftCurly = "“"
   val rightCurly = "”"
@@ -30,7 +33,10 @@ import scala.scalajs.js.annotation._
   def ucodeCodePoint(asciiCodePoint: String) : String ={
     val matchingPairs = CodePointTranscoder.pairings.filter(_.ascii == asciiCodePoint)
     matchingPairs.size match {
-      case 0 =>  "#" //{  println("No character for " + asciiCodePoint); "#"}
+      case 0 => {
+        warn(s"CodePointTranscoder: no character matching ascii ${asciiCodePoint}")
+        s"#${asciiCodePoint}#" //{  println("No character for " + asciiCodePoint); "#"}
+      }
       case 1 => matchingPairs(0).ucode
       case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
     }
@@ -45,7 +51,10 @@ import scala.scalajs.js.annotation._
   def asciiCodePoint(ucodeCodePoint: String) : String = {
     val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == ucodeCodePoint)
     matchingPairs.size match {
-      case 0 => "#"
+      case 0 => {
+        warn(s"CodePointTranscoder: no character matching unicode ${ucodeCodePoint}")
+        s"#${LiteraryGreekString.sideBySide(ucodeCodePoint)}#"
+      }
       case 1 => matchingPairs(0).ascii
       case _ => throw GreekException("Found multiple unicode mappings for " + ucodeCodePoint)
     }

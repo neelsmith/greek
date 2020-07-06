@@ -173,7 +173,7 @@ import scala.annotation.tailrec
 * class's character encoding.
 */
 object LiteraryGreekString  extends MidOrthography with LogSupport  {
-  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  Logger.setDefaultLogLevel(LogLevel.WARN)
   // 4 methods required by MidOrthography
   //
   // 1. required by MidOrthography trait
@@ -212,28 +212,51 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
     val urn = n.urn
     // initial chunking on white space
     val lgs = LiteraryGreekString(n.text)
-    val units = lgs.ascii.split(" ").filter(_.nonEmpty)
+    val units = lgs.ascii.split("[\\s]+").filter(_.nonEmpty).toVector
+    debug("TOKENIZE LGS WITH u " + lgs.ucode)
+    debug("ascii " + lgs.ascii)
+    debug ("units " + units)
 
-    val classified = for (unit <- units.zipWithIndex) yield {
-      val newPassage = urn.passageComponent + "." + unit._2
+    val classified = for ( (unit, idx) <- units.zipWithIndex) yield {
+      val newPassage = urn.passageComponent + "." + idx
       val newVersion = urn.addVersion(urn.versionOption.getOrElse("") + LiteraryGreekString.exemplarId)
       val newUrn = CtsUrn(newVersion.dropPassage.toString + newPassage)
 
-      val trimmed = unit._1.trim
-      // Catch leading quotation?
-      val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
-          Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
+      debug(s"Look at unit ${idx}: " + unit)
+      val trimmed = unit.trim
 
-      } else {
-        val depunctuated = depunctuate(unit._1)
-        val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
-
-        val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
-          MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
+      if (trimmed.isEmpty) {
+        n.text.size match {
+          case 0 => {
+            warn("LiteraryGreekString: empty text citable node " + n)
+            Vector.empty[MidToken]
+          }
+          case _ => {
+            warn (s"LiteraryGreekString: evil unicode detected.  Text node of length ${n.text.size} has no tokens.")
+            warn("Code points were:")
+            warn(LiteraryGreekString.sideBySide(n.text).mkString("\n"))
+            Vector.empty[MidToken]
+          }
         }
-        first +: trailingPunct
+
+        // (n)
+        Vector.empty[MidToken]
+      } else {
+        // Catch leading quotation?
+        val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
+            Vector(MidToken(newUrn, "\"", Some(PunctuationToken)))
+
+        } else {
+          val depunctuated = depunctuate(unit)
+          val first =  MidToken(newUrn, depunctuated.head, lexicalCategory(depunctuated.head))
+
+          val trailingPunct = for (punct <- depunctuated.tail zipWithIndex) yield {
+            MidToken(CtsUrn(newUrn + "_" + punct._2), punct._1, Some(PunctuationToken))
+          }
+          first +: trailingPunct
+        }
+        tokensClassified
       }
-      tokensClassified
     }
     classified.toVector.flatten
   }
@@ -507,6 +530,29 @@ object LiteraryGreekString  extends MidOrthography with LogSupport  {
       val newAscii = ascii + CodePointTranscoder.asciiCodePoint(ucode.head.toString)
       nfcToAscii(newUcode,newAscii )
     }
+  }
+
+  // Compute Vector of code point values from String
+  def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
+   if (idx >= s.length) {
+     cpVector
+   } else {
+     val cp = s.codePointAt(idx)
+     strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
+   }
+  }
+
+  // Compose a String from a Vector of code point values
+  def cpsToString(v: Vector[Int]) = {
+    val chs = v.map { cp =>
+      new String(Character.toChars(cp))
+    }
+    chs.mkString
+  }
+
+  def sideBySide(s: String) =  {
+    def cpList = strToCps(s)
+    cpList.map(cp => cp + s" (${cpsToString(Vector(cp))})")
   }
 
 }
