@@ -35,7 +35,7 @@ import wvlet.log._
     matchingPairs.size match {
       case 0 => {
         warn(s"CodePointTranscoder: no character matching ascii ${asciiCodePoint}")
-        s"#${asciiCodePoint}#" //{  println("No character for " + asciiCodePoint); "#"}
+        s"#${LiteraryGreekString.strToCps(asciiCodePoint)}#" //{  println("No character for " + asciiCodePoint); "#"}
       }
       case 1 => matchingPairs(0).ucode
       case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
@@ -53,7 +53,8 @@ import wvlet.log._
     matchingPairs.size match {
       case 0 => {
         warn(s"CodePointTranscoder: no character matching unicode ${ucodeCodePoint}")
-        s"#${LiteraryGreekString.sideBySide(ucodeCodePoint)}#"
+        //s"#${LiteraryGreekString.sideBySide(ucodeCodePoint)}#"
+        s"#${ucodeCodePoint}#"
       }
       case 1 => matchingPairs(0).ascii
       case _ => throw GreekException("Found multiple unicode mappings for " + ucodeCodePoint)
