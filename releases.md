@@ -1,5 +1,7 @@
 # `greek` library: release notes
 
+**5.5.3**: tidier warning messages for bad code points.
+
 **5.5.2**: corrects a bug splitting on white space in tokenization.
 
 **5.5.1**: corrects assignment of lexical category in tokenzing `LiteraryGreekString`s.
