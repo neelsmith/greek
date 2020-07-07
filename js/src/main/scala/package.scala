@@ -43,7 +43,7 @@ package object greek {
       s
 
     } else {
-      LiteraryGreekString.nfcToAscii(s,"")
+      LiteraryGreekOrthography.nfcToAscii(s,"")
     }
   }
 
@@ -56,14 +56,14 @@ package object greek {
     if (checkFirst.toInt > 127) {
       s
     } else {
-      LiteraryGreekString.asciiToUcode(s,"")
+      LiteraryGreekOrthography.asciiToUcode(s,"")
     }
   }
 
   def literaryAsciiOf (s: String): String = {
     if (s.head.toInt > 127) {
       // Probably ONLY WORKS FOR Unicode in form NFC
-      LiteraryGreekString.nfcToAscii(s,"")
+      LiteraryGreekOrthography.nfcToAscii(s,"")
 
     } else {
       s
@@ -79,7 +79,7 @@ package object greek {
     if (checkFirst.toInt > 127) {
       s
     } else {
-      LiteraryGreekString.asciiToUcode(s,"")
+      LiteraryGreekOrthography.asciiToUcode(s,"")
     }
   }
 

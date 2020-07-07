@@ -14,14 +14,14 @@ class LGSTokenizationSpec extends FlatSpec {
 
   val numericTick: Character = 'ʹ'
 
-  "The LiteraryGreekString object" should  "implement the MidOrthography trait's tokenCategories function" in {
+  "The LiteraryGreekOrthography object" should  "implement the MidOrthography trait's tokenCategories function" in {
     val expected = Vector(PunctuationToken, LexicalToken, NumericToken).toSet
-    assert (LiteraryGreekString.tokenCategories.toSet == expected)
+    assert (LiteraryGreekOrthography.tokenCategories.toSet == expected)
   }
 
 
   it should "implement the MidOrthography trait's tokenizeNode function" in {
-    val tokens = LiteraryGreekString.tokenizeNode(cn)
+    val tokens = LiteraryGreekOrthography.tokenizeNode(cn)
     val expectedTotal = 8
     val expectedLexical = 6
     val expectedPunct = 2
@@ -34,47 +34,47 @@ class LGSTokenizationSpec extends FlatSpec {
     assert(expectedLexical == lexical.size)
   }
 
-  it should "correctly depunctuate strings using the default LiteraryGreekString definition of punctuation characters" in {
+  it should "correctly depunctuate strings using the default LiteraryGreekOrthography definition of punctuation characters" in {
     //val comma = "νῆας τὸν τόπον τῶν νηῶν~  Ἑλλήσποντον δὲ, τὴν μέχρι Σιγείου θάλασσαν⁑"
     val comma = "δὲ,"
-    val depunctuatedTokens = LiteraryGreekString.depunctuate(comma)
+    val depunctuatedTokens = LiteraryGreekOrthography.depunctuate(comma)
     assert(depunctuatedTokens.size == 2)
   }
 
   it should "correctly depunctuate strings using a specified list of punctuation characters" in {
     val tilde = "νηῶν~ "
     val punctList = ".,;~?"
-    val depunctuatedTokens = LiteraryGreekString.depunctuate(tilde,punctuationChars = punctList)
+    val depunctuatedTokens = LiteraryGreekOrthography.depunctuate(tilde,punctuationChars = punctList)
     assert(depunctuatedTokens.size == 2)
     assert(depunctuatedTokens(1) == "~")
   }
 
   it should "correctly identify numeric tokens" in {
     val eleven = s"ia${numericTick}"
-    assert(LiteraryGreekString.lexicalCategory(eleven).get == NumericToken)
+    assert(LiteraryGreekOrthography.lexicalCategory(eleven).get == NumericToken)
   }
 
   it should "correctly identify punctuation tokens using default definition" in {
-    assert(LiteraryGreekString.lexicalCategory(",").get == PunctuationToken)
+    assert(LiteraryGreekOrthography.lexicalCategory(",").get == PunctuationToken)
   }
 
   it should "correctly identify punctuation tokens using specific list of punctuation characters" in {
-    assert(LiteraryGreekString.lexicalCategory("~", ".,;?~").get == PunctuationToken)
+    assert(LiteraryGreekOrthography.lexicalCategory("~", ".,;?~").get == PunctuationToken)
   }
 
   it should "correctly identify lexical tokens in ascii form" in {
     val lgs = LiteraryGreekString("ποιησαίμην")
-    assert(LiteraryGreekString.lexicalCategory(lgs.ascii).get == LexicalToken)
+    assert(LiteraryGreekOrthography.lexicalCategory(lgs.ascii).get == LexicalToken)
   }
 
   it should  "correctly identify lexical tokens in unicode form" in {
     val lgs = LiteraryGreekString("ποιησαίμην")
-    assert(LiteraryGreekString.lexicalCategory(lgs.ucode).get == LexicalToken)
+    assert(LiteraryGreekOrthography.lexicalCategory(lgs.ucode).get == LexicalToken)
   }
 
   it should "classify invalid strings as lexical categoery None" in {
     val s = "mh=nin2"
-    assert(LiteraryGreekString.lexicalCategory(s) == None)
+    assert(LiteraryGreekOrthography.lexicalCategory(s) == None)
   }
 
 

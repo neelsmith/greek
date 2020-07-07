@@ -22,9 +22,9 @@ import scala.annotation.tailrec
 */
 trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  {
 
-  //require(str.nonEmpty, "Cannot create LiteraryGreekString from empty String")
+  // REQUIRED METHODS TO IMPLEMENT:
   def alphabetString: String //= LiteraryGreekString.alphabetString
-  def puncutationString: String
+  def punctuationString: String
 
   def vowels: Vector[Char]
   def consonants: Vector[Char]
@@ -72,11 +72,9 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
   }
 
 
-  /** Required function to convert lowercase to uppercase form.
-  */
-  def toUpper: LGSTrait /*= {
+  def upperCase: String =  {
     ucString(ascii,"")
-  }*/
+  }
 
   /** Recursively converts characters in src to upper case form.
   *
@@ -99,21 +97,16 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
   }
 
 
-  /** Required function to convert uppercase to lowercase form.
-  */
-  def toLower: LGSTrait /*= {
-    lcString(ascii,"")
-  }*/
-
+  def lowerCase = lcString(ascii)
 
   /** Recursively converts characters in src to upper case form.
   *
   * @param src Ascii representation of a [[GreekString]] to convert to upper case.
   * @param accumulator String of previously converted characters.
-
-  private def lcString(src: String, accumulator: String) : LiteraryGreekString = {
+  */
+  @tailrec private def lcString(src: String, accumulator: String = "") : String = {
     if (src.isEmpty) {
-      LiteraryGreekString(accumulator)
+      accumulator
 
     } else {
       if (src.head == '*') {
@@ -123,7 +116,7 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
       }
     }
   }
-  */
+
 
 
   /** Capitalize first letter of the string if not already
@@ -149,55 +142,53 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
 
 
   /** Required function to create a new [[GreekString]] with accents removed.
-  */
-  def stripAccent: LGSTrait
+
+  def stripAccent: LGSTrait*/
+
+
+
+
+  /////////////////////////////////////////////////////////////////////////
+  /// SUPPORT FOR REQUIRED METHODS OF GreekString trait
   def stripAccentString: String = {
-    stripAccs(ascii,"")
+    stripAccs(ascii)
   }
 
-  def stripBreathing: LGSTrait
   def stripBreathingString: String = {
     stripBreathingsString(ascii,"")
   }
 
-
-  def stripBreathingAccent: LGSTrait
   def stripBreathingAccentString: String = {
-    val noBreath = stripBreathingsString(ascii,"")
-    stripAccsString(noBreath,"")
+    stripAccs(stripBreathingString,"")
   }
 
-
-  /** Create a [[LiteraryGreekString]] with grave accent (barytone) converted to acute (oxytone).*/
-  def flipGrave: LGSTrait
-  def flipGraveString(ascii: String): String  =  {
+  def flipGraveString: String  =  {
     ascii.replaceAll("\\\\", "/")
   }
 
   /** Format a transliterated version of the string value for
   * human readers. */
-  def xlit: String /* = {
-    val replacements = stripBreathingAccent.ascii.replaceAll("h", "ê").replaceAll("q", "th").
+  def xlit: String  = {
+    val replacements = stripBreathingAccentString.replaceAll("h", "ê").replaceAll("q", "th").
     replaceAll("c", "x").replaceAll("f", "ph").replaceAll("x", "ch").
     replaceAll("y", "ps").replaceAll("w", "ô")
 
     val uc = "\\*(.)".r
     uc.replaceAllIn(replacements,m => m.group(1).toUpperCase)
-  }*/
+  }
 
 
 
 
-  /** Create a [[LiteraryGreekString]] with no accent characters
-  * from an `ascii` String by recursively looking at the first character
+  /** Strip all accent characters from an `ascii` String
+  * by recursively looking at the first character
   * of the ascii string and adding it to a new string only if it is
   * not an accent.
   *
   * @param src Remaining ascii String to strip accents from.
   * @param accumulator String of non-accent characters accumulated so far.
-  *
   */
-  @tailrec private def stripAccs(src: String, accumulator: String): String = {
+  @tailrec private def stripAccs(src: String, accumulator: String = ""): String = {
     if (src.isEmpty) {
       accumulator
 
@@ -210,9 +201,7 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
     }
   }
 
-  @tailrec private def stripBreathingsString(src: String, accumulator: String): String = {
-
-
+  @tailrec private def stripBreathingsString(src: String, accumulator: String = ""): String = {
     if (src.isEmpty) {
       accumulator
 
@@ -225,6 +214,10 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
       }
     }
   }
+
+
+
+
   /** Recursively strips punctuation tokens off the end of a String,
   * to build list of tokens.
   *
@@ -329,7 +322,7 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
     * @param src Remaining ascii String to strip accents from.
     * @param accumulator String of non-accent characters accumulated so far.
     *
-    */
+
     @tailrec private def stripAccsString(src: String, accumulator: String): String = {
       if (src.isEmpty) {
         accumulator
@@ -341,7 +334,7 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
           stripAccsString(src.tail, accumulator + src.head)
         }
       }
-    }
+    }*/
 }
 
 /** Utility functions for working with definitions of the [[LiteraryGreekString]]

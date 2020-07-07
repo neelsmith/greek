@@ -8,7 +8,7 @@
 
 
 
-## Current version: 5.5.3
+## Current version: 6.0.0
 
 Status:  **active development**. [Release notes](releases.md).
 

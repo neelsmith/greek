@@ -12,16 +12,16 @@ class LGSTokenizingSpec extends FlatSpec {
   val txt = "περὶ πολλοῦ ἂν ποιησαίμην, ὦ ἄνδρες, "
   val cn = CitableNode(urn, txt)
 
-  "The LiteraryGreekString object" should "split strings on trailing punctuation" in {
+  "The LiteraryGreekOrthography object" should "split strings on trailing punctuation" in {
     val comma  = "δὲ,"
-    val depunctuated = (LiteraryGreekString.depunctuate(comma))
+    val depunctuated = (LiteraryGreekOrthography.depunctuate(comma))
     assert(depunctuated.size == 2)
     assert(depunctuated(1) == ",")
   }
 
   it should "recognize trailing quote as punctuation" in {
     val trailingQuote = """νῆας" """
-    val depunctuated = (LiteraryGreekString.depunctuate(trailingQuote))
+    val depunctuated = (LiteraryGreekOrthography.depunctuate(trailingQuote))
     assert(depunctuated.size == 2)
   }
 
@@ -30,7 +30,7 @@ class LGSTokenizingSpec extends FlatSpec {
 
     val u = CtsUrn("urn:cts:debug:w.g.v:1")
     val cn = CitableNode(u, massive)
-    val tokens = LiteraryGreekString.tokenizeNode(cn)
+    val tokens = LiteraryGreekOrthography.tokenizeNode(cn)
     println(tokens.mkString("\n"))
   }
 

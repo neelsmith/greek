@@ -102,7 +102,7 @@ import scala.annotation.tailrec
   def tokensForUrn(psg: CtsUrn) : Vector[Vector[MidToken]]= {
     val subcorpus = corpus ~~ psg
     for (n <- subcorpus.nodes) yield {
-      LiteraryGreekString.tokenizeNode(n)
+      LiteraryGreekOrthography.tokenizeNode(n)
     }
   }
 
@@ -137,7 +137,7 @@ import scala.annotation.tailrec
   * expected to follow GreekLiteraryString.
   */
   def validate(textNode: CitableNode) : Vector[TestResult[LiteraryGreekString]] = {
-    val tokens = LiteraryGreekString.tokenizeNode(textNode)
+    val tokens = LiteraryGreekOrthography.tokenizeNode(textNode)
     tokens.isEmpty match {
       case true => {
         warn("No tokens found from " + textNode)
@@ -148,9 +148,9 @@ import scala.annotation.tailrec
         val lgsList = tokens.map(t => (t.urn, LiteraryGreekString(t.text)))
 
         for( (urn, lgs) <- lgsList) yield {
-          LiteraryGreekString.validString(lgs.ascii) match {
+          LiteraryGreekOrthography.validString(lgs.ascii) match {
             case true => TestResult(true, s"${lgs.ucode} (${urn}) valid.", lgs)
-            case false => TestResult(false, s"${lgs.ucode} invalid (${urn}):  ${LiteraryGreekString.hiliteBadCps(lgs.ascii)} ", lgs)
+            case false => TestResult(false, s"${lgs.ucode} invalid (${urn}):  ${LiteraryGreekOrthography.hiliteBadCps(lgs.ascii)} ", lgs)
           }
         }
       }

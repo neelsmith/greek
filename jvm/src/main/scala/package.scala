@@ -41,8 +41,8 @@ package object greek extends LogSupport {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
     } else {
-      debug("Create LiteraryGreekString of " + s)
-      LiteraryGreekString.asciiToUcode(s,"") //+ numericTick
+      debug("Create LiteraryGreekOrthography of " + s)
+      LiteraryGreekOrthography.asciiToUcode(s,"") //+ numericTick
     }
   }
 
@@ -57,7 +57,7 @@ package object greek extends LogSupport {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
 
       if (s.head.toInt > 127) {
-        LiteraryGreekString.nfcToAscii(normalized,"")
+        LiteraryGreekOrthography.nfcToAscii(normalized,"")
 
       } else {
         // handle special cases
@@ -67,7 +67,7 @@ package object greek extends LogSupport {
   }
 
 
-  /** Create [[LiteraryGreekString]]'s `ascii` view of a String.
+  /** Create [[LiteraryGreekOrthography]]'s `ascii` view of a String.
   * If the first character is <= 127, assume that the String
   * is already in `ascii` view; otherwise, normalize to Unicode
   * form NFC before converting.
@@ -83,7 +83,7 @@ package object greek extends LogSupport {
 
     if (checkFirst.toInt > 127) {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
-      LiteraryGreekString.nfcToAscii(normalized,"")
+      LiteraryGreekOrthography.nfcToAscii(normalized,"")
 
     } else {
       // handle terminal sigma
@@ -93,7 +93,7 @@ package object greek extends LogSupport {
 
 
 
-  /** Create [[LiteraryGreekString]]'s `ucode` view of a String.
+  /** Create [[LiteraryGreekOrthography]]'s `ucode` view of a String.
   * If the first character is <= 127, assume that the String
   * is in `ascii` view and convert it; otherwise, normalize to Unicode
   * form NFC.
@@ -126,7 +126,7 @@ package object greek extends LogSupport {
 
 
     } else {
-      LiteraryGreekString.asciiToUcode(s,"")
+      LiteraryGreekOrthography.asciiToUcode(s,"")
     }
   }
 

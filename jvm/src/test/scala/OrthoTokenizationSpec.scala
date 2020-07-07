@@ -10,9 +10,9 @@ class OrthoTokenizationSpec extends FlatSpec {
   val f = "jvm/src/test/resources/hmt-reduced.cex"
   val lib = CiteLibrarySource.fromFile(f)
 
-  "An LiteraryGreekString" should "tokenize a citable node" in {
+  "An LiteraryGreekOrthography" should "tokenize a citable node" in {
     val corpus = lib.textRepository.get.corpus
-    val tokens = LiteraryGreekString.tokenizeNode(corpus.nodes(1))
+    val tokens = LiteraryGreekOrthography.tokenizeNode(corpus.nodes(1))
   }
 
 

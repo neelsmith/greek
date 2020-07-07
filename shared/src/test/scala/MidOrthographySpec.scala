@@ -12,9 +12,9 @@ class MidOrthographySpec extends FlatSpec {
   val txt = "περὶ πολλοῦ ἂν ποιησαίμην, ὦ ἄνδρες, "
   val cn = CitableNode(urn, txt)
 
-  "The LiteraryGreekString object" should "implement the MidOrthography trait's labelling function" in {
+  "The LiteraryGreekOrthography object" should "implement the MidOrthography trait's labelling function" in {
     val expected = "Conventional modern orthography of literary Greek"
-    assert(LiteraryGreekString.orthography == expected)
+    assert(LiteraryGreekOrthography.orthography == expected)
   }
 
   // validate code points for ascii versions
@@ -23,18 +23,18 @@ class MidOrthographySpec extends FlatSpec {
   }*/
 
   it should "determine if an ASCII code point is valid" in  {
-    assert(LiteraryGreekString.validAsciiCP('a'.toInt))
-    assert(LiteraryGreekString.validAsciiCP('α'.toInt) == false)
+    assert(LiteraryGreekOrthography.validAsciiCP('a'.toInt))
+    assert(LiteraryGreekOrthography.validAsciiCP('α'.toInt) == false)
   }
 
   it should "determine if a code point in the Unicode range is valid" in  {
-    assert(LiteraryGreekString.validCP('α'.toInt))
-    assert(LiteraryGreekString.validCP('a'.toInt))
+    assert(LiteraryGreekOrthography.validCP('α'.toInt))
+    assert(LiteraryGreekOrthography.validCP('a'.toInt))
   }
 
   it should "depunctuate" in {
     val comma  = "δὲ,"
-    val depunctuated = (LiteraryGreekString.depunctuate(comma))
+    val depunctuated = (LiteraryGreekOrthography.depunctuate(comma))
     assert(depunctuated.size == 2)
     assert(depunctuated(1) == ",")
   }

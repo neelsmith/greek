@@ -1,5 +1,8 @@
 # `greek` library: release notes
 
+
+**6.0.0**: refactor `LiteraryGreekString` as an implementation of a new `LGSTrait`.
+
 **5.5.3**: tidier warning messages for bad code points.
 
 **5.5.2**: corrects a bug splitting on white space in tokenization.
