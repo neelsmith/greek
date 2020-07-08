@@ -52,7 +52,13 @@ class CodePointTranscodingSpec extends FlatSpec {
 
   it should "handle combination of vowel, accent and diaeresis" in {
     val s = "i+/e"
-    println("What is ? " + CodePointTranscoder.ucodeCodePoint(s))
+    val u = CodePointTranscoder.ucodeCodePoint(s)
+    println(s"Original ${s} -> ${u}")
+
+    val combined = "ΐ"
+    println(CodePointTranscoder.sideBySide(combined))
+
+
   }
 
 
