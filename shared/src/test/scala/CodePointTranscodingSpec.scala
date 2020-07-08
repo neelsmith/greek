@@ -6,9 +6,6 @@ import org.scalatest.FlatSpec
 
 class CodePointTranscodingSpec extends FlatSpec {
 
-
-
-
   "A code point transcoder object"  should "map individual ascii characters to unicode code points" in  {
     val asciiList = Vector("a","b","g","d","e")
     val ucodeList = Vector("α","β","γ","δ","ε")
@@ -32,8 +29,9 @@ class CodePointTranscodingSpec extends FlatSpec {
 
   }
 
-  it should "accept quotation marks and em dashes as valid 'markup' characters in either encoding" in {
-    val markupChars = Vector(CodePointTranscoder.emDash, CodePointTranscoder.leftCurly, CodePointTranscoder.rightCurly)
+  it should "accept em dashes as valid 'markup' characters in either encoding" in {
+    val markupChars = Vector(CodePointTranscoder.emDash, CodePointTranscoder.leftCurly,
+    CodePointTranscoder.rightCurly)
 
 
     var count = 0
@@ -51,14 +49,10 @@ class CodePointTranscodingSpec extends FlatSpec {
   }
 
   it should "handle combination of vowel, accent and diaeresis" in {
-    val s = "i+/e"
-    val u = CodePointTranscoder.ucodeCodePoint(s)
-    println(s"Original ${s} -> ${u}")
-
-    val combined = "ΐ"
-    println(CodePointTranscoder.sideBySide(combined))
-
-
+    val s = "i/+"
+    val expected = "ΐ"
+    val actual = CodePointTranscoder.ucodeCodePoint(s)
+    assert(actual == expected)
   }
 
 

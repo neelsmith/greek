@@ -19,9 +19,8 @@ import wvlet.log._
 */
 @JSExportAll  object CodePointTranscoder extends LogSupport {
 
-  val leftCurly = "“"
-  val rightCurly = "”"
-  val emDash = "—"
+
+
   // Compute Vector of code point values from String
   def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
    if (idx >= s.length) {
@@ -132,29 +131,29 @@ import wvlet.log._
 
   }
 
+
+
+  // "Permitted markup" characters, in addition to ASCII
+  // punctuation and white space:
+  val leftCurly = "“"
+  val rightCurly = "”"
+  val emDash = "—"
   val numericTick = '\u0374'
+
+
   /** All recognized pairings of `ascii` String encodings
-  * to `ucode` String encodings.  Ascii values must be unique.
+  * to `ucode` code points (as Strings) in the Greek and Extended Greek
+  * blocks of Unicode.  Ascii values must be unique.
   */
   def pairings =
 
     Vector(
 
-      // Numeric values used in both ASCII and Unicode Milesian:
-      //
-
-      CodePointPair("½", MilesianNumeric.halfString),
-      CodePointPair("⅓", MilesianNumeric.twoThirdsString),
-
-      CodePointPair(MilesianNumeric.stigmaString, MilesianNumeric.stigmaString),
-      CodePointPair(MilesianNumeric.qoppaString, MilesianNumeric.qoppaString),
-      CodePointPair(MilesianNumeric.sampiString, MilesianNumeric.sampiString),
       CodePointPair(leftCurly, leftCurly),
       CodePointPair(rightCurly, rightCurly),
       CodePointPair(emDash, emDash),
-      CodePointPair("e=", "ê"),
-      CodePointPair("o=", "ô"),
-      //CodePointPair("*e)"," ̓Ε"),
+      CodePointPair(s"${numericTick}", s"${numericTick}"),
+
       CodePointPair(" ", " "),
       CodePointPair("\n", "\n"),
       CodePointPair("\r", "\r"),
@@ -165,15 +164,22 @@ import wvlet.log._
       CodePointPair(":", ":"),
       CodePointPair(";", ";"),
       CodePointPair("'", "'"),
-      //CodePointPair("—", "—"),
+
       CodePointPair("\"", "\""),
 
-      //CodePointPair("","Ͱ"), //880
+
+      // For Attic Greek Strings
+      CodePointPair("e=", "ê"),
+      CodePointPair("o=", "ô"),
+
+
+      // Beginning of Greek and Coptic block of Unicode is 880 x0370
+      //CodePointPair("","Ͱ"), //880 x0370
       //CodePointPair("","ͱ"), //881
       //CodePointPair("","Ͳ"), //882
       //CodePointPair("","ͳ"), //883
-      CodePointPair("","ʹ"), //884
-      CodePointPair("","͵"), //885
+      //CodePointPair("","ʹ"), //884
+      //CodePointPair("","͵"), //885
       //CodePointPair("","Ͷ"), //886
       //CodePointPair("","ͷ"), //887
       //CodePointPair("","͸"), //888
@@ -188,18 +194,18 @@ import wvlet.log._
       //CodePointPair("","΁"), //897
       //CodePointPair("","΂"), //898
       //CodePointPair("","΃"), //899
-      //CodePointPair("","΄"), //900
+      //CodePointPair("","΄"), //900 // modern Greek tonos
       //CodePointPair("","΅"), //901
-      //CodePointPair("*a/","Ά"), //902
+      CodePointPair("*a/","Ά"), //902  // x0386
       //CodePointPair("","·"), //903
-      //CodePointPair("*e/","Έ"), //904
-      //CodePointPair("*h/","Ή"), //905
-      //CodePointPair("*i/","Ί"), //906
+      CodePointPair("*e/","Έ"), //904
+      CodePointPair("*h/","Ή"), //905
+      CodePointPair("*i/","Ί"), //906
       //CodePointPair("","΋"), //907
-      //CodePointPair("*o/","Ό"), //908
+      CodePointPair("*o/","Ό"), //908
 
-      //CodePointPair("*u/","Ύ"), //910
-      //CodePointPair("*w/","Ώ"), //911
+      CodePointPair("*u/","Ύ"), //910
+      CodePointPair("*w/","Ώ"), //911
       CodePointPair("i/+","ΐ"), //912 cf 8147
       CodePointPair("*a","Α"), //913
       CodePointPair("*b","Β"), //914
@@ -265,6 +271,8 @@ import wvlet.log._
       CodePointPair("o/","ό"), //972 cf 8057
       CodePointPair("u/","ύ"), //973 cf 8059
       CodePointPair("w/","ώ"), //974 cf 8061
+      // the next series code points do not properly belong
+      // in a semantic encoding, so commented out here:
       //CodePointPair("","Ϗ"), //975
       //CodePointPair("","ϐ"), //976
       //CodePointPair("","ϑ"), //977
@@ -274,17 +282,19 @@ import wvlet.log._
       //CodePointPair("","ϕ"), //981
       //CodePointPair("","ϖ"), //982
       //CodePointPair("","ϗ"), //983
-      CodePointPair("","Ϙ"), //984
-      //CodePointPair("","ϙ"), //985
-      CodePointPair("","Ϛ"), //986
-      //CodePointPair("","ϛ"), //987
-      CodePointPair("","Ϝ"), //988
-      CodePointPair("","ϝ"), //989
-      CodePointPair("","Ϟ"), //990
-      CodePointPair("","ϟ"), //991
-      CodePointPair("","Ϡ"), //992
-      //CodePointPair("","ϡ"), //993
-
+      // Allow 3 code points used in case-insensitive
+      // encoding of numbers to be passed through
+      // unaltered:
+      //CodePointPair("","Ϙ"), //984
+      CodePointPair("ϙ","ϙ"), //985
+      //CodePointPair("","Ϛ"), //986 \x03da
+      CodePointPair("ϛ","ϛ"), //987
+      //CodePointPair("","Ϝ"), //988
+      //CodePointPair("","ϝ"), //989
+      //CodePointPair("","Ϟ"), //990
+      //CodePointPair("","ϟ"), //991
+      //CodePointPair("","Ϡ"), //992
+      CodePointPair("ϡ","ϡ"), //993
       //CodePointPair("","ϰ"), //1008
       //CodePointPair("","ϱ"), //1009
       //CodePointPair("","ϲ"), //1010
@@ -295,13 +305,17 @@ import wvlet.log._
       //CodePointPair("","Ϸ"), //1015
       //CodePointPair("","ϸ"), //1016
       //CodePointPair("","Ϲ"), //1017
-      CodePointPair("","Ϻ"), //1018
-      CodePointPair("","ϻ"), //1019
+      //CodePointPair("","Ϻ"), //1018
+      //CodePointPair("","ϻ"), //1019
       //CodePointPair("","ϼ"), //1020
       //CodePointPair("","Ͻ"), //1021
       //CodePointPair("","Ͼ"), //1022
       //CodePointPair("","Ͽ"), //1023
 
+
+
+
+      // Greek Extended block of Unicode
       CodePointPair("a)","ἀ"), //7936
       CodePointPair("a(","ἁ"), //7937
       CodePointPair("a)\\","ἂ"), //7938
@@ -449,14 +463,14 @@ import wvlet.log._
       CodePointPair("a)=|","ᾆ"), //8070
       CodePointPair("a(=|","ᾇ"), //8071
 
-      CodePointPair("","ᾈ"), //8072
-      CodePointPair("","ᾉ"), //8073
-      CodePointPair("","ᾊ"), //8074
-      CodePointPair("","ᾋ"), //8075
-      CodePointPair("","ᾌ"), //8076
-      CodePointPair("","ᾍ"), //8077
-      CodePointPair("","ᾎ"), //8078
-      CodePointPair("","ᾏ"), //8079
+      CodePointPair("*a)|","ᾈ"), //8072 \x1f88
+      CodePointPair("*a(|","ᾉ"), //8073
+      CodePointPair("*a(\\|","ᾊ"), //8074
+      //CodePointPair("*a","ᾋ"), //8075 using 913 x0391
+      CodePointPair("*a(/|","ᾌ"), //8076
+      CodePointPair("*a)/|","ᾍ"), //8077
+      CodePointPair("*a)=|","ᾎ"), //8078
+      CodePointPair("*a(/|","ᾏ"), //8079
 
       CodePointPair("h)|","ᾐ"), //8080
       CodePointPair("h(|","ᾑ"), //8081
@@ -467,14 +481,14 @@ import wvlet.log._
       CodePointPair("h)=|","ᾖ"), //8086
       CodePointPair("h(=|","ᾗ"), //8087
 
-      CodePointPair("","ᾘ"), //8088
-      CodePointPair("","ᾙ"), //8089
-      CodePointPair("","ᾚ"), //8090
-      CodePointPair("","ᾛ"), //8091
-      CodePointPair("","ᾜ"), //8092
-      CodePointPair("","ᾝ"), //8093
-      CodePointPair("","ᾞ"), //8094
-      CodePointPair("","ᾟ"), //8095
+      CodePointPair("*h)|","ᾘ"), //8088
+      CodePointPair("*h(|","ᾙ"), //8089
+      CodePointPair("*h)\\|","ᾚ"), //8090
+      CodePointPair("*h(\\|","ᾛ"), //8091
+      CodePointPair("*h)/|","ᾜ"), //8092
+      CodePointPair("*h(/|","ᾝ"), //8093
+      CodePointPair("*h)=|","ᾞ"), //8094
+      CodePointPair("*h(=|","ᾟ"), //8095
 
       CodePointPair("w)|","ᾠ"), //8096
       CodePointPair("w(|","ᾡ"), //8097
@@ -494,8 +508,8 @@ import wvlet.log._
       CodePointPair("*w)=|","ᾮ"), //8110
       CodePointPair("*w(=|","ᾯ"), //8111
 
-      CodePointPair("","ᾰ"), //8112
-      CodePointPair("","ᾱ"), //8113
+      CodePointPair("a^","ᾰ"), //8112
+      CodePointPair("a_","ᾱ"), //8113
 
       CodePointPair("a\\|","ᾲ"), //8114
       CodePointPair("a|","ᾳ"), //8115
@@ -504,17 +518,18 @@ import wvlet.log._
       CodePointPair("a=","ᾶ"), //8118
       CodePointPair("a=|","ᾷ"), //8119
 
-      CodePointPair("","Ᾰ"), //8120
-      CodePointPair("","Ᾱ"), //8121
+      CodePointPair("*a^","Ᾰ"), //8120
+      CodePointPair("*a_","Ᾱ"), //8121
 
-      CodePointPair("","Ὰ"), //8122
-      CodePointPair("","Ά"), //8123
-      CodePointPair("","ᾼ"), //8124
-      CodePointPair("","᾽"), //8125
-      CodePointPair("","ι"), //8126
-      CodePointPair("","᾿"), //8127
-      CodePointPair("","῀"), //8128
-      CodePointPair("","῁"), //8129
+      CodePointPair("*a\\","Ὰ"), //8122
+      CodePointPair("*a/","Ά"), //8123
+      CodePointPair("*a|","ᾼ"), //8124
+
+      //CodePointPair("","᾽"), //8125
+      //CodePointPair("","ι"), //8126
+      //CodePointPair("","᾿"), //8127
+      //CodePointPair("","῀"), //8128
+      //CodePointPair("","῁"), //8129
 
       CodePointPair("h\\|","ῂ"), //8130
       CodePointPair("h|","ῃ"), //8131
@@ -523,19 +538,19 @@ import wvlet.log._
       CodePointPair("h=","ῆ"), //8134
       CodePointPair("h=|","ῇ"), //8135
 
-      CodePointPair("","Ὲ"), //8136
-      CodePointPair("","Έ"), //8137
+      CodePointPair("*d\\","Ὲ"), //8136
+      CodePointPair("*e/","Έ"), //8137
 
-      CodePointPair("","Ὴ"), //8138
-      CodePointPair("","Ή"), //8139
+      CodePointPair("*h\\","Ὴ"), //8138
+      CodePointPair("*h//","Ή"), //8139
       CodePointPair("*h|","ῌ"), //8140
 
-      CodePointPair("","῍"), //8141
-      CodePointPair("","῎"), //8142
-      CodePointPair("","῏"), //8143
+      //CodePointPair("","῍"), //8141
+      //CodePointPair("","῎"), //8142
+      //CodePointPair("","῏"), //8143
 
-      CodePointPair("","ῐ"), //8144
-      CodePointPair("","ῑ"), //8145
+      CodePointPair("i^","ῐ"), //8144
+      CodePointPair("i_","ῑ"), //8145
 
       CodePointPair("i\\+","ῒ"), //8146
       CodePointPair("i/\\+","ΐ"), //8147
@@ -544,22 +559,22 @@ import wvlet.log._
       CodePointPair("i=","ῖ"), //8150
       CodePointPair("i=\\+","ῗ"), //8151
 
-      CodePointPair("","Ῐ"), //8152
-      CodePointPair("","Ῑ"), //8153
+      CodePointPair("*i^","Ῐ"), //8152
+      CodePointPair("*i_","Ῑ"), //8153
 
-      CodePointPair("","Ὶ"), //8154
-      CodePointPair("","Ί"), //8155
+      CodePointPair("*i\\","Ὶ"), //8154
+      CodePointPair("*i/","Ί"), //8155
 
 
-      CodePointPair("","῝"), //8157
-      CodePointPair("","῞"), //8158
-      CodePointPair("","῟"), //8159
+      //CodePointPair("","῝"), //8157
+      //CodePointPair("","῞"), //8158
+      //CodePointPair("","῟"), //8159
 
-      CodePointPair("","ῠ"), //8160
-      CodePointPair("","ῡ"), //8161
+      CodePointPair("u^","ῠ"), //8160
+      CodePointPair("u_","ῡ"), //8161
 
       CodePointPair("u\\+","ῢ"), //8162
-      //CodePointPair("u/+","ΰ"), //8163
+      CodePointPair("u/+","ΰ"), //8163
 
       CodePointPair("r)","ῤ"), //8164
       CodePointPair("r(","ῥ"), //8165
@@ -567,116 +582,45 @@ import wvlet.log._
       CodePointPair("u=","ῦ"), //8166
       CodePointPair("u=+","ῧ"), //8167
 
-      CodePointPair("","Ῠ"), //8168
-      CodePointPair("","Ῡ"), //8169
-      CodePointPair("","Ὺ"), //8170
-      CodePointPair("","Ύ"), //8171
+      CodePointPair("*u^","Ῠ"), //8168
+      CodePointPair("*u_","Ῡ"), //8169
+      CodePointPair("*u\\","Ὺ"), //8170
+      CodePointPair("*u/","Ύ"), //8171
 
       CodePointPair("*r(","Ῥ"), //8172
-      CodePointPair("","῭"), //8173
-      CodePointPair("","΅"), //8174
-      CodePointPair("","`"), //8175
+      //CodePointPair("","῭"), //8173
+      //CodePointPair("","΅"), //8174
+      //CodePointPair("","`"), //8175
 
       CodePointPair("w\\|","ῲ"), //8178
       CodePointPair("w|","ῳ"), //8179
       CodePointPair("w/|","ῴ"), //8180
 
-
       CodePointPair("w=","ῶ"), //8182
       CodePointPair("w=|","ῷ"), //8183
 
-      CodePointPair("","Ὸ"), //8184
-      CodePointPair("","Ό"), //8185
-      CodePointPair("","Ὼ"), //8186
-      CodePointPair("","Ώ"), //8187
+      CodePointPair("*o\\","Ὸ"), //8184
+      CodePointPair("*o/","Ό"), //8185
+      CodePointPair("*w\\","Ὼ"), //8186
+      CodePointPair("*w/","Ώ"), //8187
       CodePointPair("*w|","ῼ"), //8188
-      CodePointPair("","´"), //8189
-      CodePointPair("","῾"), //8190
-      CodePointPair("","῿") //8191
+      //CodePointPair("","´"), //8189
+      //CodePointPair("","῾"), //8190
+      //CodePointPair("","῿") //8191
+
+      // The Ancient Greek Numbers block begins at 65856 = x10140.
+      // Numeric values used in both ASCII and Unicode Milesian:
+      //
+      CodePointPair("½", MilesianNumeric.halfString),       // x10175 Greek one-half sign
+      CodePointPair("⅓", MilesianNumeric.twoThirdsString),  // x10177 Greek two-thirds sign
+      CodePointPair("¾", "\u10178"),  // x10178 Greek three-quarters sign
+      CodePointPair("0", "\u1018a") // x1018A Greek zero sign
+
+      // Encoded with Extended Greek block, above:
+      //CodePointPair(MilesianNumeric.stigmaString, MilesianNumeric.stigmaString),
+      //CodePointPair(MilesianNumeric.qoppaString, MilesianNumeric.qoppaString),
+      //CodePointPair(MilesianNumeric.sampiString, MilesianNumeric.sampiString),
     )
 
-          // conversions broken beyond BMP
-          /*
-          CodePointPair("","ŀ"), //65856
-          CodePointPair("","Ł"), //65857
-          CodePointPair("","ł"), //65858
-          CodePointPair("","Ń"), //65859
-          CodePointPair("","ń"), //65860
-          CodePointPair("","Ņ"), //65861
-          CodePointPair("","ņ"), //65862
-          CodePointPair("","Ň"), //65863
-          CodePointPair("","ň"), //65864
-          CodePointPair("","ŉ"), //65865
-          CodePointPair("","Ŋ"), //65866
-          CodePointPair("","ŋ"), //65867
-          CodePointPair("","Ō"), //65868
-          CodePointPair("","ō"), //65869
-          CodePointPair("","Ŏ"), //65870
-          CodePointPair("","ŏ"), //65871
-          CodePointPair("","Ő"), //65872
-          CodePointPair("","ő"), //65873
-          CodePointPair("","Œ"), //65874
-          CodePointPair("","œ"), //65875
-          CodePointPair("","Ŕ"), //65876
-          CodePointPair("","ŕ"), //65877
-          CodePointPair("","Ŗ"), //65878
-          CodePointPair("","ŗ"), //65879
-          CodePointPair("","Ř"), //65880
-          CodePointPair("","ř"), //65881
-          CodePointPair("","Ś"), //65882
-          CodePointPair("","ś"), //65883
-          CodePointPair("","Ŝ"), //65884
-          CodePointPair("","ŝ"), //65885
-          CodePointPair("","Ş"), //65886
-          CodePointPair("","ş"), //65887
-          CodePointPair("","Š"), //65888
-          CodePointPair("","š"), //65889
-          CodePointPair("","Ţ"), //65890
-          CodePointPair("","ţ"), //65891
-          CodePointPair("","Ť"), //65892
-          CodePointPair("","ť"), //65893
-          CodePointPair("","Ŧ"), //65894
-          CodePointPair("","ŧ"), //65895
-          CodePointPair("","Ũ"), //65896
-          CodePointPair("","ũ"), //65897
-          CodePointPair("","Ū"), //65898
-          CodePointPair("","ū"), //65899
-          CodePointPair("","Ŭ"), //65900
-          CodePointPair("","ŭ"), //65901
-          CodePointPair("","Ů"), //65902
-          CodePointPair("","ů"), //65903
-          CodePointPair("","Ű"), //65904
-          CodePointPair("","ű"), //65905
-          CodePointPair("","Ų"), //65906
-          CodePointPair("","ų"), //65907
-          CodePointPair("","Ŵ"), //65908
-          CodePointPair("","ŵ"), //65909
-          CodePointPair("","Ŷ"), //65910
-          CodePointPair("","ŷ"), //65911
-          CodePointPair("","Ÿ"), //65912
-          CodePointPair("","Ź"), //65913
-          CodePointPair("","ź"), //65914
-          CodePointPair("","Ż"), //65915
-          CodePointPair("","ż"), //65916
-          CodePointPair("","Ž"), //65917
-          CodePointPair("","ž"), //65918
-          CodePointPair("","ſ"), //65919
-          CodePointPair("","ƀ"), //65920
-          CodePointPair("","Ɓ"), //65921
-          CodePointPair("","Ƃ"), //65922
-          CodePointPair("","ƃ"), //65923
-          CodePointPair("","Ƅ"), //65924
-          CodePointPair("","ƅ"), //65925
-          CodePointPair("","Ɔ"), //65926
-          CodePointPair("","Ƈ"), //65927
-          CodePointPair("","ƈ"), //65928
-          CodePointPair("","Ɖ"), //65929
-          CodePointPair("","Ɗ"), //65930
-          CodePointPair("","Ƌ"), //65931
-          CodePointPair("","ƌ"), //65932
-          CodePointPair("","ƍ"), //65933
-          CodePointPair("","Ǝ"), //65934
-          CodePointPair("","Ə"), //65935
-          */
 
 }

@@ -6,7 +6,7 @@ import edu.holycross.shot.mid.orthography._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.cite._
 
-class MidOrthographySpec extends FlatSpec {
+class LiteraryGreekOrthographySpec extends FlatSpec {
 
   val urn = CtsUrn("urn:cts:greekLit:tlg0540.tlg001.omar:1.1")
   val txt = "περὶ πολλοῦ ἂν ποιησαίμην, ὦ ἄνδρες, "
@@ -18,9 +18,9 @@ class MidOrthographySpec extends FlatSpec {
   }
 
   // validate code points for ascii versions
-  it should "implement the MidOrthography trait's validCP function" in pending/*{
-
-  }*/
+  it should "implement the MidOrthography trait's validCP function" in {
+    assert(LiteraryGreekOrthography.validCP('a'.toInt))
+  }
 
   it should "determine if an ASCII code point is valid" in  {
     assert(LiteraryGreekOrthography.validAsciiCP('a'.toInt))
