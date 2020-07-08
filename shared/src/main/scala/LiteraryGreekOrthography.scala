@@ -80,7 +80,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
           case _ => {
             warn (s"LiteraryGreekString: evil unicode detected.  Text node of length ${n.text.size} has no tokens.")
             warn("Code points were:")
-            warn(LiteraryGreekOrthography.sideBySide(n.text).mkString("\n"))
+            warn(CodePointTranscoder.sideBySide(n.text).mkString("\n"))
             Vector.empty[MidToken]
           }
         }
@@ -334,27 +334,6 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
     }
   }
 
-  // Compute Vector of code point values from String
-  def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
-   if (idx >= s.length) {
-     cpVector
-   } else {
-     val cp = s.codePointAt(idx)
-     strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
-   }
-  }
 
-  // Compose a String from a Vector of code point values
-  def cpsToString(v: Vector[Int]) = {
-    val chs = v.map { cp =>
-      new String(Character.toChars(cp))
-    }
-    chs.mkString
-  }
-
-  def sideBySide(s: String) =  {
-    def cpList = strToCps(s)
-    cpList.map(cp => cp + s" (${cpsToString(Vector(cp))})")
-  }
 
 }

@@ -22,7 +22,28 @@ import wvlet.log._
   val leftCurly = "“"
   val rightCurly = "”"
   val emDash = "—"
+  // Compute Vector of code point values from String
+  def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
+   if (idx >= s.length) {
+     cpVector
+   } else {
+     val cp = s.codePointAt(idx)
+     strToCps(s, cpVector :+ cp, idx + java.lang.Character.charCount(cp))
+   }
+  }
 
+  // Compose a String from a Vector of code point values
+  def cpsToString(v: Vector[Int]) = {
+    val chs = v.map { cp =>
+      new String(Character.toChars(cp))
+    }
+    chs.mkString
+  }
+
+  def sideBySide(s: String) =  {
+    def cpList = strToCps(s)
+    cpList.map(cp => cp + s" (${cpsToString(Vector(cp))})")
+  }
 
   /** Find a single `ucode` code point, as a String, for a string of ASCII
   * characters.
@@ -35,7 +56,7 @@ import wvlet.log._
     matchingPairs.size match {
       case 0 => {
         warn(s"CodePointTranscoder: no character matching ascii ${asciiCodePoint}")
-        s"#${LiteraryGreekOrthography.strToCps(asciiCodePoint)}#" //{  println("No character for " + asciiCodePoint); "#"}
+        s"#${strToCps(asciiCodePoint)}#" //{  println("No character for " + asciiCodePoint); "#"}
       }
       case 1 => matchingPairs(0).ucode
       case _ => throw GreekException("Found multiple ascii mappings for " + asciiCodePoint)
