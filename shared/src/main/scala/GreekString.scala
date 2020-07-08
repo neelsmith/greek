@@ -31,7 +31,7 @@ trait GreekString  {
   /** Fixed definition of acute, grave and circumflex accents
   * in ASCII representational system.
   */
-  val accents = Vector('/','\\','=')
+  def accents: Vector[Char]// = Vector('/','\\','=')
 
   /** Convert uppercase characters to lowercase form if possible
   * in this encoding system.

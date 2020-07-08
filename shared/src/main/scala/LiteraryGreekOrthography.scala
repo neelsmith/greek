@@ -15,12 +15,12 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import scala.annotation.tailrec
 
-/** Utility functions for working with definitions of the [[LiteraryGreekString]]
-* class's character encoding.
+/** Implementation of the MidOrthography trait for orthography of
+* Strings the LiteraryGreekString class.
 */
 object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   Logger.setDefaultLogLevel(LogLevel.WARN)
-  // 4 methods required by MidOrthography
+  // 5 methods required by MidOrthography
   //
   // 1. required by MidOrthography trait
   /** Label for orthographic system.*/
@@ -84,9 +84,8 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
             Vector.empty[MidToken]
           }
         }
-
-        // (n)
         Vector.empty[MidToken]
+
       } else {
         // Catch leading quotation?
         val tokensClassified: Vector[MidToken] = if (trimmed(0) == '"') {
@@ -109,54 +108,6 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   // 5. required by MidOrthography trait
   /** String value to appendin in forming exemplar ID values.*/
   def exemplarId: String = "_lgstkn"
-
-
-  def validAsciiCP(cp: Int): Boolean = {
-    val cArray = Character.toChars(cp)
-    alphabetString.contains(cArray(0))
-  }
-
-  /** Create a [[LiteraryGreekString]] with no accent characters
-  * from an `ascii` String by recursively looking at the first character
-  * of the ascii string and adding it to a new string only if it is
-  * not an accent.
-  *
-  * @param src Remaining ascii String to strip accents from.
-  * @param accumulator String of non-accent characters accumulated so far.
-  *
-
-  @tailrec private def stripAccs(src: String, accumulator: String): LiteraryGreekString = {
-    if (src.isEmpty) {
-      LiteraryGreekString(accumulator)
-
-    } else {
-      if (isAccent(src.head)) {
-        stripAccs(src.tail, accumulator)
-      } else {
-        stripAccs(src.tail, accumulator + src.head)
-      }
-    }
-  }
-
-  @tailrec private def stripBreathings(src: String, accumulator: String): LiteraryGreekString = {
-    if (src.isEmpty) {
-      LiteraryGreekString(accumulator)
-
-    } else {
-
-      if (isBreathing(src.head)) {
-        stripBreathings(src.tail, accumulator)
-      } else {
-        stripBreathings(src.tail, accumulator + src.head)
-      }
-    }
-  }
-  */
-  def punctuationString: String = {
-    //"(),;:.?"
-    """,;:".—"""
-  }
-
 
 
   /** Recursively strips punctuation tokens off the end of a String,
@@ -182,7 +133,6 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
     }
   }
 
-
   /** Identify token type of a string.  Numeric tokens are flagged by
   * the trailing numeric tick character.  Punctuation tokens are those
   * found in an list that defaults to the punctuationString.  Other valid
@@ -207,6 +157,44 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   }
 
 
+  /** Extract first series of characters from an ascii String
+  * forming a single Unicode code point by recursively looking ahead
+  * as long as following character is a combining character.
+  *
+  * @param s String to extract code point from.
+  * @param accumulator String accumulasted so far.
+  *
+  */
+  @tailrec def peekAhead(s: String, accumulator: String): String = {
+    if (s.size < 2) {
+      accumulator + s
+    } else {
+      if (s(0) == '*') {
+        if (s.size == 2) {
+          accumulator + s
+        } else if (isCombining(s(2))) {
+          peekAhead(s.drop(2), accumulator + s.take(2))
+        } else {
+          accumulator + s.take(2)
+        }
+
+      } else if (isCombining(s(1))) {
+        peekAhead(s.drop(1), accumulator + s.head)
+      } else {
+        accumulator + s.head.toString
+      }
+    }
+  }
+
+
+  ///////////// ORTHOGRAPHIC DEFINITION
+  //
+  /** All valid characters in the ASCII representation of this system
+  * in their alphabetic order in Greek.
+  */
+  val alphabetString = "*abgdezhqiklmncoprstufxyw'.|()/\\=+,:;.— \n\r"
+  //val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/\\=+,:;.“”— \n\r"
+
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
   /** Alphabetically ordered Vector of consonant characters in `ascii` view.*/
@@ -220,6 +208,9 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   * other characters in `ucode` view.*/
   val comboChars = Vector('|','+')
 
+  val punctuationString: String = """,;:".—"""
+    //"(),;:.?"
+
   val whiteSpace = Vector(' ','\t', '\n', '\r' )
 
   val numericTick: Character = 'ʹ'
@@ -228,11 +219,11 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   val validList = vowels.mkString("") + consonants.mkString("") + breathings.mkString("") + accents.mkString("") + comboChars.mkString("") + punctuationString.mkString("") + whiteSpace.mkString("") + typography.mkString("")
 
 
-  /** All valid characters in the ASCII representation of this system
-  * in their alphabetic order in Greek.
-  */
-  val alphabetString = "*abgdezhqiklmncoprstufxyw'.|()/\\=+,:;.— \n\r"
-  //val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/\\=+,:;.“”— \n\r"
+  def validAsciiCP(cp: Int): Boolean = {
+    val cArray = Character.toChars(cp)
+    alphabetString.contains(cArray(0))
+  }
+
 
   /** True if given character is a vowel.
   *
@@ -290,36 +281,6 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
       "combining"
     } else {
       "invalid"
-    }
-  }
-
-
-  /** Extract first series of characters from an ascii String
-  * forming a single Unicode code point by recursively looking ahead
-  * as long as following character is a combining character.
-  *
-  * @param s String to extract code point from.
-  * @param accumulator String accumulasted so far.
-  *
-  */
-  @tailrec def peekAhead(s: String, accumulator: String): String = {
-    if (s.size < 2) {
-      accumulator + s
-    } else {
-      if (s(0) == '*') {
-        if (s.size == 2) {
-          accumulator + s
-        } else if (isCombining(s(2))) {
-          peekAhead(s.drop(2), accumulator + s.take(2))
-        } else {
-          accumulator + s.take(2)
-        }
-
-      } else if (isCombining(s(1))) {
-        peekAhead(s.drop(1), accumulator + s.head)
-      } else {
-        accumulator + s.head.toString
-      }
     }
   }
 

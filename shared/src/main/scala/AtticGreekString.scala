@@ -15,6 +15,7 @@ import scala.scalajs.js.annotation._
   /** The Unicode representation of this string.*/
   val ucode = atticUcodeOf(str)
 
+  def accents = Vector('/','\\','=')
 
   /** Required function to convert lowercase to uppercase form.
   */
