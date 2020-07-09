@@ -177,7 +177,8 @@ import scala.annotation.tailrec
   val rightCurly = "”"
   val emDash = "—"
   val numericTick = '\u0374'
-
+  val sigma = '\u03c3'
+  val terminalSigma = '\u03c2'
 
   /** All recognized pairings of `ascii` String encodings
   * to `ucode` code points (as Strings) in the Greek and Extended Greek
@@ -296,7 +297,7 @@ import scala.annotation.tailrec
       CodePointPair("o","ο"), //959
       CodePointPair("p","π"), //960
       CodePointPair("r","ρ"), //961
-      CodePointPair("Σ","ς"), //962
+      //CodePointPair("Σ","ς"), //962
       CodePointPair("s","σ"), //963
       CodePointPair("t","τ"), //964
       CodePointPair("u","υ"), //965

@@ -84,7 +84,7 @@ package object greek extends LogSupport {
     }
 
     if (checkFirst.toInt > 127) {
-      val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
+      val normalized = Normalizer.normalize(s.replaceAll(s"${CodePointTranscoder.terminalSigma}", s"${CodePointTranscoder.sigma}" ), Normalizer.Form.NFC)
       debug(s"asciiOf ${s} normalized to " + normalized)
       //LiteraryGreekOrthography.nfcToAscii(normalized,"")
       asciiForString(normalized)
@@ -115,10 +115,10 @@ package object greek extends LogSupport {
       }
 
     if (checkFirst.toInt > 127) {
-      Normalizer.normalize(s, Normalizer.Form.NFC)
+      Normalizer.normalize(s, Normalizer.Form.NFC).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
 
     } else {
-      ucodeForString(s,alphabetCPs, combining)
+      ucodeForString(s,alphabetCPs, combining).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
     }
   }
   // ANNOTATE FOR TAILREC
