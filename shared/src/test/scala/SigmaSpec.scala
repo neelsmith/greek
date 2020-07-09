@@ -11,12 +11,12 @@ class SigmaSpec extends FlatSpec {
 
   "A literary Greek string's ascii to unicode transcoding" should "handle final sigma" in {
 
-    assert(LiteraryGreekOrthography.asciiToUcode("*s","") == "Σ")
+    assert(ucodeForString("*s",LiteraryGreekOrthography.cpList) == "Σ")
   }
   it should "handle that in longer words" in {
     val s = "*i*l*i*a*s"
     val expected = "ΙΛΙΑΣ"
-    assert  (LiteraryGreekOrthography.asciiToUcode(s, "") == expected)
+    assert  (ucodeForString(s, LiteraryGreekOrthography.cpList) == expected)
   }
 
 

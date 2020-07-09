@@ -29,24 +29,24 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 package object greek extends LogSupport {
 
 
-  val numericTick = '\u0374'
+  //val numericTick = '\u0374'
 
   def isAscii(s: String): Boolean = {
     val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
     asciiAlphas.contains(true)
   }
 
-  def milesianUcodeOf(s: String) : String = {
+  def milesianUcodeOf(s: String, alphabetCPs:  Vector[Int]) : String = {
     if (s.head.toInt > 127) {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
     } else {
       debug("Create LiteraryGreekOrthography of " + s)
-      LiteraryGreekOrthography.asciiToUcode(s,"") //+ numericTick
+      asciiForString(s,alphabetCPs) //+ numericTick
     }
   }
 
-  def milesianAsciiOf (s: String): String = {
+  def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
     if (s.isEmpty) {""} else {
 
 
@@ -57,7 +57,7 @@ package object greek extends LogSupport {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
 
       if (s.head.toInt > 127) {
-        LiteraryGreekOrthography.nfcToAscii(normalized,"")
+        asciiForString(normalized,alphabetCPs)
 
       } else {
         // handle special cases
@@ -74,7 +74,7 @@ package object greek extends LogSupport {
   *
   * @param s String to create `ascii` view for.
   */
-  def literaryAsciiOf (s: String): String = {
+  def asciiOf (s: String, alphabetCPs: Vector[Int]): String = {
     val checkFirst = if (s.head == '“') {
       s(1)
     } else {
@@ -83,14 +83,39 @@ package object greek extends LogSupport {
 
     if (checkFirst.toInt > 127) {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
-      LiteraryGreekOrthography.nfcToAscii(normalized,"")
-
+      //LiteraryGreekOrthography.nfcToAscii(normalized,"")
+      asciiForString(normalized, alphabetCPs)
     } else {
+      // VALIDATE THIS, TOO!
       // handle terminal sigma
       Normalizer.normalize(s, Normalizer.Form.NFC)
     }
   }
 
+
+  // ANNOTATE FOR TAILREC
+  //
+  /** Recursively build a unicode form from an ascii String.
+  *
+  * @param ascii Ascii string to convert to Unicode.
+  * @param validCpList List of all code points allowed in this orthography.
+  * @param ucode Recursively accumulated Unicode string.
+  * @param idx Index by code point into the ascii string to convert.
+  */
+  def asciiForString(ascii: String,  validCpList: Vector[Int], ucode: String = "", idx: Int = 0): String = {
+    if (idx >= ascii.length) {
+      ucode
+    } else {
+      val cp = ascii.codePointAt(idx)
+      val newIndex = idx + java.lang.Character.charCount(cp)
+      val newUcode = ucode + CodePointTranscoder.cpsToString(Vector(cp))
+      if (validCpList.contains(cp)) {
+        asciiForString(ascii, validCpList, ucode + newUcode, newIndex)
+      } else {
+        asciiForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
+      }
+    }
+  }
 
 
   /** Create [[LiteraryGreekOrthography]]'s `ucode` view of a String.
@@ -99,8 +124,9 @@ package object greek extends LogSupport {
   * form NFC.
   *
   * @param s String to create `ucode` view for.
+  * @param alphabetCPs All code points allowed in this alphabet
   */
-  def literaryUcodeOf(s: String) : String = {
+  def ucodeForString(s: String, alphabetCPs: Vector[Int]) : String = {
       val checkFirst = if (s.head == '“') {
         s(1)
       } else {
@@ -111,22 +137,8 @@ package object greek extends LogSupport {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
 
-      // waht was all this about?
-      /*
-      if (s.head.toInt == 787){
-        val asciified = CodePointTranscoder.asciiCodePoint(s.tail.head.toString) + ")" + literaryAsciiOf(s.tail.tail)
-        val asciiLeader = CodePointTranscoder.asciiCodePoint(s.tail.head.toString)
-        val leader = CodePointTranscoder.ucodeCodePoint(asciiLeader + ")")
-        Normalizer.normalize(leader + s.tail.tail, Normalizer.Form.NFC)
-
-      } else if (s.tail.head == 787 ) {
-        //smoothUpperCase(s.tail.tail)
-        Normalizer.normalize(s, Normalizer.Form.NFC)
-      } else {*/
-
-
     } else {
-      LiteraryGreekOrthography.asciiToUcode(s,"")
+      asciiForString(s,alphabetCPs)
     }
   }
 
@@ -140,11 +152,13 @@ package object greek extends LogSupport {
 
 
   def atticUcodeOf(s: String) : String = {
+    /*
     if (s.head.toInt > 127) {
       Normalizer.normalize(s, Normalizer.Form.NFC)
     } else {
-      AtticGreekString.asciiToUcode(s)
+      AtticGreekString.asciiForString(s)
     }
+    */
     "ATTIC Ucode OF  " + s
   }
 

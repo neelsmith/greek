@@ -53,14 +53,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     doublePrecision(3).getOrElse(0.0)
   }
 
-  def numericAlphabetString = ""
 
   /** Ascii encoding of fractional component with
   * conventional "seconds" mark (double quote). */
   def asciiPartial: String = {
     debug("Encode as ascii: " + partialString)
     if (partialString.isEmpty) { "" } else {
-      milesianAsciiOf(partialString.trim) +"\""
+      milesianAsciiOf(partialString.trim, cpList) +"\""
     }
   }
 
@@ -70,7 +69,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   * (double quote).*/
   def ucodePartial: String = {
     if (partialString.isEmpty) { "" } else {
-      milesianUcodeOf(partialString) +"\""
+      milesianUcodeOf(partialString, cpList) +"\""
     }
   }
 

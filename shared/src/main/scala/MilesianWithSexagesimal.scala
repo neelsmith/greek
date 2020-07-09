@@ -26,7 +26,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   def stringParts: (String, String) = ("","")
   def asciiPartial: String = ""
   def ucodePartial: String = ""
-  def numericAlphabetString: String = ""
+
   def unicodeTickString : String = ""
 
   override def compare(that: GreekNumeric): Int = {

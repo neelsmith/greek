@@ -11,33 +11,33 @@ class AsciiToUcodeSpec extends FlatSpec {
 
   "A literary Greek string's ascii to unicode transcoding" should "map single ASCII characters to a codepoint" in {
 
-    assert(LiteraryGreekOrthography.asciiToUcode("m","") == "μ")
+    assert(asciiForString("m",LiteraryGreekOrthography.cpList) == "μ")
   }
 
   it should "map sequences of consonants to an equal number of codepoints" in {
-    assert(LiteraryGreekOrthography.asciiToUcode("tr","") == "τρ")
+    assert(asciiForString("tr",LiteraryGreekOrthography.cpList) == "τρ")
   }
 
   it should "map sequences of vowels to an equal number of codepoints" in {
-    assert(LiteraryGreekOrthography.asciiToUcode("ei","") == "ει")
+    assert(asciiForString("ei",LiteraryGreekOrthography.cpList) == "ει")
   }
 
   it should "map vowel+breathing+vowel to two code points" in {
-    assert(LiteraryGreekOrthography.asciiToUcode("a" + ')' + "a","") == "ἀα")
+    assert(asciiForString("a" + ')' + "a",LiteraryGreekOrthography.cpList) == "ἀα")
   }
 
   it should "map vowel+breathing+accent to one code point" in {
-      assert(LiteraryGreekOrthography.asciiToUcode("a" + ')' + "/","") == "ἄ")
+      assert(asciiForString("a" + ')' + "/",LiteraryGreekOrthography.cpList) == "ἄ")
   }
 
   it should "happily accept iota subscript as a vowel" in {
-    assert (LiteraryGreekOrthography.asciiToUcode("dw/rw|","") == "δώρῳ")
+    assert (asciiForString("dw/rw|",LiteraryGreekOrthography.cpList) == "δώρῳ")
   }
 
   it should "accept white space" in {
     val expected = "μῆνιν ἄειδε θεὰ"
     val submitted = "mh=nin a)/eide qea\\"
-    assert (LiteraryGreekOrthography.asciiToUcode(submitted,"") == expected)
+    assert (asciiForString(submitted,LiteraryGreekOrthography.cpList) == expected)
   }
 
   it should "construct single-accented vowel in ancient Greek range" in {

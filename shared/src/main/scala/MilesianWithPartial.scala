@@ -64,7 +64,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
       case  Some(milInt) => milInt.ascii
     }
   /*  if (intString.isEmpty) { "" } else {
-      milesianAsciiOf(intString) + MilesianNumeric.numericTick
+      milesianAsciiOf(intString, cpList) + MilesianNumeric.numericTick
     }
     */
   }
@@ -80,7 +80,7 @@ trait MilesianWithPartial extends GreekNumeric with  Ordered[GreekNumeric] with 
     if (intString == MilesianNumeric.oudenString) {
       MilesianNumeric.oudenString
     } else if (intString.isEmpty) { "" } else {
-      milesianUcodeOf(intString) + MilesianNumeric.numericTick
+      milesianUcodeOf(intString, cpList) + MilesianNumeric.numericTick
     }
   }
 

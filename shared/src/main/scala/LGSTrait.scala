@@ -22,17 +22,56 @@ import scala.annotation.tailrec
 */
 trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  {
 
+
+  //////////////////////////////////////////////
+  // REQUIRED METHODS TO IMPLEMENT FOR LGSTrait:
+  def alphabetString: String //= LiteraryGreekString.alphabetString
+  def punctuationString: String
+
+  def vowels: Vector[Char]
+  def consonants: Vector[Char]
+  def accents: Vector[Char]
+  def breathings: Vector[Char]
+
+  def comboChars: Vector[Char]
+  def combos: String
+
+
+  //////////////////////////////////////////////
+  // Fundamental things an LGSTrait does:
+  //
   /** The ASCII representation of this string.
   */
-  def ascii = literaryAsciiOf(combos.replaceAll("ς","σ"))
+  def ascii : String = {
+    // convert valid points
+    ""
+  }
+
+
 
   //val ucode =  literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("s$","Σ").replaceAll("σ ", "ς ").replaceAll("σ$", "ς"))
   /** The representation of this string with glyphs in the "Greek and Coptic"
   * and "Extended Greek" blocks of Unicode.
   */
-  def ucode =  literaryUcodeOf(combos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
+  def ucode : String = "" //=  literaryUcodeOf(combos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
 
-  /**
+
+
+
+
+  /** True if a given code point appears in the code point list.
+  *
+  * @param cp Code point to check.
+  */
+  //def validCP(cp: Int): Boolean = cpList.contains(cp)
+
+
+
+  /**  Check leading characters including quotation marks
+  * and differing conventions for indicating upper-case in ascii,
+  * and create a String following greek library conventions.
+  *
+  * @param str String to check.
   */
   def fixedCombos(str: String): String = {
     if (str.head == '“') {
@@ -64,18 +103,7 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
     }
   }
 
-  //////////////////////////////////////////////
-  // REQUIRED METHODS TO IMPLEMENT FOR LGSTrait:
-  def alphabetString: String //= LiteraryGreekString.alphabetString
-  def punctuationString: String
 
-  def vowels: Vector[Char]
-  def consonants: Vector[Char]
-  def accents: Vector[Char]
-  def breathings: Vector[Char]
-
-  def comboChars: Vector[Char]
-  def combos: String
 
   ////////// Methods for working with classifications of characters
   //

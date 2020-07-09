@@ -11,6 +11,18 @@ import edu.holycross.shot.cite._
 import wvlet.log._
 import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
+/*
+CodePointPair("ϙ","ϙ"), //985
+//CodePointPair("","Ϛ"), //986 \x03da
+CodePointPair("ϛ","ϛ"), //987
+//CodePointPair("","Ϝ"), //988
+//CodePointPair("","ϝ"), //989
+//CodePointPair("","Ϟ"), //990
+//CodePointPair("","ϟ"), //991
+//CodePointPair("","Ϡ"), //992
+CodePointPair("ϡ","ϡ"), //993
+*/
+
 /** Representation of a Greek string written in conventional literary orthography.
 *
 * @param str A string in either the ascii or ucode representation of the [[GreekNumeric]]
@@ -19,13 +31,13 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 @JSExportAll  case class MilesianInteger(str: String) extends GreekNumeric  with  Ordered[GreekNumeric]  with LogSupport {
 
 
-  def numericAlphabetString = ""
 
+  
   def ascii: String =  {
     if (unticked == MilesianNumeric.oudenString) {
       MilesianNumeric.oudenString
     } else {
-      milesianAsciiOf(unticked) + MilesianNumeric.numericTick
+      milesianAsciiOf(unticked, cpList) + MilesianNumeric.numericTick
     }
 
   }
@@ -34,7 +46,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
     if (unticked == MilesianNumeric.oudenString) {
       MilesianNumeric.oudenString
     } else {
-      milesianUcodeOf(unticked) + MilesianNumeric.numericTick
+      milesianUcodeOf(unticked, cpList) + MilesianNumeric.numericTick
     }
   }
 

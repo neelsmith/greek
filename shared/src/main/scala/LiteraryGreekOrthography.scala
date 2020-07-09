@@ -33,7 +33,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   */
   def validCP(cp: Int): Boolean = {
     val s = Character.toChars(cp.toInt).toVector.mkString
-    val ascii = literaryAsciiOf(s)
+    val ascii = asciiForString(s, cpList)
     if (ascii.isEmpty){
       warn("NO LITERARY ASCII found for " + s)
       false
@@ -108,6 +108,14 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   // 5. required by MidOrthography trait
   /** String value to appendin in forming exemplar ID values.*/
   def exemplarId: String = "_lgstkn"
+
+
+
+  /** All Unicode code points contained in the  alphabet.*/
+  def cpList = CodePointTranscoder.strToCps(alphabetString)
+
+
+
 
 
   /** Recursively strips punctuation tokens off the end of a String,
@@ -292,7 +300,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   * @param ascii String to convert to `ucode` view.
   * @param ucode Accumluated string of Unicode code  points
   * in `ucode` view's encoding.
-  */
+
   @tailrec def asciiToUcode(ascii: String, ucode: String): String = {
     //Logger.setDefaultLogLevel(LogLevel.INFO)
     //debug("asciiToUcode: a vs u " + ascii + " vs " + ucode)
@@ -309,14 +317,14 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
       asciiToUcode(newAscii, newUcode)
     }
   }
-
+  */
   /** Recursively converts code points in a Unicode string in form NFC to
   * equivalent characters in `ascii` view.
   *
   * @param ucode String to convert.  Note that the String must be in
   * Unicode Form NFC.
   * @param ascii String of `ascii` view accumulated so far.
-  */
+
   def nfcToAscii(ucode: String, ascii: String): String = {
     //debug("nfcToAscii: " + ucode + " and " + ascii)
     if (ucode.size == 0 ) {
@@ -333,7 +341,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
       nfcToAscii(newUcode,newAscii )
     }
   }
-
+  */
 
 
 }

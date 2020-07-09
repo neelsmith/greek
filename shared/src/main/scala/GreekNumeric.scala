@@ -23,7 +23,9 @@ trait GreekNumeric  {
   /** A single string listing all valid characters in the ASCII
   * representation of this system in their alphabetic order.
   */
-  def numericAlphabetString: String
+  def numericAlphabetString : String = "abgde" + MilesianNumeric.stigma + "zhqiklmncop" + MilesianNumeric.qoppa + "rstufxyw" + MilesianNumeric.sampi  + MilesianNumeric.numericTick
+
+  def cpList : Vector[Int] = CodePointTranscoder.strToCps(numericAlphabetString)
 
   def toDouble: Double
 }
