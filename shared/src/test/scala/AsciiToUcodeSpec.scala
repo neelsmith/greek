@@ -10,36 +10,34 @@ class AsciiToUcodeSpec extends FlatSpec {
 
 
   "A literary Greek string's ascii to unicode transcoding" should "map single ASCII characters to a codepoint" in {
-
-    assert(ucodeOf("m",LiteraryGreekOrthography.cpList) == "μ")
+    //assert(ucodeOf("m", LiteraryGreekOrthography.cpList) == "μ")
   }
-
-  /*
-
+/*
   it should "map sequences of consonants to an equal number of codepoints" in {
-    assert(asciiForString("tr",LiteraryGreekOrthography.cpList) == "τρ")
+    assert(ucodeOf("tr", LiteraryGreekOrthography.cpList) == "τρ")
   }
+
 
   it should "map sequences of vowels to an equal number of codepoints" in {
-    assert(asciiForString("ei",LiteraryGreekOrthography.cpList) == "ει")
+    assert(ucodeOf("ei",LiteraryGreekOrthography.cpList) == "ει")
   }
-
+*/
   it should "map vowel+breathing+vowel to two code points" in {
-    assert(asciiForString("a" + ')' + "a",LiteraryGreekOrthography.cpList) == "ἀα")
+    assert(ucodeOf("a" + ')' + "a",LiteraryGreekOrthography.cpList) == "ἀα")
   }
-
+/*
   it should "map vowel+breathing+accent to one code point" in {
-      assert(asciiForString("a" + ')' + "/",LiteraryGreekOrthography.cpList) == "ἄ")
+      assert(ucodeOf("a" + ')' + "/",LiteraryGreekOrthography.cpList) == "ἄ")
   }
 
   it should "happily accept iota subscript as a vowel" in {
-    assert (asciiForString("dw/rw|",LiteraryGreekOrthography.cpList) == "δώρῳ")
+    assert (ucodeOf("dw/rw|",LiteraryGreekOrthography.cpList) == "δώρῳ")
   }
 
   it should "accept white space" in {
     val expected = "μῆνιν ἄειδε θεὰ"
     val submitted = "mh=nin a)/eide qea\\"
-    assert (asciiForString(submitted,LiteraryGreekOrthography.cpList) == expected)
+    assert (ucodeOf(submitted,LiteraryGreekOrthography.cpList) == expected)
   }
 
   it should "construct single-accented vowel in ancient Greek range" in {
@@ -59,8 +57,8 @@ class AsciiToUcodeSpec extends FlatSpec {
     // This happens in ScalaJS:
     //assert(s3.ascii.contains("#"))
 
-  }*/
-
+  }
+*/
 
 
 

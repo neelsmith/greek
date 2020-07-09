@@ -115,7 +115,6 @@ package object greek extends LogSupport {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
     } else {
-      println("CONVERT " + s + " TO UCODE")
       ucodeForString(s,alphabetCPs)
     }
   }
@@ -129,24 +128,28 @@ package object greek extends LogSupport {
   * @param idx Index by code point into the ascii string to convert.
   */
   def ucodeForString(ascii: String,  validCpList: Vector[Int], ucode: String = "", idx: Int = 0): String = {
+    println(s"At ${idx}, ucode is " + ucode)
     if (idx >= ascii.length) {
       ucode
     } else {
       val cp = ascii.codePointAt(idx)
-      println("CONVERTING " + ascii + " at CP " + cp)
+      val cpAsString = CodePointTranscoder.cpsToString(Vector(cp))
       val newIndex = idx + java.lang.Character.charCount(cp)
-      val newUcode = ucode + CodePointTranscoder.cpsToString(Vector(cp))
-      ////////////////////////////
-      /// HERE
-      ///
+
       /// convert ascii with CPTranscoder
       // but pass along ucdoe byoned ascii
-      ///////////////////////
-      println("NEW UCODE " + newUcode)
-      if (validCpList.contains(cp)) {
-        asciiForString(ascii, validCpList, ucode + newUcode, newIndex)
+      val newUcode = if (cp < 127) {
+        CodePointTranscoder.ucodeCodePoint(cpAsString)
       } else {
-        asciiForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
+        cpAsString
+      }
+
+
+      println(s"${cpAsString} = ${cp} yield ${newUcode}")
+      if (validCpList.contains(cp)) {
+        ucodeForString(ascii, validCpList, ucode + newUcode, newIndex)
+      } else {
+        ucodeForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
       }
     }
   }
