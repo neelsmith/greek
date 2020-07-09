@@ -32,15 +32,29 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   * @param cp Code point to test.
   */
   def validCP(cp: Int): Boolean = {
+    if (cp < 127) {
+      validAsciiCP(cp)
+    } else {
+      validUcodeCP(cp)
+    }
+    /*
     val s = Character.toChars(cp.toInt).toVector.mkString
-    val ascii = asciiForString(s, cpList)
+    val ascii = asciiForString(s)
+    debug(s"validCP: LOOK AT ASCII STR ${ascii} from string ${s}")
     if (ascii.isEmpty){
       warn("NO LITERARY ASCII found for " + s)
       false
     } else {
       val asciiCP = ascii(0).toInt
-      validAsciiCP(asciiCP)
+
     }
+    */
+
+  }
+
+  def validUcodeCP(cp: Int) : Boolean = {
+    CodePointTranscoder.transcodableUcodeCP(cp)
+
   }
 
   // 3. required by MidOrthography trait
@@ -165,34 +179,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   }
 
 
-  /** Extract first series of characters from an ascii String
-  * forming a single Unicode code point by recursively looking ahead
-  * as long as following character is a combining character.
-  *
-  * @param s String to extract code point from.
-  * @param accumulator String accumulasted so far.
-  *
-  */
-  @tailrec def peekAhead(s: String, accumulator: String): String = {
-    if (s.size < 2) {
-      accumulator + s
-    } else {
-      if (s(0) == '*') {
-        if (s.size == 2) {
-          accumulator + s
-        } else if (isCombining(s(2))) {
-          peekAhead(s.drop(2), accumulator + s.take(2))
-        } else {
-          accumulator + s.take(2)
-        }
 
-      } else if (isCombining(s(1))) {
-        peekAhead(s.drop(1), accumulator + s.head)
-      } else {
-        accumulator + s.head.toString
-      }
-    }
-  }
 
 
   ///////////// ORTHOGRAPHIC DEFINITION
@@ -200,8 +187,7 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   /** All valid characters in the ASCII representation of this system
   * in their alphabetic order in Greek.
   */
-  val alphabetString = "*abgdezhqiklmncoprstufxyw'.|()/\\=+,:;.— \n\r"
-  //val alphabetString = "*abgdezhqiklmncoprsΣtufxyw'.|()/\\=+,:;.“”— \n\r"
+  val alphabetString = "*abgdezhqiklmncoprstufxyw'.|()/\\=+,:;." + "\"" + "— \n\r"
 
   /** Alphabetically ordered Vector of vowel characters in `ascii` view.*/
   val vowels = Vector('a','e','h','i','o','u','w')
@@ -215,6 +201,8 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   /** Characters in addition to breathings and accents that combine with
   * other characters in `ucode` view.*/
   val comboChars = Vector('|','+')
+
+  val combining = breathings ++ accents ++ comboChars
 
   val punctuationString: String = """,;:".—"""
     //"(),;:.?"
@@ -255,14 +243,14 @@ object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
   *
   * @param c Character to check.
   */
-  def isAccent(c: Character): Boolean = {accents.contains(c)}
+  def isAccent(c: Character): Boolean = accents.contains(c)
 
 
   /** True if given character is a breathing.
   *
   * @param c Character to check.
   */
-  def isBreathing(c: Character): Boolean = {breathings.contains(c)}
+  def isBreathing(c: Character): Boolean = breathings.contains(c)
 
   /** True if given character combines with other characters in `ucode` view.
   *

@@ -10,34 +10,34 @@ class AsciiToUcodeSpec extends FlatSpec {
 
 
   "A literary Greek string's ascii to unicode transcoding" should "map single ASCII characters to a codepoint" in {
-    //assert(ucodeOf("m", LiteraryGreekOrthography.cpList) == "μ")
+    assert(ucodeOf("m", LiteraryGreekOrthography.cpList,LiteraryGreekOrthography.combining) == "μ")
   }
-/*
+
   it should "map sequences of consonants to an equal number of codepoints" in {
-    assert(ucodeOf("tr", LiteraryGreekOrthography.cpList) == "τρ")
+    assert(ucodeOf("tr", LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining) == "τρ")
   }
 
 
   it should "map sequences of vowels to an equal number of codepoints" in {
-    assert(ucodeOf("ei",LiteraryGreekOrthography.cpList) == "ει")
+    assert(ucodeOf("ei",LiteraryGreekOrthography.cpList,LiteraryGreekOrthography.combining ) == "ει")
   }
-*/
+
   it should "map vowel+breathing+vowel to two code points" in {
-    assert(ucodeOf("a" + ')' + "a",LiteraryGreekOrthography.cpList) == "ἀα")
+    assert(ucodeOf("a" + ')' + "a",LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining) == "ἀα")
   }
-/*
+
   it should "map vowel+breathing+accent to one code point" in {
-      assert(ucodeOf("a" + ')' + "/",LiteraryGreekOrthography.cpList) == "ἄ")
+      assert(ucodeOf("a" + ')' + "/",LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining) == "ἄ")
   }
 
   it should "happily accept iota subscript as a vowel" in {
-    assert (ucodeOf("dw/rw|",LiteraryGreekOrthography.cpList) == "δώρῳ")
+    assert (ucodeOf("dw/rw|",LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining) == "δώρῳ")
   }
 
   it should "accept white space" in {
     val expected = "μῆνιν ἄειδε θεὰ"
     val submitted = "mh=nin a)/eide qea\\"
-    assert (ucodeOf(submitted,LiteraryGreekOrthography.cpList) == expected)
+    assert (ucodeOf(submitted,LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining) == expected)
   }
 
   it should "construct single-accented vowel in ancient Greek range" in {
@@ -58,7 +58,7 @@ class AsciiToUcodeSpec extends FlatSpec {
     //assert(s3.ascii.contains("#"))
 
   }
-*/
+
 
 
 

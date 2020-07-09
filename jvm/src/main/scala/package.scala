@@ -27,7 +27,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-
+  Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
   //val numericTick = '\u0374'
 
@@ -42,7 +42,7 @@ package object greek extends LogSupport {
 
     } else {
       debug("Create LiteraryGreekOrthography of " + s)
-      asciiForString(s,alphabetCPs) //+ numericTick
+      asciiForString(s) //+ numericTick
     }
   }
 
@@ -57,7 +57,7 @@ package object greek extends LogSupport {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
 
       if (s.head.toInt > 127) {
-        asciiForString(normalized,alphabetCPs)
+        asciiForString(normalized)
 
       } else {
         // handle special cases
@@ -75,6 +75,8 @@ package object greek extends LogSupport {
   * @param s String to create `ascii` view for.
   */
   def asciiOf (s: String, alphabetCPs: Vector[Int]): String = {
+    Logger.setDefaultLogLevel(LogLevel.DEBUG)
+
     val checkFirst = if (s.head == '“') {
       s(1)
     } else {
@@ -83,8 +85,9 @@ package object greek extends LogSupport {
 
     if (checkFirst.toInt > 127) {
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
+      debug(s"asciiOf ${s} normalized to " + normalized)
       //LiteraryGreekOrthography.nfcToAscii(normalized,"")
-      asciiForString(normalized, alphabetCPs)
+      asciiForString(normalized)
     } else {
       // VALIDATE THIS, TOO!
       // handle terminal sigma
@@ -104,7 +107,7 @@ package object greek extends LogSupport {
   * @param s String to create `ucode` view for.
   * @param alphabetCPs All code points allowed in this alphabet
   */
-  def ucodeOf(s: String, alphabetCPs: Vector[Int]) : String = {
+  def ucodeOf(s: String, alphabetCPs: Vector[Int], combining: Vector[Char] ) : String = {
       val checkFirst = if (s.head == '“') {
         s(1)
       } else {
@@ -115,7 +118,7 @@ package object greek extends LogSupport {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
     } else {
-      ucodeForString(s,alphabetCPs)
+      ucodeForString(s,alphabetCPs, combining)
     }
   }
   // ANNOTATE FOR TAILREC
@@ -127,47 +130,58 @@ package object greek extends LogSupport {
   * @param ucode Recursively accumulated Unicode string.
   * @param idx Index by code point into the ascii string to convert.
   */
-  def ucodeForString(ascii: String,  validCpList: Vector[Int], ucode: String = "", idx: Int = 0): String = {
-    println(s"At ${idx}, ucode is " + ucode)
+  def ucodeForString(ascii: String,  validCpList: Vector[Int], combining: Vector[Char], ucode: String = "", idx: Int = 0): String = {
+    debug(s"At ${idx}, ucode is " + ucode)
     if (idx >= ascii.length) {
       ucode
+
     } else {
       val cp = ascii.codePointAt(idx)
       val cpAsString = CodePointTranscoder.cpsToString(Vector(cp))
       val newIndex = idx + java.lang.Character.charCount(cp)
+      val charIndex = ascii.offsetByCodePoints(0, idx)
+      val trimmedAscii = ascii.slice(charIndex, ascii.size)
+
+      val initialCluster = CodePointTranscoder.peekAhead(trimmedAscii, combining = combining)
+      val skipChars = initialCluster.size - 1
+      debug("Trim ascii to " + trimmedAscii)
 
       /// convert ascii with CPTranscoder
-      // but pass along ucdoe byoned ascii
+      // but pass along ucode beyond ascii
       val newUcode = if (cp < 127) {
-        CodePointTranscoder.ucodeCodePoint(cpAsString)
+        CodePointTranscoder.ucodeCodePoint(initialCluster)
       } else {
         cpAsString
       }
-
-
-      println(s"${cpAsString} = ${cp} yield ${newUcode}")
+      debug(s"${cpAsString} = ${cp} yield ${newUcode}")
       if (validCpList.contains(cp)) {
-        ucodeForString(ascii, validCpList, ucode + newUcode, newIndex)
+        ucodeForString(ascii, validCpList, combining, ucode + newUcode, newIndex + skipChars)
       } else {
-        ucodeForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
+        ucodeForString(ascii, validCpList, combining, ucode + s"#${newUcode}#", newIndex + skipChars)
       }
     }
   }
 
 
-  def asciiForString(ucode: String,  validCpList: Vector[Int], ascii: String = "", idx: Int = 0): String = {
-    if (idx >= ucode.length) {
+  def asciiForString(ucode: String,  ascii: String = "", idx: Int = 0): String = {
+
+    if (idx >= ucode.size) { //ucode.codePoints().count()){
       ascii
     } else {
       val cp = ucode.codePointAt(idx)
+      val newCpString = CodePointTranscoder.cpsToString(Vector(cp))
       val newIndex = idx + java.lang.Character.charCount(cp)
-      val newAscii = ucode + CodePointTranscoder.cpsToString(Vector(cp))
+      val newAscii = CodePointTranscoder.asciiCodePoint(newCpString)
 
-      if (validCpList.contains(cp) || cp < 127) {
-        asciiForString(ascii, validCpList, ucode + newAscii, newIndex)
-      } else {
-        asciiForString(ascii, validCpList, ucode + s"#${newAscii}#", newIndex)
-      }
+      //val newAscii = CodePointTranscoder.cpsToString(Vector(cp))
+
+
+
+      debug("asciiForString " + ucode + " at idx " + idx)
+      debug("newAscii " + newAscii + " from cp " + cp)
+      debug("New idx will be " + newIndex )
+      asciiForString(ucode, ascii + newAscii, newIndex)
+
     }
   }
 

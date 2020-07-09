@@ -4,6 +4,7 @@ import scala.scalajs.js.annotation._
 
 import wvlet.log._
 
+import scala.annotation.tailrec
 
 /** A pairing of an ASCII string with a single Unicode code point.
 *
@@ -18,8 +19,6 @@ import wvlet.log._
 * and code points in the Greek and Coptic or Extended Greek blocks of Unicode.
 */
 @JSExportAll  object CodePointTranscoder extends LogSupport {
-
-
 
   // Compute Vector of code point values from String
   def strToCps(s: String, cpVector: Vector[Int] = Vector.empty[Int], idx : Int = 0) : Vector[Int] = {
@@ -81,6 +80,17 @@ import wvlet.log._
     }
   }
 
+  def transcodableUcodeCP(cp: Int): Boolean = {
+    val s = cpsToString(Vector(cp))
+    val matchingPairs = CodePointTranscoder.pairings.filter(_.ucode == s)
+    matchingPairs.size match {
+      case 0 => false
+      case 1 => true
+      case _ => throw GreekException("Found multiple unicode mappings for " + s + " from code point " + cp)
+    }
+  }
+
+
 
   /** Utility function to tidy up badly encoded Unicode when a combining
   * accent is erroneously placed on a preceding space by luddites equating
@@ -131,6 +141,34 @@ import wvlet.log._
 
   }
 
+  /** Extract first series of characters from an ascii String
+  * forming a single Unicode code point by recursively looking ahead
+  * as long as following character is a combining character.
+  *
+  * @param s String to extract code point from.
+  * @param accumulator String accumulasted so far.
+  *
+  */
+  @tailrec def peekAhead(s: String, accumulator: String = "", combining: Vector[Char]): String = {
+    if (s.size < 2) {
+      accumulator + s
+    } else {
+      if (s(0) == '*') {
+        if (s.size == 2) {
+          accumulator + s
+        } else if (combining.contains(s(2))) {
+          peekAhead(s.drop(2), accumulator + s.take(2), combining)
+        } else {
+          accumulator + s.take(2)
+        }
+
+      } else if (combining.contains(s(1))) {
+        peekAhead(s.drop(1), accumulator + s.head, combining)
+      } else {
+        accumulator + s.head.toString
+      }
+    }
+  }
 
 
   // "Permitted markup" characters, in addition to ASCII

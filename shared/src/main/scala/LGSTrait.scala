@@ -32,38 +32,21 @@ trait LGSTrait  extends GreekString with  Ordered[GreekString] with LogSupport  
   def consonants: Vector[Char]
   def accents: Vector[Char]
   def breathings: Vector[Char]
-
   def comboChars: Vector[Char]
   def combos: String
 
 
-  //////////////////////////////////////////////
-  // Fundamental things an LGSTrait does:
-  //
   /** The ASCII representation of this string.
   */
-  def ascii : String = {
-    // convert valid points
-    ""
-  }
-
+  def ascii : String
 
 
   //val ucode =  literaryUcodeOf(fixedCombos.replace("s ","Σ ").replaceAll("s$","Σ").replaceAll("σ ", "ς ").replaceAll("σ$", "ς"))
   /** The representation of this string with glyphs in the "Greek and Coptic"
   * and "Extended Greek" blocks of Unicode.
   */
-  def ucode : String = "" //=  literaryUcodeOf(combos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
+  def ucode : String //=  literaryUcodeOf(combos).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
 
-
-
-
-
-  /** True if a given code point appears in the code point list.
-  *
-  * @param cp Code point to check.
-  */
-  //def validCP(cp: Int): Boolean = cpList.contains(cp)
 
 
 
