@@ -1,5 +1,8 @@
 # `greek` library: release notes
 
+
+**8.0.0**: cleaner refactoring of GreekString, MidOrthography and CiteValidator traits.
+
 **7.0.0**: completes refactoring begun with 6.0.0 release.  Transcoding of ascii Strings and unicode
 code points is handled by the `CodePointTranscoder` object.  The `LiteraryGreekString` now extends the `LGSTrait` as well as the `GreekString` trait.  The `LiteraryGreekOrthography` defines character classes used by the `LiteraryGreekString` class, and implements the `MidOrthography` trait.
 

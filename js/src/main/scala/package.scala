@@ -28,64 +28,7 @@ import wvlet.log._
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-
-
-
-
-/*
-  def isAscii(s: String): Boolean = {
-    val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
-    asciiAlphas.contains(true)
-  }
-
-
-
-  def milesianAsciiOf (s: String): String = {
-
-    if (isAscii(s)) {
-      s
-
-    } else {
-      LiteraryGreekOrthography.nfcToAscii(s,"")
-    }
-  }
-
-   def milesianUcodeOf(s: String) : String = {
-    val checkFirst = if (s.head == '“') {
-      s(1)
-    } else {
-      s.head
-    }
-    if (checkFirst.toInt > 127) {
-      s
-    } else {
-      LiteraryGreekOrthography.asciiToUcode(s,"")
-    }
-  }
-
-  def literaryAsciiOf (s: String): String = {
-    if (s.head.toInt > 127) {
-      // Probably ONLY WORKS FOR Unicode in form NFC
-      LiteraryGreekOrthography.nfcToAscii(s,"")
-
-    } else {
-      s
-    }
-  }
-
-   def literaryUcodeOf(s: String) : String = {
-    val checkFirst = if (s.head == '“') {
-      s(1)
-    } else {
-      s.head
-    }
-    if (checkFirst.toInt > 127) {
-      s
-    } else {
-      LiteraryGreekOrthography.asciiToUcode(s,"")
-    }
-  }
-*/
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
 def isAscii(s: String): Boolean = {
   val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
@@ -106,7 +49,8 @@ def milesianUcodeOf(s: String, alphabetCPs:  Vector[Int]) : String = {
 def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
   if (s.isEmpty) {""} else {
     if (s.head.toInt > 127) {
-      asciiForString(s)
+      asciiForString(s.replaceAll(s"${CodePointTranscoder.terminalSigma}",
+      s"${CodePointTranscoder.sigma}"))
 
     } else {
       // handle special cases
@@ -132,7 +76,9 @@ def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
     }
 
     if (checkFirst.toInt > 127) {
-      asciiForString(s)
+      asciiForString(
+        s.replaceAll(s"${CodePointTranscoder.terminalSigma}",
+      s"${CodePointTranscoder.sigma}"))
     } else {
       s
     }
@@ -154,7 +100,7 @@ def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
       }
 
     if (checkFirst.toInt > 127) {
-      s
+      s.replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
 
     } else {
       ucodeForString(s,alphabetCPs, combining).replaceAll("σ ", "ς ").replaceAll("σ$", "ς")
@@ -205,7 +151,8 @@ def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
   def asciiForString(ucode: String,  ascii: String = "", idx: Int = 0): String = {
 
     if (idx >= ucode.size) { //ucode.codePoints().count()){
-      ascii
+      ascii.replaceAll(s"${CodePointTranscoder.terminalSigma}", "s")
+
     } else {
       val cp = ucode.codePointAt(idx)
       val newCpString = CodePointTranscoder.cpsToString(Vector(cp))
@@ -215,6 +162,7 @@ def milesianAsciiOf (s: String, alphabetCPs: Vector[Int]): String = {
       debug("asciiForString " + ucode + " at idx " + idx)
       debug("newAscii " + newAscii + " from cp " + cp)
       debug("New idx will be " + newIndex )
+
       asciiForString(ucode, ascii + newAscii, newIndex)
 
     }
