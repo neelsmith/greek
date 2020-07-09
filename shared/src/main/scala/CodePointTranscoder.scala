@@ -149,7 +149,7 @@ import scala.annotation.tailrec
   * @param accumulator String accumulasted so far.
   *
   */
-  @tailrec def peekAhead(s: String, accumulator: String = "", combining: Vector[Char]): String = {
+def peekAhead(s: String, accumulator: String = "", combining: Vector[Char] = Vector.empty[Char]): String = {
     if (s.size < 2) {
       accumulator + s
     } else {

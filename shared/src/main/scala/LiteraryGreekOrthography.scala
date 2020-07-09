@@ -19,7 +19,7 @@ import scala.annotation.tailrec
 * Strings the LiteraryGreekString class.
 */
 object LiteraryGreekOrthography  extends MidOrthography with LogSupport  {
-  Logger.setDefaultLogLevel(LogLevel.WARN)
+  //Logger.setDefaultLogLevel(LogLevel.WARN)
   // 5 methods required by MidOrthography
   //
   // 1. required by MidOrthography trait

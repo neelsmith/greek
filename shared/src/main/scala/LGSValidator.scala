@@ -21,7 +21,7 @@ import scala.annotation.tailrec
 * system.
 */
 @JSExportAll  case class LGSValidator(lib: CiteLibrary) extends CiteValidator[LiteraryGreekString] with LogSupport  {
-  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  //Logger.setDefaultLogLevel(LogLevel.INFO)
   // useful short hands
   lazy val corpus = lib.textRepository.get.corpus
   lazy val dsev = DseVector.fromCiteLibrary(lib)

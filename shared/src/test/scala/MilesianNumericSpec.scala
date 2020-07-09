@@ -45,10 +45,12 @@ class MilesianNumericSpec extends FlatSpec {
     assert (third.partialString == "γ")
   }
 
+
   it should "produce an ascii encoding of an ASCII Milesian string for an integer" in{
     val one = MilesianWithFraction("aʹ")
     val expected = "aʹ"
     assert(one.ascii == expected)
+
   }
 
   it  should "produce a unicode encoding of ASCII Milesian string for an integer" in {
@@ -57,6 +59,7 @@ class MilesianNumericSpec extends FlatSpec {
     assert(one.ucode == expected)
   }
 
+/*
   it should "produce an integer value for a single-digit numeric string" in {
     val one = MilesianWithFraction("a'")
     assert (one.toInt == 1)
@@ -74,7 +77,6 @@ class MilesianNumericSpec extends FlatSpec {
     val oneAndAThird = MilesianWithFraction("a' g")
     assert (oneAndAThird.toInt == 1)
   }
-
-
+*/
 
 }

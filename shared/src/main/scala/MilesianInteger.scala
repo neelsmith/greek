@@ -30,10 +30,11 @@ CodePointPair("ϡ","ϡ"), //993
 */
 @JSExportAll  case class MilesianInteger(str: String) extends GreekNumeric  with  Ordered[GreekNumeric]  with LogSupport {
 
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
 
-  
   def ascii: String =  {
+    debug(s"MilesianInteger: create ascii from ${str}")
     if (unticked == MilesianNumeric.oudenString) {
       MilesianNumeric.oudenString
     } else {

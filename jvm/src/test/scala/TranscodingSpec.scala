@@ -9,7 +9,7 @@ class TranscodingSpec extends FlatSpec {
 
 
 
-  "A code point transcoder object"  should "derive a Unicode Greek string when instantiated with an ASCII string" in  pending /*{
+  "A code point transcoder object"  should "derive a Unicode Greek string when instantiated with an ASCII string" in {
     val lgs = LiteraryGreekString("mh=nin")
     val expected = Normalizer.normalize("μῆνιν", Normalizer.Form.NFC)
     assert(lgs.ascii == "mh=nin")
@@ -35,16 +35,16 @@ class TranscodingSpec extends FlatSpec {
     val eraucode = "Ἐρατοσθένης"
 
     // Generate from literaryUcodeOf function:
-    val lgs = LiteraryGreekString(literaryUcodeOf(eraucode))
+    val lgs = LiteraryGreekString(ucodeOf(eraucode, LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining))
     assert(lgs.ascii == "*e)ratosqe/nhs")
     // Generate directly from String value
     assert(lgs.ascii == LiteraryGreekString(eraucode).ascii)
 
-  }*/
+  }
 
 
 
-/*
+  /*
   it should "enable nice sorting of a vector" in {
     val wds = Vector ("ὡς", "ἐμοίχευεν", " ̓Ερατοσθένης", "τὴν", "γυναῖκα")
     val lgs = for (wd <- wds) yield (LiteraryGreekString(wd))
@@ -52,7 +52,7 @@ class TranscodingSpec extends FlatSpec {
     assert(expectedWithCase == lgs.sortWith(_ < _).map(_.ucode))
     println(lgs.map(_.toLower).sortWith(_ < _).map(_.ucode))
 
-  }
-*/
+  }*/
+
 
 }

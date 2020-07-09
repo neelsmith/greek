@@ -17,7 +17,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * system.
 */
 @JSExportAll  case class MilesianWithFraction(str: String) extends MilesianWithPartial  with LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.INFO)
+  //Logger.setDefaultLogLevel(LogLevel.INFO)
 
 
   /** Find [[MilesianInteger]] object, if any, that
@@ -57,8 +57,9 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   /** Ascii encoding of fractional component with
   * conventional "seconds" mark (double quote). */
   def asciiPartial: String = {
-    debug("Encode as ascii: " + partialString)
+
     if (partialString.isEmpty) { "" } else {
+      debug("Encode partial as ascii: " + partialString)
       milesianAsciiOf(partialString.trim, cpList) +"\""
     }
   }
@@ -81,11 +82,11 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
   * characters. */
   def expandedFractions = if (isAscii(str)) {
     val trimmed = str.trim.replaceAll(MilesianNumeric.halfString, "b ").replaceAll(MilesianNumeric.twoThirdsString, "b " + MilesianNumeric.stigma + " ").trim
-    debug("Trimmed ascii: #" + trimmed + "#")
+    debug("Trimmed ascii: |" + trimmed + "|")
     trimmed
   } else {
     val trimmed = str.trim.replaceAll(MilesianNumeric.halfString, "β ").replaceAll(MilesianNumeric.twoThirdsString, "β " + MilesianNumeric.stigma + " ").trim
-    debug("Trimmed: #" + trimmed + "#")
+    debug("Trimmed: |" + trimmed + "|")
     trimmed
   }
 

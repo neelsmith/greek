@@ -1,4 +1,8 @@
 package edu.holycross.shot
+// package-level implementatoins for JVM of crucial
+// asciiOf and ucodeOf methods.
+
+
 import java.text.Normalizer
 
 import wvlet.log._
@@ -27,9 +31,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 * for Unicode that is already normalized to Form NFC.
 */
 package object greek extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
-
-  //val numericTick = '\u0374'
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
   def isAscii(s: String): Boolean = {
     val asciiAlphas = s.toLowerCase.map(ch => (ch.toInt >= 'a' && ch.toInt <= 'z' ) )
@@ -42,7 +44,7 @@ package object greek extends LogSupport {
 
     } else {
       debug("Create LiteraryGreekOrthography of " + s)
-      asciiForString(s) //+ numericTick
+      ucodeForString(s,alphabetCPs, Vector.empty[Char]) //+ numericTick
     }
   }
 
@@ -50,16 +52,17 @@ package object greek extends LogSupport {
     if (s.isEmpty) {""} else {
 
 
-      debug("milesianAsciiOf " + s)
+
       // catch special cases of stigma, qoppa and sampi
       //val flagged = s.replaceAll(MilesianNumeric.sigmaString,"STIGMA").replaceAll(MilesianNumeric.qoppaString,"QOPPA").replaceAll
 
       val normalized = Normalizer.normalize(s, Normalizer.Form.NFC)
-
+      debug("milesianAsciiOf " + s + " normalized to " + normalized)
       if (s.head.toInt > 127) {
         asciiForString(normalized)
 
       } else {
+
         // handle special cases
         normalized
       }
@@ -75,7 +78,7 @@ package object greek extends LogSupport {
   * @param s String to create `ascii` view for.
   */
   def asciiOf (s: String, alphabetCPs: Vector[Int]): String = {
-    Logger.setDefaultLogLevel(LogLevel.DEBUG)
+    //Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
     val checkFirst = if (s.head == '“') {
       s(1)
@@ -94,10 +97,6 @@ package object greek extends LogSupport {
       Normalizer.normalize(s, Normalizer.Form.NFC)
     }
   }
-
-
-
-
 
   /** Create [[LiteraryGreekOrthography]]'s `ucode` view of a String.
   * If the first character is <= 127, assume that the String
@@ -172,10 +171,6 @@ package object greek extends LogSupport {
       val newCpString = CodePointTranscoder.cpsToString(Vector(cp))
       val newIndex = idx + java.lang.Character.charCount(cp)
       val newAscii = CodePointTranscoder.asciiCodePoint(newCpString)
-
-      //val newAscii = CodePointTranscoder.cpsToString(Vector(cp))
-
-
 
       debug("asciiForString " + ucode + " at idx " + idx)
       debug("newAscii " + newAscii + " from cp " + cp)
