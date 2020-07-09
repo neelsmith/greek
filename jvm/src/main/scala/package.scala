@@ -93,29 +93,7 @@ package object greek extends LogSupport {
   }
 
 
-  // ANNOTATE FOR TAILREC
-  //
-  /** Recursively build a unicode form from an ascii String.
-  *
-  * @param ascii Ascii string to convert to Unicode.
-  * @param validCpList List of all code points allowed in this orthography.
-  * @param ucode Recursively accumulated Unicode string.
-  * @param idx Index by code point into the ascii string to convert.
-  */
-  def asciiForString(ascii: String,  validCpList: Vector[Int], ucode: String = "", idx: Int = 0): String = {
-    if (idx >= ascii.length) {
-      ucode
-    } else {
-      val cp = ascii.codePointAt(idx)
-      val newIndex = idx + java.lang.Character.charCount(cp)
-      val newUcode = ucode + CodePointTranscoder.cpsToString(Vector(cp))
-      if (validCpList.contains(cp)) {
-        asciiForString(ascii, validCpList, ucode + newUcode, newIndex)
-      } else {
-        asciiForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
-      }
-    }
-  }
+
 
 
   /** Create [[LiteraryGreekOrthography]]'s `ucode` view of a String.
@@ -126,7 +104,7 @@ package object greek extends LogSupport {
   * @param s String to create `ucode` view for.
   * @param alphabetCPs All code points allowed in this alphabet
   */
-  def ucodeForString(s: String, alphabetCPs: Vector[Int]) : String = {
+  def ucodeOf(s: String, alphabetCPs: Vector[Int]) : String = {
       val checkFirst = if (s.head == '“') {
         s(1)
       } else {
@@ -136,12 +114,59 @@ package object greek extends LogSupport {
     if (checkFirst.toInt > 127) {
       Normalizer.normalize(s, Normalizer.Form.NFC)
 
-
     } else {
-      asciiForString(s,alphabetCPs)
+      println("CONVERT " + s + " TO UCODE")
+      ucodeForString(s,alphabetCPs)
+    }
+  }
+  // ANNOTATE FOR TAILREC
+  //
+  /** Recursively build a unicode form from an ascii String.
+  *
+  * @param ascii Ascii string to convert to Unicode.
+  * @param validCpList List of all code points allowed in this orthography.
+  * @param ucode Recursively accumulated Unicode string.
+  * @param idx Index by code point into the ascii string to convert.
+  */
+  def ucodeForString(ascii: String,  validCpList: Vector[Int], ucode: String = "", idx: Int = 0): String = {
+    if (idx >= ascii.length) {
+      ucode
+    } else {
+      val cp = ascii.codePointAt(idx)
+      println("CONVERTING " + ascii + " at CP " + cp)
+      val newIndex = idx + java.lang.Character.charCount(cp)
+      val newUcode = ucode + CodePointTranscoder.cpsToString(Vector(cp))
+      ////////////////////////////
+      /// HERE
+      ///
+      /// convert ascii with CPTranscoder
+      // but pass along ucdoe byoned ascii
+      ///////////////////////
+      println("NEW UCODE " + newUcode)
+      if (validCpList.contains(cp)) {
+        asciiForString(ascii, validCpList, ucode + newUcode, newIndex)
+      } else {
+        asciiForString(ascii, validCpList, ucode + s"#${newUcode}#", newIndex)
+      }
     }
   }
 
+
+  def asciiForString(ucode: String,  validCpList: Vector[Int], ascii: String = "", idx: Int = 0): String = {
+    if (idx >= ucode.length) {
+      ascii
+    } else {
+      val cp = ucode.codePointAt(idx)
+      val newIndex = idx + java.lang.Character.charCount(cp)
+      val newAscii = ucode + CodePointTranscoder.cpsToString(Vector(cp))
+
+      if (validCpList.contains(cp) || cp < 127) {
+        asciiForString(ascii, validCpList, ucode + newAscii, newIndex)
+      } else {
+        asciiForString(ascii, validCpList, ucode + s"#${newAscii}#", newIndex)
+      }
+    }
+  }
 
 
 
