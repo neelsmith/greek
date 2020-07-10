@@ -28,7 +28,7 @@ case class LiteraryGreekString(str: String)  extends LGSTrait with GreekString w
   /////////////// REQUIRED BY LGSTrait
 
 
-  def ascii = asciiOf(str, LiteraryGreekOrthography.cpList)
+  def ascii = asciiOf(str)
   def ucode = ucodeOf(str, LiteraryGreekOrthography.cpList, LiteraryGreekOrthography.combining)
 
   /** All valid characters in the ASCII representation of this system

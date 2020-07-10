@@ -7,19 +7,22 @@ import java.text.Normalizer
 class AtoUSpec extends FlatSpec {
 
 
-  val alphabet = CodePointTranscoder.strToCps("abct~")
-  val combos = Vector.empty[Char]
+  val alphabet = CodePointTranscoder.strToCps("himn=~")
+  val passThrough = "~"
+  val combos = Vector('=')
 
   "The package object's ucodeOf method"  should "use a supplied alphabet to covert ascii to unicode" in {
-    println(ucodeOf("baba~", alphabet, combos))
+    val expected = "μῆνιν~"
+    val actual = ucodeOf("mh=nin~", alphabet, combos, passThrough)
+    assert(actual == expected)
   }
 
-  it should "convert ucode to ascii" in {
-    val s = "μῆνιν"
-    val s2 = "μῆνιν~"
-    println(asciiOf(s, alphabet))
-    println(asciiOf(s2, alphabet))
-  }
+  it should "check pass-through list in converting ucode to ascii" in  {
+    val s = "μῆνιν~"
+    val expected = "mh=nin~"
+    val actual = asciiOf(s, passThrough)
+    assert(actual == expected)
+  } 
 
 
 }

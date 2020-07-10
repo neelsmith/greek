@@ -31,14 +31,14 @@ class JvmLiteraryGreekStringSpec extends FlatSpec {
 
   it should "create the LiteraryGreekString's `ascii` view of an ASCII string"in {
     val s = "mh=nin"
-    assert (asciiOf(s, LiteraryGreekOrthography.cpList) == s)
+    assert (asciiOf(s) == s)
   }
 
   it should "create the LiteraryGreekString's `ascii` view of NFC Unicode" in {
     val s = Normalizer.normalize("μῆνιν", Normalizer.Form.NFC)
     assert(s.size == 5)
     val expected = "mh=nin"
-    val actual = asciiOf(s, LiteraryGreekOrthography.cpList)
+    val actual = asciiOf(s)
     println("actual " + actual)
     //assert(asciiOf(s, LiteraryGreekOrthography.cpList) == expected)
   }
@@ -47,7 +47,7 @@ class JvmLiteraryGreekStringSpec extends FlatSpec {
     val s = Normalizer.normalize("μῆνιν", Normalizer.Form.NFD)
     assert (s.size == 6)
     val expected = "mh=nin"
-    assert(asciiOf(s, LiteraryGreekOrthography.cpList) == expected)
+    assert(asciiOf(s) == expected)
   }
 
 
