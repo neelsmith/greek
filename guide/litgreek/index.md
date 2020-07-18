@@ -1,7 +1,11 @@
 ---
 layout: page
 title: The LiteraryGreekString
+has_children: true
 ---
+
+
+## The `LiteraryGreekString` class
 
 The `LiteraryGreekString` class defines a digital representation of polytonic Greek as it appears in the orthography of modern print editions.  It associates 232 Unicode code points with unique ASCII strings composed from a set of lower-case ASCII characters and non-alphabetic characters.
 
