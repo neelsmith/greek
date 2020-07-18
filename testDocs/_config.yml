@@ -1,0 +1,10 @@
+theme: "just-the-docs"
+
+aux_links:
+  "greek library on github":
+    - "//github.com/neelsmith/greek"
+
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: true
+
+search_enabled: true
