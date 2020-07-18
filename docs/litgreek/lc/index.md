@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Lower-case mappings"
+parent: The LiteraryGreekString
 ---
 
 ## Summary for the ``LiteraryGreekString`` class
