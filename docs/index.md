@@ -3,6 +3,8 @@ layout: page
 title: Greek
 ---
 
+## The `greek` library
+
 **Version 9.0.0**
 
 In the twenty-first century, it's still not possible to use internet standards to represent ancient Greek digitally.  The library documented here offers a way to work with semantically explicit representations of the numerous alphabetic writing systems used in the archaic and classical Greek world.
